@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  tomcat:
+    image: tomcat:10.1.18
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./target/Syndic.war:/usr/local/tomcat/webapps/Syndic.war
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: syndic_db
+      MYSQL_USER: amine
+      MYSQL_PASSWORD: 1999
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./db/init:/docker-entrypoint-initdb.d
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql-data:

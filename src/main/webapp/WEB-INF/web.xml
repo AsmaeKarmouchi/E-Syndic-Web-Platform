@@ -1,0 +1,161 @@
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app version="3.0"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+
+  <display-name>Archetype Created Web Application</display-name>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>login.jsp</welcome-file>
+    <welcome-file>register.jsp</welcome-file>
+    <welcome-file>test.jsp</welcome-file>
+    <welcome-file>admin.jsp</welcome-file>
+    <welcome-file>reclamer.jsp</welcome-file>
+    <welcome-file>paiement.jsp</welcome-file>
+    <welcome-file>addmember.jsp</welcome-file>
+    <welcome-file>addpayment.jsp</welcome-file>
+    <welcome-file>addsupplier.jsp</welcome-file>
+    <welcome-file>syndicprofile.jsp</welcome-file>
+  </welcome-file-list>
+
+  <servlet>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.LoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>RegisterServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.RegisterServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegisterServlet</servlet-name>
+    <url-pattern>/register</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>AddSyndicServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.AddSyndicServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddSyndicServlet</servlet-name>
+    <url-pattern>/addsyndic</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>PropertyServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.PropertyServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>PropertyServlet</servlet-name>
+    <url-pattern>/property</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>AddMemberServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.AddMemberServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddMemberServlet</servlet-name>
+    <url-pattern>/addmember</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AddPaymentServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.AddPaymentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddPaymentServlet</servlet-name>
+    <url-pattern>/addpayment</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>MemberProfileServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.MemberProfileServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemberProfileServlet</servlet-name>
+    <url-pattern>/memberprofile</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>SyndicProfileServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.SyndicProfileServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SyndicProfileServlet</servlet-name>
+    <url-pattern>/syndicprofile</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>MeetingServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.MeetingServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MeetingServlet</servlet-name>
+    <url-pattern>/meeting</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>IncidentServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.IncidentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>IncidentServlet</servlet-name>
+    <url-pattern>/incident</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>NewsServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.NewsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NewsServlet</servlet-name>
+    <url-pattern>/news</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ChargeServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.ChargeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChargeServlet</servlet-name>
+    <url-pattern>/charge</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>AddSupplierServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.AddSupplierServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddSupplierServlet</servlet-name>
+    <url-pattern>/addsupplier</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>AddTaskServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.AddTaskServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddTaskServlet</servlet-name>
+    <url-pattern>/addtask</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DisplayAccountsServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.DisplayAccountsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DisplayAccountsServlet</servlet-name>
+    <url-pattern>/displayaccounts</url-pattern>
+  </servlet-mapping>
+</web-app>
