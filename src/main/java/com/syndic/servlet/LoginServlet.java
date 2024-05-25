@@ -48,7 +48,21 @@ public class LoginServlet extends HttpServlet {
         if (session != null) {
             session.invalidate(); // Fermer la session existante
         }
-
+        // Récupérer la liste des résidences
+        Connection connection = null;
+        List<Syndic> List_syndics = new ArrayList<>();
+        try {
+            connection = Syndic_con.getConnection();
+            if (connection != null) {
+                syndicDAO = new SyndicProfileDAOImpl(connection);
+                List_syndics = syndicDAO.getSyndic();
+                System.out.println(List_syndics);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        // Ajouter la liste des résidences en tant qu'attribut de requête
+        request.setAttribute("List_syndics", List_syndics);
         // Rediriger vers la page login.jsp
         RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
         dispatcher.forward(request, response);
@@ -98,12 +112,15 @@ public class LoginServlet extends HttpServlet {
 
                             return;
                         } else if (user.getAdmin() == 2){
-                            response.sendRedirect("dashboardSyndic.jsp");
+
                             int userId = user.getIdUser();
                             syndicDAO = new SyndicProfileDAOImpl(connection);
                             Syndic syndic = syndicDAO.getSyndicByUserId(userId);
                             session.setAttribute("syndic", syndic);
 
+                            System.out.println(syndic.getId()+".. "+syndic.getResidenceName()+".. "+residence);
+
+                            if (syndic.getResidenceName().equals(residence)) {
                             Syndic syndic2 = syndicDAO.getSyndicById(syndic.getId());
                             session.setAttribute("syndic2", syndic2);
 
@@ -128,10 +145,15 @@ public class LoginServlet extends HttpServlet {
                             list_Charges = chargeDAO.getCharges();
                             session.setAttribute("list_Charges", list_Charges);
 
+                            response.sendRedirect("dashboardSyndic.jsp");
+                                return;
 
-                            return;
+                            } else {
+                                response.sendRedirect("login.jsp?error=2"); // Residence mismatch error
+                                return;
+                            }
                         }  else  {
-
+//member
                             response.sendRedirect("home.jsp");
                             int userId = user.getIdUser();
                             memberDAO = new MemberProfileDAOImpl(connection);

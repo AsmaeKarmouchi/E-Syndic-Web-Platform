@@ -1,3 +1,5 @@
+<%@ page import="com.syndic.beans.Syndic" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
@@ -54,7 +56,20 @@
 
         <div>
             <label for="residence" class="text-sm font-medium text-gray-600">Residence</label>
-            <input type="text" id="residence" name="Residence" class="mt-1 p-2 w-full border-2 border-gray-300 rounded-md focus:outline-none focus:border-indigo-500" required>
+            <select id="residence" name="residence" class="mt-1 p-2 w-full border-2 border-gray-300 rounded-md focus:outline-none focus:border-indigo-500" required>
+                <option value="">select a residence</option>
+                <%
+                    List<Syndic> List_syndics = (List<Syndic>) request.getAttribute("List_syndics");
+
+                    if (List_syndics != null) {
+                        for (Syndic syndic : List_syndics) {
+                %>
+                <option value="<%= syndic.getResidenceName() %>"><%= syndic.getResidenceName() %></option>
+                <%
+                        }
+                    }
+                %>
+            </select>
         </div>
 
         <div>
