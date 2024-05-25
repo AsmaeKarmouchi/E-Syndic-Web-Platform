@@ -14,6 +14,28 @@
     <!----STYLESHEET---->
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media print {
+            @page {
+                margin: 0;
+            }
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+            }
+            .no-print {
+                display: none;
+            }
+            .print-container {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+        }
+    </style>
+
 </head>
 
 <body>
@@ -40,13 +62,12 @@
             <!-- Grid -->
             <div class="flex justify-between">
                 <div>
-                    <svg class="size-10" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 26V13C1 6.37258 6.37258 1 13 1C19.6274 1 25 6.37258 25 13C25 19.6274 19.6274 25 13 25H12" class="stroke-blue-600 dark:stroke-white" stroke="currentColor" stroke-width="2"/>
-                        <path d="M5 26V13.16C5 8.65336 8.58172 5 13 5C17.4183 5 21 8.65336 21 13.16C21 17.6666 17.4183 21.32 13 21.32H12" class="stroke-blue-600 dark:stroke-white" stroke="currentColor" stroke-width="2"/>
-                        <circle cx="13" cy="13.0214" r="5" fill="currentColor" class="fill-blue-600 dark:fill-white"/>
-                    </svg>
+                    <div>
+                        <img src="image/logo2.png" alt="Logo" class="size-20" width="46" height="46" viewBox="0 0 46 46">
 
-                    <h1 class="mt-2 text-lg md:text-xl font-semibold text-blue-600 dark:text-white">Preline Inc.</h1>
+
+                        <h1 class="mt-2 text-lg md:text-xl font-semibold text-blue-600 dark:text-white">Ensias_Syndic</h1>
+                    </div>
                 </div>
                 <!-- Col -->
 
@@ -66,7 +87,7 @@
             <!-- End Grid -->
 
             <!-- Grid -->
-            <div class="mt-8 grid sm:grid-cols-2 gap-3">
+            <div class=" m-4 mt-8 grid sm:grid-cols-2 gap-3">
                 <div>
                     <h3 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">Bill to:</h3>
                     <h3 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">Sara Williams</h3>
@@ -100,34 +121,34 @@
 
             <div  >
 
-                <div class="max-w-2xl mx-auto bg-white p-4 rounded-lg shadow-md border border-gray-300">
-                    <div class="text-lg leading-relaxed space-y-4">
-                        <div class="overflow-x-auto">
+
+                    <div class="text-lg leading-relaxed space-y-4 ">
+                        <div class="overflow-x-auto border rounded-md">
                             <table class="min-w-full bg-white border border-gray-200">
                                 <tbody class="divide-y divide-gray-200">
                                 <tr class="border-t">
                                     <td class="px-4 py-2 whitespace-nowrap text-sm font-semibold text-gray-700">Meeting ID</td>
-                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500"><%= meeting.getMeetingId() %></td>
+                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 text-center"><%= meeting.getMeetingId() %></td>
                                 </tr>
                                 <tr class="border-t">
                                     <td class="px-4 py-2 whitespace-nowrap text-sm font-semibold text-gray-700">Location</td>
-                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500"><%= meeting.getMeetingLocation() %></td>
+                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 text-center"><%= meeting.getMeetingLocation() %></td>
                                 </tr>
                                 <tr class="border-t">
                                     <td class="px-4 py-2 whitespace-nowrap text-sm font-semibold text-gray-700">Time</td>
-                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500"><%= meeting.getMeetingTime() %></td>
+                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 text-center"><%= meeting.getMeetingTime() %></td>
                                 </tr>
                                 <tr class="border-t">
                                     <td class="px-4 py-2 whitespace-nowrap text-sm font-semibold text-gray-700">Topic</td>
-                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500"><%= meeting.getMeetingTopic() %></td>
+                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 text-center"><%= meeting.getMeetingTopic() %></td>
                                 </tr>
                                 <tr class="border-t">
                                     <td class="px-4 py-2 whitespace-nowrap text-sm font-semibold text-gray-700">Residence</td>
-                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500"><%= meeting.getMeetingResidence() %></td>
+                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 text-center"><%= meeting.getMeetingResidence() %></td>
                                 </tr>
                                 <tr class="border-t">
                                     <td class="px-4 py-2 whitespace-nowrap text-sm font-semibold text-gray-700">Type</td>
-                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500"><%= meeting.getMeetingType() %></td>
+                                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 text-center"><%= meeting.getMeetingType() %></td>
                                 </tr>
 
                                 </tbody>
@@ -143,7 +164,7 @@
                     <footer class="mt-8 text-center text-sm text-gray-600">
                         Generated on <%= new java.util.Date() %>
                     </footer>
-                </div>
+
 
             </div>
 
@@ -185,7 +206,10 @@
     }
 %>
 <script>
-    window.print();
+    // JavaScript code for printing the page
+    window.onload = () => {
+        window.print();
+    };
 </script>
 </body>
 <script src="javascript/main.js"></script>

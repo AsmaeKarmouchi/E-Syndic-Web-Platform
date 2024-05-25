@@ -16,6 +16,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
   <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <body>
 
@@ -25,185 +27,202 @@
   </div>
   <main>
     <% Syndic syndic = (Syndic) session.getAttribute("syndic2"); %>
-  <!------------MIDDLE ------------>
-  <div class="main-content flex flex-col p-6">
-    <div class="recent-updates w-full">
-      <h1>Welcome <%= syndic.getFirstName() %>!</h1>
-      <div class="form-container">
-        <form action="syndicprofile" method="post" class="w-full">
-          <!-- Syndic Information -->
-          <section class="py-1">
-            <div class="w-full px-4 mx-auto mt-6">
-              <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
-                <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-                  <div class="text-center flex justify-between">
-                    <h6 class="text-blueGray-700 text-xl font-bold m-4">
-                      Informations Syndic
-                    </h6>
-                  </div>
-                  <div class="flex flex-wrap">
-                    <div class="w-full lg:w-6/12 px-4">
-                      <div class="relative w-full mb-3">
-                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="firstname">
-                          First Name
-                        </label>
-                        <input type="text" id="firstname" name="firstname" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getFirstName() %>">
-                      </div>
+    <!------------MIDDLE ------------>
+    <div class="main-content flex flex-col p-6">
+      <div class="recent-updates w-full">
+        <h1 class="text-3xl font-bold text-blue-600 mb-4">Welcome <%= syndic.getFirstName() %>!</h1>
+        <div class="form-container">
+          <form action="syndicprofile" method="post" class="w-full">
+            <!-- Syndic Information -->
+            <section class="py-1">
+              <div class="w-full px-4 mx-auto mt-6">
+                <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-100 border-0">
+                  <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+                    <div class="text-center flex justify-between">
+                      <h6 class="text-gray-700 text-xl font-bold m-4">
+                        <i class="fas fa-info-circle fa-2x mr-2"></i>Informations Syndic
+                      </h6>
                     </div>
-                    <div class="w-full lg:w-6/12 px-4">
-                      <div class="relative w-full mb-3">
-                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="lastname">
-                          Last Name
-                        </label>
-                        <input type="text" id="lastname" name="lastname" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getLastName() %>">
+                    <div class="flex flex-wrap">
+                      <!-- First Name -->
+                      <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="firstname">
+                            <i class="fas fa-user fa-2x mr-1"></i>First Name
+                          </label>
+                          <input type="text" id="firstname" name="firstname" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getFirstName() %>">
+                        </div>
                       </div>
-                    </div>
-                    <div class="w-full lg:w-6/12 px-4">
-                      <div class="relative w-full mb-3">
-                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="codepostal">
-                          Postal Code
-                        </label>
-                        <input type="text" id="codepostal" name="codepostal" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getCodepostal() %>">
+                      <!-- Last Name -->
+                      <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="lastname">
+                            <i class="fas fa-user fa-2x mr-1"></i>Last Name
+                          </label>
+                          <input type="text" id="lastname" name="lastname" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getLastName() %>">
+                        </div>
                       </div>
-                    </div>
-                    <div class="w-full lg:w-6/12 px-4">
-                      <div class="relative w-full mb-3">
-                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="phonenumber">
-                          Phone Number
-                        </label>
-                        <input type="text" id="phonenumber" name="phonenumber" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getPhoneNumber() %>">
+                      <!-- Postal Code -->
+                      <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="codepostal">
+                            <i class="fas fa-map-marker-alt fa-2x mr-1"></i>Postal Code
+                          </label>
+                          <input type="text" id="codepostal" name="codepostal" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getCodepostal() %>">
+                        </div>
                       </div>
-                    </div>
-                    <div class="w-full lg:w-6/12 px=4">
-                      <div class="relative w-full mb-3">
-                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="fulladdress">
-                          Full Address
-                        </label>
-                        <input type="text" id="fulladdress" name="fulladdress" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getFulladdress() %>">
+                      <!-- Phone Number -->
+                      <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="phonenumber">
+                            <i class="fas fa-phone fa-2x mr-1"></i>Phone Number
+                          </label>
+                          <input type="text" id="phonenumber" name="phonenumber" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getPhoneNumber() %>">
+                        </div>
                       </div>
-                    </div>
-                    <div class="w-full lg:w-6/12 px=4">
-                      <div class="relative w-full mb-3">
-                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="mail">
-                          E-mail
-                        </label>
-                        <input type="text" id="mail" name="mail" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getMail() %>">
+                      <!-- Full Address -->
+                      <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="fulladdress">
+                            <i class="fas fa-address-card fa-2x mr-1"></i>Full Address
+                          </label>
+                          <input type="text" id="fulladdress" name="fulladdress" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getFulladdress() %>">
+                        </div>
+                      </div>
+                      <!-- E-mail -->
+                      <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="mail">
+                            <i class="fas fa-envelope fa-2x mr-1"></i>E-mail
+                          </label>
+                          <input type="text" id="mail" name="mail" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getMail() %>">
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
 
-          <!-- Residence Information -->
-          <section class="py-1">
-            <div class="w-full px-4 mx-auto mt-6">
-              <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
-                <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-                  <div class="text-center flex justify-between">
-                    <h6 class="text-blueGray-700 text-xl font-bold m-4">
-                      About Residence
-                    </h6>
+            <!-- Residence Information -->
+            <section class="py-1">
+              <div class="w-full px-4 mx-auto mt-6">
+                <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-100 border-0">
+                  <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+                    <div class="text-center flex justify-between">
+                      <h6 class="text-gray-700 text-xl font-bold m-4">
+                        <i class="fas fa-home fa-2x mr-2"></i>About Residence
+                      </h6>
+                    </div>
+                    <div class="flex flex-wrap">
+                      <!-- Residence Name -->
+                      <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="residenceName">
+                            <i class="fas fa-building fa-2x mr-1"></i>Residence Name
+                          </label>
+                          <input type="text" id="residenceName" name="residenceName" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getResidenceName() %>">
+                        </div>
+                      </div>
+                      <!-- Residence Address -->
+                      <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="residenceAddress">
+                            <i class="fas fa-map-marker-alt fa-2x mr-1"></i>Residence Address
+                          </label>
+                          <input type="text" id="residenceAddress" name="residenceAddress" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getResidenceAddress() %>">
+                        </div>
+                      </div>
+                      <!-- Residence Type -->
+                      <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="residenceType">
+                            <i class="fas fa-home fa-2x mr-1"></i>Residence Type
+                          </label>
+                          <input type="text" id="residenceType" name="residenceType" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getResidenceType() %>">
+                        </div>
+                      </div>
+                      <!-- Residence Size -->
+                      <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="residenceSize">
+                            <i class="fas fa-ruler-combined fa-2x mr-1"></i>Residence Size (m²)
+                          </label>
+                          <input type="number" id="residenceSize" name="residenceSize" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getResidenceSize() %>">
+                        </div>
+                      </div>
+                      <!-- Number of Apartments -->
+                      <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="apartmentCount">
+                            <i class="fas fa-building fa-2x mr-1"></i>Number of Apartments
+                          </label>
+                          <input type="number" id="apartmentCount" name="apartmentCount" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getApartmentCount() %>">
+                        </div>
+                      </div>
+                      <!-- Number of Villas -->
+                      <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="villaCount">
+                            <i class="fas fa-home fa-2x mr-1"></i>Number of Villas
+                          </label>
+                          <input type="number" id="villaCount" name="villaCount" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getVillaCount() %>">
+                        </div>
+                      </div>
+                      <!-- Number of Gardens -->
+                      <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="gardenCount">
+                            <i class="fas fa-leaf fa-2x mr-1"></i>Number of Gardens
+                          </label>
+                          <input type="number" id="gardenCount" name="gardenCount" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getGardenCount() %>">
+                        </div>
+                      </div>
+                      <!-- Number of Pools -->
+                      <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="poolCount">
+                            <i class="fas fa-swimming-pool fa-2x mr-1"></i>Number of Pools
+                          </label>
+                          <input type="number" id="poolCount" name="poolCount" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getPoolCount() %>">
+                        </div>
+                      </div>
+                      <!-- Number of Parkings -->
+                      <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="parkingCount">
+                            <i class="fas fa-parking fa-2x mr-1"></i>Number of Parkings
+                          </label>
+                          <input type="number" id="parkingCount" name="parkingCount" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getParkingCount() %>">
+                        </div>
+                      </div>
+                      <!-- Number of Elevators -->
+                      <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="elevatorsCount">
+                            <i class="fas fa-elevator fa-2x mr-1"></i>Number of Elevators
+                          </label>
+                          <input type="number" id="elevatorsCount" name="elevatorsCount" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getElevatorsCount() %>">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-center mt-6">
+                      <button type="submit" class="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150">
+                        <i class="fas fa-save fa-2x mr-2"></i>Save
+                      </button>
+                    </div>
                   </div>
-                  <div class="flex flex-wrap">
-                    <div class="w-full lg:w-6/12 px-4">
-                      <div class="relative w-full mb-3">
-                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="residenceName">
-                          Residence Name
-                        </label>
-                        <input type="text" id="residenceName" name="residenceName" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getResidenceName() %>">
-                      </div>
-                    </div>
-                    <div class="w-full lg:w-6/12 px-4">
-                      <div class="relative w-full mb-3">
-                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="residenceAddress">
-                          Residence Address
-                        </label>
-                        <input type="text" id="residenceAddress" name="residenceAddress" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getResidenceAddress() %>">
-                      </div>
-                    </div>
-                    <div class="w-full lg:w-6/12 px-4">
-                      <div class="relative w-full mb-3">
-                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="residenceType">
-                          Residence Type
-                        </label>
-                        <input type="text" id="residenceType" name="residenceType" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getResidenceType() %>">
-                      </div>
-                    </div>
-                    <div class="w-full lg:w-6/12 px-4">
-                      <div class="relative w-full mb-3">
-                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="residenceSize">
-                          Residence Size (m²)
-                        </label>
-                        <input type="number" id="residenceSize" name="residenceSize" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getResidenceSize() %>">
-                      </div>
-                    </div>
-                    <div class="w-full lg:w-6/12 px-4">
-                      <div class="relative w-full mb-3">
-                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="apartmentCount">
-                          Number of Apartments
-                        </label>
-                        <input type="number" id="apartmentCount" name="apartmentCount" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getApartmentCount() %>">
-                      </div>
-                    </div>
-                    <div class="w-full lg:w-6/12 px-4">
-                      <div class="relative w-full mb-3">
-                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="villaCount">
-                          Number of Villas
-                        </label>
-                        <input type="number" id="villaCount" name="villaCount" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getVillaCount() %>">
-                      </div>
-                    </div>
-                    <div class="w-full lg:w-6/12 px-4">
-                      <div class="relative w-full mb-3">
-                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="gardenCount">
-                          Number of Gardens
-                        </label>
-                        <input type="number" id="gardenCount" name="gardenCount" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getGardenCount() %>">
-                      </div>
-                    </div>
-                    <div class="w-full lg:w-6/12 px-4">
-                      <div class="relative w-full mb-3">
-                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="poolCount">
-                          Number of Pools
-                        </label>
-                        <input type="number" id="poolCount" name="poolCount" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getPoolCount() %>">
-                      </div>
-                    </div>
-                    <div class="w-full lg:w-6/12 px-4">
-                      <div class="relative w-full mb-3">
-                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="parkingCount">
-                          Number of Parkings
-                        </label>
-                        <input type="number" id="parkingCount" name="parkingCount" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getParkingCount() %>">
-                      </div>
-                    </div>
-                    <div class="w-full lg:w-6/12 px-4">
-                      <div class="relative w-full mb-3">
-                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="elevatorsCount">
-                          Number of Elevators
-                        </label>
-                        <input type="number" id="elevatorsCount" name="elevatorsCount" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getElevatorsCount() %>">
-                      </div>
-                    </div>
-                  </div>
-                  <button type="submit" class="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150">
-                    Save
-                  </button>
                 </div>
               </div>
-            </div>
-          </section>
-        </form>
+            </section>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-  <!-------------END OF MIDDLE --------->
+    <!-------------END OF MIDDLE --------->
+  </main>
 
-<!-------------END OF MIDDLE --------->
-</main>
-<!---------RIGHT--------->
+  <!---------RIGHT--------->
 <div class="right">
   <!--------TOP-->
   <div class="top">

@@ -20,15 +20,17 @@
 
     <main>
 
+        <div class="flex justify-between items-center p-6 bg-gray-100 shadow-md border rounded-md">
+            <h1 class="text-3xl font-bold text-gray-800">Add Payment</h1>
+            <div class="text-lg text-gray-600"><%=java.time.LocalDate.now()%></div>
+        </div>
+
         <div>
             <div class="recent-updates"></div>
         </div>
         <br><br><br><br><br><br>
         <div class="max-w-screen-xl mx-auto px-4 md:px-6">
             <div class="items-start justify-between md:flex">
-                <div class="max-w-lg">
-                    <h3 class="text-light-800 text-xl font-bold sm:text-2xl">Members Payment</h3>
-                </div>
                 <div class="mt-3 md:mt-0 flex gap-4">
                     <button id="addPaymentBtn"
                             class="inline-block px-4 py-2 text-white duration-150 font-medium bg-indigo-600 rounded-lg hover:bg-indigo-500 active:bg-indigo-700 md:text-sm btn">
@@ -103,41 +105,41 @@
                 </table>
             </div>
 
-            <div id="PaymentForm" class="form hidden mt-6">
-                <form id="paymentFormElement" class="grid grid-cols-2 gap-6" action="addpayment" method="post">
+            <div id="PaymentForm" class="form hidden mt-6 p-6 bg-white shadow-lg rounded-lg">
+                <form id="paymentFormElement" class="grid grid-cols-1 gap-6 md:grid-cols-2" action="addpayment" method="post">
                     <input type="hidden" id="action" name="action" value="add">
                     <input type="hidden" id="edit_code" name="edit_code" value="">
 
                     <div class="col-span-1">
-                        <label for="code" class="block text-sm font-medium text-light-700">Code:</label>
+                        <label for="code" class="block text-sm font-medium text-gray-700">Code:</label>
                         <input type="number" id="code" name="code" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div class="col-span-1">
-                        <label for="date" class="block text-sm font-medium text-light-700">Date:</label>
+                        <label for="date" class="block text-sm font-medium text-gray-700">Date:</label>
                         <input type="date" id="date" name="date" value="<%=java.time.LocalDate.now()%>" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div class="col-span-1">
-                        <label for="amount" class="block text-sm font-medium text-light-700">Amount:</label>
+                        <label for="amount" class="block text-sm font-medium text-gray-700">Amount:</label>
                         <input type="number" id="amount" name="amount" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div class="col-span-1">
-                        <label for="method" class="block text-sm font-medium text-light-700">Method:</label>
+                        <label for="method" class="block text-sm font-medium text-gray-700">Method:</label>
                         <input type="text" id="method" name="method" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div class="col-span-1">
-                        <label for="type" class="block text-sm font-medium text-light-700">Type:</label>
+                        <label for="type" class="block text-sm font-medium text-gray-700">Type:</label>
                         <input type="text" id="type" name="type" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div class="col-span-1">
-                        <label for="account_id" class="block text-sm font-medium text-light-700">Account ID:</label>
+                        <label for="account_id" class="block text-sm font-medium text-gray-700">Account ID:</label>
                         <input type="number" id="account_id" name="account_id" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div class="col-span-1">
-                        <label for="member_id" class="block text-sm font-medium text-light-700">Member ID:</label>
+                        <label for="member_id" class="block text-sm font-medium text-gray-700">Member ID:</label>
                         <input type="number" id="member_id" name="member_id" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div class="col-span-1">
-                        <label for="status" class="block text-sm font-medium text-light-700">Status:</label>
+                        <label for="status" class="block text-sm font-medium text-gray-700">Status:</label>
                         <input type="text" id="status" name="status" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div class="col-span-2 flex justify-end">
@@ -147,6 +149,7 @@
                     </div>
                 </form>
             </div>
+
 
         </div>
 </main>

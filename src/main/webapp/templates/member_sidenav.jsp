@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,51 +14,47 @@
 
 <body>
 <!-----------ASIDE------------->
-<aside >
+<aside>
     <div class="top">
-
         <div class="logo">
-            <h2>E-<span class="danger">Syndic</span></h2>
+            <h2>E-<span class="text-red-500">Syndic</span></h2>
         </div>
         <div class="close" id="close-btn">
-            <i class='bx bx-x'></i>
+            <i class='bx bx-x text-2xl text-gray-600'></i>
         </div>
     </div>
 
     <!----------SIDEBAR---------->
     <div class="sidebar">
-        <a href="#" >
-            <i class='bx bxs-dashboard' ></i>
-            <h3>Dashboard</h3>
+        <a href="#" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+            <i class='bx bxs-dashboard text-2xl'></i>
+            <h3 class="ml-4">Dashboard</h3>
         </a>
 
-        <a href="memberprofile" id="memberprofile">
-            <i class='bx bx-user' ></i>
-            <h3>Profile</h3>
+        <a href="memberprofile" id="memberprofile" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+            <i class='bx bx-user text-2xl'></i>
+            <h3 class="ml-4">Profile</h3>
         </a>
 
-        <a href="property" id="property">
-            <i class='bx bx-file'></i>
-            <h3>Property</h3>
+        <a href="property" id="property" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+            <i class='bx bx-file text-2xl'></i>
+            <h3 class="ml-4">Property</h3>
         </a>
 
-
-
-        <a href="meeting" id ="meeting">
-            <i class='bx bxs-crown'></i>
-            <h3>Meetings</h3>
+        <a href="meeting" id="meeting" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+            <i class='bx bxs-crown text-2xl'></i>
+            <h3 class="ml-4">Meetings</h3>
         </a>
 
-        <a href="incident" id="incident">
-            <i class='bx bxs-crown'></i>
-            <h3>Reports Incident</h3>
+        <a href="incident" id="incident" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+            <i class='bx bxs-error-circle text-2xl'></i>
+            <h3 class="ml-4">Report Incident</h3>
         </a>
 
-        <a href="login" id="logout-link">
-            <i class='bx bx-log-out-circle'></i>
-            <h3>Log Out</h3>
+        <a href="login" id="logout-link" class="flex items-center p-4 text-gray-700 hover:bg-red-600 hover:text-white transition duration-200">
+            <i class='bx bx-log-out-circle text-2xl'></i>
+            <h3 class="ml-4">Log Out</h3>
         </a>
-
     </div>
 </aside>
 <!---------END OF ASIDE--------->

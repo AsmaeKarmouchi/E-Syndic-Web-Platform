@@ -14,6 +14,7 @@
     <!----STYLESHEET---->
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 
 <body>
@@ -23,9 +24,34 @@
     <!------------MIDDLE ------------>
     <main>
         <!----------TOP -------->
-        <h1>Meeting</h1>
-        <div class="date">
-            <%=java.time.LocalDate.now()%>
+        <div class="flex justify-between items-center p-6 bg-gray-100 shadow-md border rounded-md">
+            <h1 class="text-3xl font-bold text-gray-800">Meeting</h1>
+            <div class="text-lg text-gray-600"><%=java.time.LocalDate.now()%></div>
+        </div>
+
+        <div class="bg-white rounded-lg overflow-hidden shadow-lg p-6 m-5">
+            <div class="px-6 py-4">
+                <h2 class="text-2xl font-semibold mb-3 text-red-500 flex items-center">
+                    <svg class="h-8 w-8 fill-current mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M10 3c4.97 0 9 4.03 9 9s-4.03 9-9 9-9-4.03-9-9 4.03-9 9-9m0-2c-5.52 0-10 4.48-10 10s4.48 10 10 10 10-4.48 10-10-4.48-10-10-10z"/>
+                        <circle cx="10" cy="14" r="2"/>
+                        <path d="M9 5h2v7H9z"/>
+                    </svg>
+                    Meeting Regulation
+                </h2>
+                <div class="px-6 py-4 text-center">
+                    <h2 class="text-xl font-semibold mb-2">Law No. 18-00 concerning the status of condominiums in built-up areas.<br><br></h2>
+                    <h3 class="text-left text-xl font-semibold mb-4">Rules of the General Meeting of Condominium Owners<br></h3>
+                    <ul class="text-left">
+                        <li><b>Participation :</b> Each condominium owner has the right to participate in person or by proxy.</li>
+                        <li><b>Agenda :</b> Only the items listed on the agenda can be discussed and voted upon.</li>
+                        <li><b>Deliberation :</b> Decisions are made according to the majority rules defined by law or condominium regulations.</li>
+                        <li><b>Minutes :</b> A written record of the meeting must be drafted, signed by the chairman, and kept in the condominium's archives.</li>
+                        <li><b>Transparency :</b> Important information must be made available to condominium owners before the meeting.</li>
+                        <li><b>Respect for Rules :</b> Condominium owners must behave respectfully and adhere to the established rules for the meeting.</li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
         <div class="flex items-center justify-center">
@@ -159,24 +185,11 @@
         <script> alert('<%= successMessage %>');</script>
         <% request.getSession().removeAttribute("successMessage");} %>
 
-        <div class="flex justify-between">
-            <div class=" w-1/2 bg-white rounded-lg overflow-hidden shadow-lg p-6 m-6">
-                <div class="px-6 py-4 text-center">
-                    <h2 class="text-xl font-semibold mb-2">Law No. 18-00 concerning the status of condominiums in built-up areas.<br><br></h2>
-                    <h3 class="text-left text-xl font-semibold mb-4">Rules of the General Meeting of Condominium Owners<br></h3>
-                    <ul class="text-left">
-                        <li><b>Participation :<br></b> Each condominium owner has the right to participate in person or by proxy.<br><br></li>
-                        <li><b>Agenda :<br></b> Only the items listed on the agenda can be discussed and voted upon.<br><br></li>
-                        <li><b>Deliberation :<br></b> Decisions are made according to the majority rules defined by law or condominium regulations.<br><br></li>
-                        <li><b>Minutes :<br></b> A written record of the meeting must be drafted, signed by the chairman, and kept in the condominium's archives.<br><br></li>
-                        <li><b>Transparency :<br></b> Important information must be made available to condominium owners before the meeting.<br><br></li>
-                        <li><b>Respect for Rules :<br></b> Condominium owners must behave respectfully and adhere to the established rules for the meeting.<br><br></li>
-                    </ul>
-                </div>
 
-            </div>
+
+
             <!-- component -->
-            <div class="w-1/2 flex items-center justify-center p-12">
+            <div class=" flex items-center justify-center p-12">
                 <!-- Author: FormBold Team -->
                 <!-- Learn More: https://formbold.com -->
                 <div class="mx-auto w-full max-w-[550px] bg-white">
@@ -308,7 +321,7 @@
 
 
 
-        </div>
+
 
 
 
@@ -328,7 +341,7 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1">
                 <%
                     List<Meeting> listMeetings = (List<Meeting>) session.getAttribute("list_Meetings");
                     if (listMeetings != null) {

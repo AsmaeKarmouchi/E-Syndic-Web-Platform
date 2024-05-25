@@ -23,76 +23,64 @@
 
     <!------------MIDDLE ------------>
     <main>
-        <br><br><br><br>
         <div class="max-w-screen-xl mx-auto px-4 md:px-6">
             <h3 class="text-light-800 text-xl font-bold sm:text-2xl m-4">Liste des Syndics</h3>
 
-
-            <div class="mt-12 shadow-sm border rounded-lg overflow-x-auto">
-                <table class="w-full table-auto text-sm text-left">
-                    <thead class="bg-gray-50 text-gray-600 font-medium border-b">
-                    <tr>
-                        <th class="py-3 px-6">ID</th>
-                        <th class="py-3 px-6">Prénom</th>
-                        <th class="py-3 px-6">Nom</th>
-                        <th class="py-3 px-6">Adresse</th>
-                        <th class="py-3 px-6">Residence</th>
-                        <th class="py-3 px-6">Téléphone</th>
-                        <th class="py-3 px-6">Email</th>
-                        <th class="py-3 px-6">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody class="text-gray-600 divide-y" id="syndicsTableBody">
-                    <%
-                        if (session.getAttribute("List_syndics") != null) {
-                            List<Syndic> syndicsList = (List<Syndic>) session.getAttribute("List_syndics");
-                            for (Syndic syndic : syndicsList) {
-                    %>
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap"><%= syndic.getId() %></td>
-                        <td class="px-6 py-4 whitespace-nowrap"><%= syndic.getFirstName() %></td>
-                        <td class="px-6 py-4 whitespace-nowrap"><%= syndic.getLastName() %></td>
-                        <td class="px-6 py-4 whitespace-nowrap"><%= syndic.getFulladdress() %></td>
-                        <td class="px-6 py-4 whitespace-nowrap"><%= syndic.getResidenceName() %></td>
-                        <td class="px-6 py-4 whitespace-nowrap"><%= syndic.getPhoneNumber() %></td>
-                        <td class="px-6 py-4 whitespace-nowrap"><%= syndic.getMail() %></td>
-                        <td class="text-right px-4 whitespace-nowrap">
-                            <button class="editSyndicBtn py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
-                                    data-id="<%= syndic.getId() %>"
-                                    data-firstname="<%= syndic.getFirstName() %>"
-                                    data-lastname="<%= syndic.getLastName() %>"
-                                    data-address="<%= syndic.getFulladdress() %>"
-                                    data-postalcode="<%= syndic.getResidenceName() %>"
-                                    data-phonenumber="<%= syndic.getPhoneNumber() %>"
-                                    data-email="<%= syndic.getMail() %>">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                <!-- Boucle sur chaque syndic -->
+                <% if (session.getAttribute("List_syndics") != null) {
+                    List<Syndic> syndicsList = (List<Syndic>) session.getAttribute("List_syndics");
+                    for (Syndic syndic : syndicsList) { %>
+                <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                    <div class="px-6 py-4">
+                        <div class="flex items-center justify-between" onclick="toggleDetails(this)">
+                            <div class="font-bold text-xl mb-2" ><%= syndic.getFirstName() %> <%= syndic.getLastName() %></div>
+                            <!-- Placer le bouton toggle hidden ici -->
+                            <button class="toggleDetailsBtn text-gray-600 focus:outline-none"  >
+                                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
                             </button>
-                            <form action="deletesyndic" method="post" class="inline">
-                                <input type="hidden" name="id" value="<%= syndic.getId() %>">
-                                <button type="submit" class="deleteSyndicBtn py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg">
-                                    Delete
-                                </button>
 
-                            </form>
-                        </td>
-                    </tr>
-                    <%
-                        }
-                    } else {
-                    %>
-                    <tr>
-                        <td colspan="8" class="px-6 py-4">Aucun syndic trouvé.</td>
-                    </tr>
-                    <%
-                        }
-                    %>
-                    </tbody>
-                </table>
+
+                        </div>
+                        <!-- Contenu caché -->
+                        <div class="hidden bg-gray-100 shadow-md rounded-lg p-4 mb-4">
+                            <p class="text-gray-600 text-sm mb-2"><%= syndic.getFulladdress() %></p>
+                            <p class="text-gray-600 text-sm mb-2"><%= syndic.getResidenceName() %></p>
+                            <p class="text-gray-600 text-sm mb-2"><%= syndic.getPhoneNumber() %></p>
+                            <p class="text-gray-600 text-sm mb-2"><%= syndic.getMail() %></p>
+                        </div>
+                    </div>
+                    <div class="px-6 py-4">
+                        <!-- Boutons d'action -->
+                        <button class="editSyndicBtn py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
+                                data-id="<%= syndic.getId() %>"
+                                data-firstname="<%= syndic.getFirstName() %>"
+                                data-lastname="<%= syndic.getLastName() %>"
+                                data-address="<%= syndic.getFulladdress() %>"
+                                data-postalcode="<%= syndic.getResidenceName() %>"
+                                data-phonenumber="<%= syndic.getPhoneNumber() %>"
+                                data-email="<%= syndic.getMail() %>">
+                            Edit
+                        </button>
+                        <form action="deletesyndic" method="post" class="inline">
+                            <input type="hidden" name="id" value="<%= syndic.getId() %>">
+                            <button type="submit" class="deleteSyndicBtn py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <% }
+                } else { %>
+                <div class="col-span-full">Aucun syndic trouvé.</div>
+                <% } %>
             </div>
         </div>
-
-
-
     </main>
+
     <!-------------END OF MIDDLE --------->
 
 
@@ -187,27 +175,15 @@
     <!---------END OF RIGHT------->
 
 </div>
+
+
 <script>
-    function showDetails(id) {
-        // Afficher les détails du syndic correspondant
-        document.getElementById("details_" + id).style.display = "table-row";
+
+    function toggleDetails(element) {
+        var details = element.nextElementSibling;
+        details.classList.toggle("hidden");
     }
 
-    function hideDetails(id) {
-        // Masquer les détails du syndic correspondant
-        document.getElementById("details_" + id).style.display = "none";
-    }
-
-    function deleteSyndic(id) {
-        if (confirm("Êtes-vous sûr de vouloir supprimer ce syndic?")) {
-            // Envoyer une requête pour supprimer le syndic avec l'ID correspondant
-            window.location.href = "deleteSyndic.jsp?id=" + id;
-        }
-    }
-
-    // Code pour afficher le nombre total de syndics
-    var totalSyndics = <%= request.getAttribute("totalSyndics") %>;
-    document.getElementById("totalSyndics").innerHTML = "Nombre total de syndics : " + totalSyndics;
 </script>
 <script>
     document.getElementById("syndics").classList.add("active");

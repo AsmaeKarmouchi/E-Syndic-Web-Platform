@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,59 +18,54 @@
     <div class="top">
 
         <div class="logo">
-            <h2>E-<span class="danger">Syndic</span></h2>
+            <h2>E-<span class="text-red-500">Syndic</span></h2>
         </div>
         <div class="close" id="close-btn">
-            <i class='bx bx-x'></i>
+            <i class='bx bx-x text-xl text-gray-600'></i>
         </div>
     </div>
 
     <!----------SIDEBAR---------->
     <div class="sidebar">
-        <a href="dashboardSyndic.jsp" id="dashboardSyndic">
-            <i class='bx bxs-dashboard' ></i>
-            <h3>Dashboard</h3>
+        <a href="dashboardSyndic.jsp" id="dashboardSyndic" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+            <i class='bx bxs-dashboard text-2xl'></i>
+            <h3 class="ml-4">Dashboard</h3>
         </a>
 
-        <a href="syndicprofile" id = "syndicprofile">
-            <i class='bx bx-user' ></i>
-            <h3>Profile</h3>
+        <a href="syndicprofile" id="syndicprofile" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+            <i class='bx bx-user text-2xl'></i>
+            <h3 class="ml-4">Profile</h3>
         </a>
 
-        <a href="#">
-            <i class='bx bx-paper-plane bx-tada' ></i>
-            <h3>Messages</h3><span class="message-count">24</span>
+        <a href="#" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+            <i class='bx bx-paper-plane bx-tada text-2xl'></i>
+            <h3 class="ml-4">Messages</h3><span class="ml-auto bg-red-500 text-white rounded-full px-2 py-1 text-xs">24</span>
         </a>
 
-
-        <a href="incident" id="incident">
-            <i class='bx bxs-crown'></i>
-            <h3>Incidents</h3>
+        <a href="incident" id="incident" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+            <i class='bx bxs-crown text-2xl'></i>
+            <h3 class="ml-4">Incidents</h3>
         </a>
 
-
-        <a href="meeting" id="meeting">
-            <i class='bx bx-cog bx-flashing' ></i>
-            <h3>Meetings</h3>
+        <a href="meeting" id="meeting" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+            <i class='bx bx-calendar text-2xl'></i>
+            <h3 class="ml-4">Meetings</h3>
         </a>
 
-
-        <a  href="news" id="news" >
-            <i class='bx bx-cog bx-flashing' ></i>
-            <h3>News-comm</h3>
+        <a href="news" id="news" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+            <i class='bx bx-news text-2xl'></i>
+            <h3 class="ml-4">News-comm</h3>
         </a>
 
-        <a  href="charge" id="charge" >
-            <i class='bx bx-cog bx-flashing' ></i>
-            <h3>Charges</h3>
+        <a href="charge" id="charge" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+            <i class='bx bx-money text-2xl'></i>
+            <h3 class="ml-4">Charges</h3>
         </a>
 
-
-        <a href="login" id="logout-link">
-            <i class='bx bx-log-out-circle'></i>
-            <h3>Log Out</h3>
+        <a href="login" id="logout-link" class="flex items-center p-4 text-gray-700 hover:bg-red-600 hover:text-white transition duration-200">
+            <i class='bx bx-log-out-circle text-2xl'></i>
+            <h3 class="ml-4">Log Out</h3>
         </a>
-
     </div>
 </aside>
 <!---------END OF ASIDE--------->
