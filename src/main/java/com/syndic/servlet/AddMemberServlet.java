@@ -2,6 +2,7 @@ package com.syndic.servlet;
 
 
 import com.syndic.beans.Member;
+import com.syndic.beans.*;
 import com.syndic.beans.User;
 import com.syndic.connection.Syndic_con;
 import com.syndic.dao.*;
@@ -9,6 +10,8 @@ import com.syndic.dao.*;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -24,16 +27,34 @@ public class AddMemberServlet extends HttpServlet {
     private SyndicProfileDAO syndicDAO;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO Auto-generated method stub
+        // Récupérer la liste des résidences
+        Connection connection = null;
+        List<Syndic> List_syndics = new ArrayList<>();
+        try {
+            connection = Syndic_con.getConnection();
+            if (connection != null) {
+                syndicDAO = new SyndicProfileDAOImpl(connection);
+                List_syndics = syndicDAO.getSyndic();
+                System.out.println(List_syndics);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        request.setAttribute("List_syndics", List_syndics);
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("addmember.jsp");
         dispatcher.forward(request, response);
     }
+
+
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Récupérer les données du formulaire
         String residence = request.getParameter("residence");
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+
         // Crypter le mot de passe avant de l'ajouter à la base de données
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         Connection connection = null;
@@ -44,19 +65,24 @@ public class AddMemberServlet extends HttpServlet {
                 connection = Syndic_con.getConnection();
                 if (connection != null) {
                     userDAO = new UserDAOImpl(connection);
+
                     // Cr�er un nouvel utilisateur
                     User newUser = new User(0, name, email, hashedPassword,0);
                     // Appeler la m�thode pour ajouter l'utilisateur � la base de donn�es
                     userDAO.createUser(newUser);
+
                     // Récupérer l'ID de l'utilisateur nouvellement créé
                     int userId = userDAO.getUserIdByEmail(email);
+                    syndicDAO = new SyndicProfileDAOImpl(connection);
+                    int syndicId = syndicDAO.getSyndicIdByResidence(residence);
+
+
                     // Créer un nouveau membre
                     Member newMember = new Member();
                     newMember.setUserId(userId);
+                    newMember.setMemberSId(syndicId);
 
-                    syndicDAO = new SyndicProfileDAOImpl(connection);
-
-                    newMember.setMemberSId(syndicDAO.getSyndicByresidence(residence).getId());
+                //    newMember.setMemberSId(syndicDAO.getSyndicByresidence(residence).getId());
                     MemberProfileDAO memberDAO = new MemberProfileDAOImpl(connection);
                     memberDAO.addMember(newMember);
 

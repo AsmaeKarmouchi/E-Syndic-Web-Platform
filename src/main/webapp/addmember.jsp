@@ -1,3 +1,5 @@
+<%@ page import="com.syndic.beans.Syndic" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,21 +39,24 @@
         <input type="password" id="password" name="password" required><br>
 
         <label for="residence">Residence:</label>
-        <input type="text" id="residence" name="residence" required><br>
+        <select id="residence" name="residence" class="mt-1 p-2 w-full border-2 border-gray-300 rounded-md focus:outline-none focus:border-indigo-500" required>
+          <option value="">select a residence</option>
+          <%
+            List<Syndic> List_syndics = (List<Syndic>) request.getAttribute("List_syndics");
+
+            if (List_syndics != null) {
+              for (Syndic syndic : List_syndics) {
+          %>
+          <option value="<%= syndic.getResidenceName() %>"><%= syndic.getResidenceName() %></option>
+          <%
+              }
+            }
+          %>
+        </select><br>
 
         <input type="submit" value="Ajouter">
       </form>
     </div>
-
-    <% String successMessage = (String) request.getSession().getAttribute("successMessage"); %>
-    <% if (successMessage != null) {  %>
-    <script> alert('<%= successMessage %>');</script>
-    <% request.getSession().removeAttribute("successMessage");} %>
-
-    <% String errorMessage = (String) request.getSession().getAttribute("errorMessage"); %>
-    <% if (errorMessage != null) { %>
-    <script>alert('<%= errorMessage %>');</script>
-    <% request.getSession().removeAttribute("errorMessage");} %>
 
 
   </main>

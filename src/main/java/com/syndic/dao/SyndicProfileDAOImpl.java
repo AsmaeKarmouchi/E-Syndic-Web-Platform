@@ -85,7 +85,9 @@ public class SyndicProfileDAOImpl implements SyndicProfileDAO {
                     String codepostal = resultSet.getString("s_codepostal");
                     String phoneNumber = resultSet.getString("s_phonenumber");
                     String mail = resultSet.getString("s_mail");
-                    return new Syndic ( id, firstName, lastName, fulladdress, codepostal, phoneNumber, mail, userId);
+                    String residenceName = resultSet.getString("residence_name");
+
+                    return new Syndic(id, firstName, lastName, fulladdress, codepostal, phoneNumber, mail, userId, residenceName);
                 }
             }
         }
@@ -198,7 +200,22 @@ public class SyndicProfileDAOImpl implements SyndicProfileDAO {
 
         return syndics;
     }
+    // Implémentation de la méthode getSyndicIdByResidence
+    @Override
+    public int getSyndicIdByResidence(String residence) throws SQLException {
+        int syndicId = -1; // Valeur par défaut si aucun syndic correspondant n'est trouvé
+        String query = "SELECT s_id FROM syndics WHERE residence_name = ?";
 
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, residence);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    syndicId = resultSet.getInt("s_id");
+                }
+            }
+        }
+        return syndicId;
+    }
 }
 
 
