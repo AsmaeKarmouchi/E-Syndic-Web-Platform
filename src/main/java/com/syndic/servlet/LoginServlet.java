@@ -119,13 +119,20 @@ public class LoginServlet extends HttpServlet {
                             session.setAttribute("syndic", syndic);
                             session.setAttribute("syndic_id", syndic.getId());
 
-                            System.out.println(syndic.getId()+".. "+syndic.getResidenceName()+".. "+residence);
+
 
                             if (syndic.getResidenceName().equals(residence)) {
                             Syndic syndic2 = syndicDAO.getSyndicById(syndic.getId());
                             session.setAttribute("syndic2", syndic2);
 
                             int syndicId = syndic.getId();
+
+                            List<Member> list_members;
+                            memberDAO = new MemberProfileDAOImpl(connection);
+                            list_members = memberDAO.getMembersBySyndic(syndicId);
+                            System.out.println(list_members);
+                            session.setAttribute("list_members", list_members);
+
                             List<Meeting> list_Meetings = new ArrayList<>();
                             meetingDAO = new MeetingDAOImpl(connection);
                             list_Meetings = meetingDAO.getMeetingBySyndicId(syndicId);

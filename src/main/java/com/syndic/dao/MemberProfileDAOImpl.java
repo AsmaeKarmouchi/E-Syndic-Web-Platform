@@ -102,8 +102,8 @@ public class MemberProfileDAOImpl implements MemberProfileDAO {
         }
         System.out.println(members);
         return members;
-
     }
+
     public int getMemberCount() throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(COUNT_MEMBERS);
              ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -112,6 +112,37 @@ public class MemberProfileDAOImpl implements MemberProfileDAO {
             }
             return 0;
         }
+    }
+
+
+    @Override
+    public List<Member> getMembersBySyndic(int syndicId) {
+        List<Member> members = new ArrayList<>();
+        String query = "SELECT * FROM members WHERE member_s_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, syndicId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Member member = new Member();
+                    member.setId(rs.getInt("m_id"));
+                    member.setFirstName(rs.getString("m_firstname"));
+                    member.setLastName(rs.getString("m_lastname"));
+                    member.setCodepostal(rs.getString("m_codepostal"));
+                    member.setPhoneNumber(rs.getString("m_phonenumber"));
+                    member.setFulladdress(rs.getString("m_fulladdress"));
+                    member.setMail(rs.getString("m_mail"));
+                    member.setUserId(rs.getInt("m_iduser"));
+                    member.setPropertyCode(rs.getInt("property_code"));
+                    member.setPropertyType(rs.getString("property_type"));
+                    member.setPropertySize(rs.getInt("property_size"));
+                    member.setCoOwnershipFee(rs.getInt("coOwnershipFee"));
+                    members.add(member);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return members;
     }
 
 }
