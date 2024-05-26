@@ -130,13 +130,14 @@ public class LoginServlet extends HttpServlet {
                             List<Member> list_members;
                             memberDAO = new MemberProfileDAOImpl(connection);
                             list_members = memberDAO.getMembersBySyndic(syndicId);
-                            System.out.println(list_members);
                             session.setAttribute("list_members", list_members);
 
                             List<Meeting> list_Meetings = new ArrayList<>();
                             meetingDAO = new MeetingDAOImpl(connection);
                             list_Meetings = meetingDAO.getMeetingBySyndicId(syndicId);
                             session.setAttribute("list_Meetings", list_Meetings);
+
+
 
                             List<Incident> list_Incidents = new ArrayList<>();
                             incidentDAO = new IncidentDAOImpl(connection);
@@ -174,9 +175,15 @@ public class LoginServlet extends HttpServlet {
                             list_Incidents = incidentDAO.getIncidentBySyndicId(syndicId);
                             session.setAttribute("list_Incidents", list_Incidents);
 
+                            List<Meeting> list_Meetings = new ArrayList<>();
+                            meetingDAO = new MeetingDAOImpl(connection);
+                            list_Meetings = meetingDAO.getMeetingBySyndicId(syndicId);
+                            session.setAttribute("list_Meetings", list_Meetings);
+
                             syndicDAO = new SyndicProfileDAOImpl(connection);
                             Syndic syndic = syndicDAO.getSyndicById(syndicId);
                             session.setAttribute("syndic", syndic);
+
 
                             return;
                         }

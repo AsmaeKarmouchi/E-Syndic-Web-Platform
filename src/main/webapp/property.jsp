@@ -17,6 +17,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
     <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
@@ -29,154 +30,195 @@
         <div class="main-content flex flex-col p-6">
             <div class="recent-updates w-full">
                 <h1>Welcome <%= ((Member) session.getAttribute("member")).getFirstName() %>!</h1>
-                <div class="form-container">
+                <% Syndic syndic = (Syndic) session.getAttribute("syndic"); %>
+                <!------------MIDDLE ------------>
+                <div class="main-content flex flex-col p-6">
+                    <div class="recent-updates w-full">
+                        <h1 class="text-3xl font-bold text-blue-600 mb-4">Welcome <%= syndic.getFirstName() %>!</h1>
+                        <div class="form-container">
 
-                        <!-- Member Information -->
-                        <section class="py-1">
-                            <div class="w-full px-4 mx-auto mt-6">
-                                <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
-                                    <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-                                        <div class="text-center flex justify-between">
-                                            <h6 class="text-blueGray-700 text-xl font-bold m-4">
-                                                Syndic Information
-                                            </h6>
-                                        </div>
-                                        <div class="p-6">
-                                            <h2 class="flex items-center justify-between text-xl font-semibold mb-4 cursor-pointer">
-                                                <span><%= ((Syndic) session.getAttribute("syndic")).getFirstName() %> <%= ((Syndic) session.getAttribute("syndic")).getLastName()%> Syndic of <%= ((Syndic) session.getAttribute("syndic")).getResidenceName() %> Residence</span>
-
-                                            </h2>
-                                            <div class=" bg-gray-100 shadow-md rounded-lg p-4 mb-4">
-                                                <div class="flex flex-wrap -mx-2">
-                                                    <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
-                                                        <p class="text-gray-800"><strong>First Name:</strong> <%= ((Syndic) session.getAttribute("syndic")).getFirstName() %></p>
-                                                        <p class="text-gray-800"><strong>Last Name:</strong> <%= ((Syndic) session.getAttribute("syndic")).getLastName()%></p>
-
-                                                    </div>
+                                <!-- Syndic Information -->
+                                <section class="py-1">
+                                    <div class="w-full px-4 mx-auto mt-6">
+                                        <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-100 border-0">
+                                            <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+                                                <div class="text-center flex justify-between">
+                                                    <h6 class="text-gray-700 text-xl font-bold m-4">
+                                                        <i class="fas fa-info-circle fa-2x mr-2"></i>Informations Syndic
+                                                    </h6>
                                                 </div>
-                                                <div class="w-full px-2 mt-4">
-                                                    <strong class="text-gray-800 block mb-2">Address:</strong>
-                                                    <div class="bg-white rounded-lg shadow-md p-4">
-                                                        <%= ((Syndic) session.getAttribute("syndic")).getFulladdress() %>
+                                                <div class="flex flex-wrap">
+                                                    <!-- First Name -->
+                                                    <div class="w-full lg:w-6/12 px-4">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="firstname">
+                                                                <i class="fas fa-user fa-2x mr-1"></i>First Name
+                                                            </label>
+                                                            <input type="text" id="firstname" name="firstname" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getFirstName() %>" readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
-
-                                                <div class="w-full px-2 mt-4">
-                                                    <strong class="text-gray-800 block mb-2">Postal Code:</strong>
-                                                    <div class="bg-white rounded-lg shadow-md p-4">
-                                                        <%= ((Syndic) session.getAttribute("syndic")).getCodepostal() %>
+                                                    <!-- Last Name -->
+                                                    <div class="w-full lg:w-6/12 px-4">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="lastname">
+                                                                <i class="fas fa-user fa-2x mr-1"></i>Last Name
+                                                            </label>
+                                                            <input type="text" id="lastname" name="lastname" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getLastName() %>" readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="w-full px-2 mt-4">
-                                                    <strong class="text-gray-800 block mb-2">Phone Number:</strong>
-                                                    <div class="bg-white rounded-lg shadow-md p-4">
-                                                        <%= ((Syndic) session.getAttribute("syndic")).getPhoneNumber() %>
+                                                    <!-- Postal Code -->
+                                                    <div class="w-full lg:w-6/12 px-4">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="codepostal">
+                                                                <i class="fas fa-map-marker-alt fa-2x mr-1"></i>Postal Code
+                                                            </label>
+                                                            <input type="text" id="codepostal" name="codepostal" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getCodepostal() %>" readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="w-full px-2 mt-4">
-                                                    <strong class="text-gray-800 block mb-2">Email:</strong>
-                                                    <div class="bg-white rounded-lg shadow-md p-4">
-                                                        <%= ((Syndic) session.getAttribute("syndic")).getMail() %>
+                                                    <!-- Phone Number -->
+                                                    <div class="w-full lg:w-6/12 px-4">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="phonenumber">
+                                                                <i class="fas fa-phone fa-2x mr-1"></i>Phone Number
+                                                            </label>
+                                                            <input type="text" id="phonenumber" name="phonenumber" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getPhoneNumber() %>" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Full Address -->
+                                                    <div class="w-full lg:w-6/12 px-4">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="fulladdress">
+                                                                <i class="fas fa-address-card fa-2x mr-1"></i>Full Address
+                                                            </label>
+                                                            <input type="text" id="fulladdress" name="fulladdress" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getFulladdress() %>" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <!-- E-mail -->
+                                                    <div class="w-full lg:w-6/12 px-4">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="mail">
+                                                                <i class="fas fa-envelope fa-2x mr-1"></i>E-mail
+                                                            </label>
+                                                            <input type="text" id="mail" name="mail" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getMail() %>" readonly>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </section>
+                                </section>
 
-                        <!-- Property Information -->
-                        <section class="py-1">
-                            <div class="w-full px-4 mx-auto mt-6">
-                                <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
-                                    <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-                                        <div class="text-center flex justify-between">
-                                            <h6 class="text-blueGray-700 text-xl font-bold m-4">
-                                                Residence Information
-                                            </h6>
-                                        </div>
-                                        <div class="p-6">
-                                            <h2 class="flex items-center justify-between text-xl font-semibold mb-4 cursor-pointer">
-                                                <span><%= ((Syndic) session.getAttribute("syndic")).getFirstName() %> <%= ((Syndic) session.getAttribute("syndic")).getLastName()%> Syndic of <%= ((Syndic) session.getAttribute("syndic")).getResidenceName() %> Residence</span>
-
-                                            </h2>
-                                            <div class=" bg-gray-100 shadow-md rounded-lg p-4 mb-4">
-                                                <div class="w-full px-2 mt-4">
-                                                    <strong class="text-gray-800 block mb-2">Residence Name:</strong>
-                                                    <div class="bg-white rounded-lg shadow-md p-4">
-                                                        <%= ((Syndic) session.getAttribute("syndic")).getResidenceName() %>
-                                                    </div>
+                                <!-- Residence Information -->
+                                <section class="py-1">
+                                    <div class="w-full px-4 mx-auto mt-6">
+                                        <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-100 border-0">
+                                            <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+                                                <div class="text-center flex justify-between">
+                                                    <h6 class="text-gray-700 text-xl font-bold m-4">
+                                                        <i class="fas fa-home fa-2x mr-2"></i>About Residence
+                                                    </h6>
                                                 </div>
-                                                <div class="w-full px-2 mt-4">
-                                                    <strong class="text-gray-800 block mb-2">Residence Address:</strong>
-                                                    <div class="bg-white rounded-lg shadow-md p-4">
-                                                        <%= ((Syndic) session.getAttribute("syndic")).getResidenceAddress() %>
+                                                <div class="flex flex-wrap">
+                                                    <!-- Residence Name -->
+                                                    <div class="w-full lg:w-6/12 px-4">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="residenceName">
+                                                                <i class="fas fa-building fa-2x mr-1"></i>Residence Name
+                                                            </label>
+                                                            <input type="text" id="residenceName" name="residenceName" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getResidenceName() %>" readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="w-full px-2 mt-4">
-                                                    <strong class="text-gray-800 block mb-2">Residence Type:</strong>
-                                                    <div class="bg-white rounded-lg shadow-md p-4">
-                                                        <%= ((Syndic) session.getAttribute("syndic")).getResidenceType() %>
+                                                    <!-- Residence Address -->
+                                                    <div class="w-full lg:w-6/12 px-4">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="residenceAddress">
+                                                                <i class="fas fa-map-marker-alt fa-2x mr-1"></i>Residence Address
+                                                            </label>
+                                                            <input type="text" id="residenceAddress" name="residenceAddress" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getResidenceAddress() %>" readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="w-full px-2 mt-4">
-                                                    <strong class="text-gray-800 block mb-2">Residence Size:</strong>
-                                                    <div class="bg-white rounded-lg shadow-md p-4">
-                                                        <%= ((Syndic) session.getAttribute("syndic")).getResidenceSize() %> sqm
+                                                    <!-- Residence Type -->
+                                                    <div class="w-full lg:w-6/12 px-4">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="residenceType">
+                                                                <i class="fas fa-home fa-2x mr-1"></i>Residence Type
+                                                            </label>
+                                                            <input type="text" id="residenceType" name="residenceType" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getResidenceType() %>" readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="w-full px-2 mt-4">
-                                                    <strong class="text-gray-800 block mb-2">Apartment Count:</strong>
-                                                    <div class="bg-white rounded-lg shadow-md p-4">
-                                                        <%= ((Syndic) session.getAttribute("syndic")).getApartmentCount() %>
+                                                    <!-- Residence Size -->
+                                                    <div class="w-full lg:w-6/12 px-4">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="residenceSize">
+                                                                <i class="fas fa-ruler-combined fa-2x mr-1"></i>Residence Size (m²)
+                                                            </label>
+                                                            <input type="number" id="residenceSize" name="residenceSize" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getResidenceSize() %>" readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="w-full px-2 mt-4">
-                                                    <strong class="text-gray-800 block mb-2">Villa Count:</strong>
-                                                    <div class="bg-white rounded-lg shadow-md p-4">
-                                                        <%= ((Syndic) session.getAttribute("syndic")).getVillaCount() %>
+                                                    <!-- Number of Apartments -->
+                                                    <div class="w-full lg:w-6/12 px-4">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="apartmentCount">
+                                                                <i class="fas fa-building fa-2x mr-1"></i>Number of Apartments
+                                                            </label>
+                                                            <input type="number" id="apartmentCount" name="apartmentCount" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getApartmentCount() %>" readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="w-full px-2 mt-4">
-                                                    <strong class="text-gray-800 block mb-2">Garden Count:</strong>
-                                                    <div class="bg-white rounded-lg shadow-md p-4">
-                                                        <%= ((Syndic) session.getAttribute("syndic")).getGardenCount() %>
+                                                    <!-- Number of Villas -->
+                                                    <div class="w-full lg:w-6/12 px-4">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="villaCount">
+                                                                <i class="fas fa-home fa-2x mr-1"></i>Number of Villas
+                                                            </label>
+                                                            <input type="number" id="villaCount" name="villaCount" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getVillaCount() %>" readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="w-full px-2 mt-4">
-                                                    <strong class="text-gray-800 block mb-2">Pool Count:</strong>
-                                                    <div class="bg-white rounded-lg shadow-md p-4">
-                                                        <%= ((Syndic) session.getAttribute("syndic")).getPoolCount() %>
+                                                    <!-- Number of Gardens -->
+                                                    <div class="w-full lg:w-6/12 px-4">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="gardenCount">
+                                                                <i class="fas fa-leaf fa-2x mr-1"></i>Number of Gardens
+                                                            </label>
+                                                            <input type="number" id="gardenCount" name="gardenCount" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getGardenCount() %>" readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="w-full px-2 mt-4">
-                                                    <strong class="text-gray-800 block mb-2">Parking Count:</strong>
-                                                    <div class="bg-white rounded-lg shadow-md p-4">
-                                                        <%= ((Syndic) session.getAttribute("syndic")).getParkingCount() %>
+                                                    <!-- Number of Pools -->
+                                                    <div class="w-full lg:w-6/12 px-4">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="poolCount">
+                                                                <i class="fas fa-swimming-pool fa-2x mr-1"></i>Number of Pools
+                                                            </label>
+                                                            <input type="number" id="poolCount" name="poolCount" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getPoolCount() %>" readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="w-full px-2 mt-4">
-                                                    <strong class="text-gray-800 block mb-2">Elevators Count:</strong>
-                                                    <div class="bg-white rounded-lg shadow-md p-4">
-                                                        <%= ((Syndic) session.getAttribute("syndic")).getElevatorsCount() %>
+                                                    <!-- Number of Parkings -->
+                                                    <div class="w-full lg:w-6/12 px-4">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="parkingCount">
+                                                                <i class="fas fa-parking fa-2x mr-1"></i>Number of Parkings
+                                                            </label>
+                                                            <input type="number" id="parkingCount" name="parkingCount" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getParkingCount() %>" readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="w-full px-2 mt-4">
-                                                    <strong class="text-gray-800 block mb-2">Security System:</strong>
-                                                    <div class="bg-white rounded-lg shadow-md p-4">
-                                                        <%= ((Syndic) session.getAttribute("syndic")).isSecuritySystem() ? "Yes" : "No" %>
+                                                    <!-- Number of Elevators -->
+                                                    <div class="w-full lg:w-6/12 px-4">
+                                                        <div class="relative w-full mb-3">
+                                                            <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="elevatorsCount">
+                                                                <i class="fas fa-elevator fa-2x mr-1"></i>Number of Elevators
+                                                            </label>
+                                                            <input type="number" id="elevatorsCount" name="elevatorsCount" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getElevatorsCount() %>" readonly>
+                                                        </div>
                                                     </div>
                                                 </div>
 
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </section>
+                                </section>
+                        </div>
+                    </div>
                 </div>
-            </div>
+        </div>
         </div>
         <!-------------END OF MIDDLE --------->
     </main>

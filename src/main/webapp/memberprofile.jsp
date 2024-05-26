@@ -16,6 +16,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
     <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
@@ -24,140 +25,160 @@
         <jsp:include page="templates/member_sidenav.jsp"/>
     </div>
     <main>
+        <% Member member = (Member) session.getAttribute("member"); %>
 
-    <div class="main-content flex flex-col p-6">
-        <div class="recent-updates w-full">
-            <h1>Welcome <%= ((Member) session.getAttribute("member")).getFirstName() %>!</h1>
-            <div class="form-container">
-                <form action="memberprofile" method="post" class="w-full">
-                    <!-- Member Information -->
-                    <section class="py-1">
-                        <div class="w-full px-4 mx-auto mt-6">
-                            <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
-                                <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-                                    <div class="text-center flex justify-between">
-                                        <h6 class="text-blueGray-700 text-xl font-bold m-4">
-                                            Member Information
-                                        </h6>
-                                    </div>
-                                    <div class="flex flex-wrap">
-                                        <div class="w-full lg:w-6/12 px-4">
-                                            <div class="relative w-full mb-3">
-                                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="firstname">
-                                                    First Name
-                                                </label>
-                                                <input type="text" id="firstname" name="firstname" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="${member.firstName}">
-                                            </div>
+        <div class="main-content flex flex-col p-6">
+            <div class="recent-updates w-full">
+                <h1 class="text-3xl font-bold text-blue-600 mb-4">Welcome <%= member.getFirstName() %>!</h1>
+                <div class="form-container">
+                    <form action="memberprofile" method="post" class="w-full">
+                        <!-- Syndic Information -->
+                        <section class="py-1">
+                            <div class="w-full px-4 mx-auto mt-6">
+                                <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-100 border-0">
+                                    <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+                                        <div class="text-center flex justify-between">
+                                            <h6 class="text-gray-700 text-xl font-bold m-4">
+                                                <i class="fas fa-info-circle fa-2x mr-2"></i>Member Informations
+                                            </h6>
                                         </div>
-                                        <div class="w-full lg:w-6/12 px-4">
-                                            <div class="relative w-full mb-3">
-                                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="lastname">
-                                                    Last Name
-                                                </label>
-                                                <input type="text" id="lastname" name="lastname" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="${member.lastName}">
+                                        <div class="flex flex-wrap">
+                                            <!-- First Name -->
+                                            <div class="w-full lg:w-6/12 px-4">
+                                                <div class="relative w-full mb-3">
+                                                    <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="firstname">
+                                                        <i class="fas fa-user fa-2x mr-1"></i>First Name
+                                                    </label>
+                                                    <input type="text" id="firstname" name="firstname" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= member.getFirstName() %>">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="w-full lg:w-6/12 px-4">
-                                            <div class="relative w-full mb-3">
-                                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="codepostal">
-                                                    Postal Code
-                                                </label>
-                                                <input type="text" id="codepostal" name="codepostal" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="${member.codepostal}">
+                                            <!-- Last Name -->
+                                            <div class="w-full lg:w-6/12 px-4">
+                                                <div class="relative w-full mb-3">
+                                                    <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="lastname">
+                                                        <i class="fas fa-user fa-2x mr-1"></i>Last Name
+                                                    </label>
+                                                    <input type="text" id="lastname" name="lastname" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= member.getLastName() %>">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="w-full lg:w-6/12 px-4">
-                                            <div class="relative w-full mb-3">
-                                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="phonenumber">
-                                                    Phone Number
-                                                </label>
-                                                <input type="text" id="phonenumber" name="phonenumber" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="${member.phoneNumber}">
+                                            <!-- Postal Code -->
+                                            <div class="w-full lg:w-6/12 px-4">
+                                                <div class="relative w-full mb-3">
+                                                    <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="codepostal">
+                                                        <i class="fas fa-map-marker-alt fa-2x mr-1"></i>Postal Code
+                                                    </label>
+                                                    <input type="text" id="codepostal" name="codepostal" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= member.getCodepostal() %>">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="w-full lg:w-6/12 px=4">
-                                            <div class="relative w-full mb-3">
-                                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="fulladdress">
-                                                    Full Address
-                                                </label>
-                                                <input type="text" id="fulladdress" name="fulladdress" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="${member.fulladdress}">
+                                            <!-- Phone Number -->
+                                            <div class="w-full lg:w-6/12 px-4">
+                                                <div class="relative w-full mb-3">
+                                                    <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="phonenumber">
+                                                        <i class="fas fa-phone fa-2x mr-1"></i>Phone Number
+                                                    </label>
+                                                    <input type="text" id="phonenumber" name="phonenumber" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= member.getPhoneNumber() %>">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="w-full lg:w-6/12 px=4">
-                                            <div class="relative w-full mb-3">
-                                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="mail">
-                                                    E-mail
-                                                </label>
-                                                <input type="text" id="mail" name="mail" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="${member.mail}">
+                                            <!-- Full Address -->
+                                            <div class="w-full lg:w-6/12 px-4">
+                                                <div class="relative w-full mb-3">
+                                                    <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="fulladdress">
+                                                        <i class="fas fa-address-card fa-2x mr-1"></i>Full Address
+                                                    </label>
+                                                    <input type="text" id="fulladdress" name="fulladdress" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= member.getFulladdress() %>">
+                                                </div>
+                                            </div>
+                                            <!-- E-mail -->
+                                            <div class="w-full lg:w-6/12 px-4">
+                                                <div class="relative w-full mb-3">
+                                                    <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="mail">
+                                                        <i class="fas fa-envelope fa-2x mr-1"></i>E-mail
+                                                    </label>
+                                                    <input type="text" id="mail" name="mail" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= member.getMail() %>">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
+                        </section>
 
-                    <!-- Property Information -->
-                    <section class="py-1">
-                        <div class="w-full px-4 mx-auto mt-6">
-                            <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
-                                <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-                                    <div class="text-center flex justify-between">
-                                        <h6 class="text-blueGray-700 text-xl font-bold m-4">
-                                            Property Information
-                                        </h6>
+                        <!-- Residence Information -->
+                        <section class="py-1">
+                            <div class="w-full px-4 mx-auto mt-6">
+                                <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-100 border-0">
+                                    <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+                                        <div class="text-center flex justify-between">
+                                            <h6 class="text-gray-700 text-xl font-bold m-4">
+                                                <i class="fas fa-home fa-2x mr-2"></i>About Property
+                                            </h6>
+                                        </div>
+                                        <div class="flex flex-wrap">
+                                            <!-- Residence Name -->
+                                            <div class="w-full lg:w-6/12 px-4">
+                                                <div class="relative w-full mb-3">
+                                                    <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="property_code">
+                                                        <i class="fas fa-building fa-2x mr-1"></i>Property Code
+                                                    </label>
+                                                    <input type="text" id="property_code" name="property_code" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%=member.getPropertyCode() %>">
+                                                </div>
+                                            </div>
+
+                                            <!-- Residence Type -->
+                                            <div class="w-full lg:w-6/12 px-4">
+                                                <div class="relative w-full mb-3">
+                                                    <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="property_address">
+                                                        <i class="fas fa-home fa-2x mr-1"></i>Property Address
+                                                    </label>
+                                                    <input type="text" id="property_address" name="property_address" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= member.getPropertyAddress() %>">
+                                                </div>
+                                            </div>
+                                            <!-- Residence Size -->
+                                            <div class="w-full lg:w-6/12 px-4">
+                                                <div class="relative w-full mb-3">
+                                                    <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="property_size">
+                                                        <i class="fas fa-ruler-combined fa-2x mr-1"></i>Property Size (m²)
+                                                    </label>
+                                                    <input type="number" id="property_size" name="property_size" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= member.getPropertySize() %>">
+                                                </div>
+                                            </div>
+
+                                            <!-- Number of Villas -->
+                                            <div class="w-full lg:w-6/12 px-4">
+                                                <div class="relative w-full mb-3">
+                                                    <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="property_type">
+                                                        <i class="fas fa-home fa-2x mr-1"></i>Property Type
+                                                    </label>
+                                                    <input type="number" id="property_type" name="property_type" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= member.getPropertyType() %>">
+                                                </div>
+                                            </div>
+
+
+
+                                            <!-- Number of Elevators -->
+                                            <div class="w-full lg:w-6/12 px-4">
+                                                <div class="relative w-full mb-3">
+                                                    <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="co_ownership_fee">
+                                                        <i class="fas fa-elevator fa-2x mr-1"></i>Co-Ownership_Fee
+                                                    </label>
+                                                    <input type="number" id="co_ownership_fee" name="co_ownership_fee" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= member.getCoOwnershipFee() %>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center mt-6">
+                                            <button type="submit" class="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150">
+                                                <i class="fas fa-save fa-2x mr-2"></i>Save
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="flex flex-wrap">
-                                        <div class="w-full lg:w-6/12 px-4">
-                                            <div class="relative w-full mb-3">
-                                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="property_code">
-                                                    Property Code
-                                                </label>
-                                                <input type="text" id="property_code" name="property_code" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="${member.propertyCode}">
-                                            </div>
-                                        </div>
-                                        <div class="w-full lg:w-6/12 px-4">
-                                            <div class="relative w-full mb-3">
-                                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="property_address">
-                                                    Property Address
-                                                </label>
-                                                <input type="text" id="property_address" name="property_address" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="${member.propertyAddress}">
-                                            </div>
-                                        </div>
-                                        <div class="w-full lg:w-6/12 px-4">
-                                            <div class="relative w-full mb-3">
-                                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="property_type">
-                                                    Property Type
-                                                </label>
-                                                <input type="text" id="property_type" name="property_type" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="${member.propertyType}">
-                                            </div>
-                                        </div>
-                                        <div class="w-full lg:w-6/12 px-4">
-                                            <div class="relative w-full mb-3">
-                                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="property_size">
-                                                    Property Size (m²)
-                                                </label>
-                                                <input type="number" id="property_size" name="property_size" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="${member.propertySize}">
-                                            </div>
-                                        </div>
-                                        <div class="w-full lg:w-6/12 px-4">
-                                            <div class="relative w-full mb-3">
-                                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="co_ownership_fee">
-                                                    Co-ownership Fee
-                                                </label>
-                                                <input type="number" id="co_ownership_fee" name="co_ownership_fee" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="${member.coOwnershipFee}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150">
-                                        Save
-                                    </button>
                                 </div>
                             </div>
-                        </div>
-                    </section>
-                </form>
+                        </section>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+
     <!-------------END OF MIDDLE --------->
 </main>
 <!---------RIGHT--------->

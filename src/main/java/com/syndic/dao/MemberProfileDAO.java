@@ -14,8 +14,11 @@ public interface MemberProfileDAO {
 
     void updateMember(Member member) throws SQLException;
 
+    List<Member> getMemberbySid(int member_s_id);
+
     List<Member> getMember();
     int getMemberCount() throws SQLException;
-    public List<Member> getMembersBySyndic(int syndicId)throws SQLException;
+
+    List<Member> getMembersBySyndic(int syndicId);
 }
 

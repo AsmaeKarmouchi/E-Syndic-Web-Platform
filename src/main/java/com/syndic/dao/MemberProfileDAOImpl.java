@@ -1,8 +1,7 @@
 package com.syndic.dao;
 
 import com.syndic.beans.Member;
-import com.syndic.beans.Syndic;
-import com.syndic.beans.User;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -80,13 +79,40 @@ public class MemberProfileDAOImpl implements MemberProfileDAO {
         }
     }
     @Override
+    public List<Member> getMemberbySid(int member_s_id)  {
+        List<Member> members = new ArrayList<>();
+        String query = "SELECT * FROM members where member_s_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, member_s_id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+               Member member = new Member();
+                member.setId(resultSet.getInt("m_id"));
+                member.setFirstName(resultSet.getString("m_firstname"));
+                member.setLastName(resultSet.getString("m_lastname"));
+                member.setLastName(resultSet.getString("m_codepostal"));
+                member.setCodepostal(resultSet.getString("m_codepostal"));
+                member.setPhoneNumber(resultSet.getString("m_phonenumber"));
+                member.setFulladdress(resultSet.getString("m_fulladdress"));
+                member.setMail(resultSet.getString("m_mail"));
+                members.add(member);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(members);
+        return members;
+
+    }
+
+    @Override
     public List<Member> getMember()  {
         List<Member> members = new ArrayList<>();
         String query = "SELECT * FROM members";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-               Member member = new Member();
+                Member member = new Member();
                 member.setId(resultSet.getInt("m_id"));
                 member.setFirstName(resultSet.getString("m_firstname"));
                 member.setLastName(resultSet.getString("m_lastname"));

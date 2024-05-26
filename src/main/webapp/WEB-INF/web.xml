@@ -151,6 +151,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>NotificationServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.NotificationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NotificationServlet</servlet-name>
+    <url-pattern>/sendNotification</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>AddTaskServlet</servlet-name>
     <servlet-class>com.syndic.servlet.AddTaskServlet</servlet-class>
   </servlet>
@@ -166,4 +175,23 @@
     <servlet-name>DisplayAccountsServlet</servlet-name>
     <url-pattern>/displayaccounts</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>MeetingMServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.MeetingMServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MeetingMServlet</servlet-name>
+    <url-pattern>/meetingM</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>IncidentMServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.IncidentMServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>IncidentMServlet</servlet-name>
+    <url-pattern>/incidentM</url-pattern>
+  </servlet-mapping>
+
 </web-app>

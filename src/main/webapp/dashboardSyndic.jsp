@@ -13,6 +13,7 @@
 <%@ page import="com.syndic.dao.PaymentDAOImpl" %>
 <%@ page import="com.syndic.dao.MemberProfileDAO" %>
 <%@ page import="com.syndic.dao.MemberProfileDAOImpl" %>
+<%@ page import="com.syndic.beans.Syndic" %>
 <%
     int userCount = 0;
     int taskCount=0;
@@ -77,9 +78,12 @@
         <section>
             <div id="main" class="main-content flex-1  mt-12 md:mt-2 pb-24 md:pb-5">
 
-                <h1 class=" m-4">Dashboard</h1>
-                <div class="date m-4">
-                    <%=java.time.LocalDate.now()%>
+                <div class="flex justify-between items-center p-6 bg-blue-200 shadow-md border rounded-md">
+                    <h1 class="text-3xl font-bold text-gray-800">Dashboard</h1>
+                    <div class="text-lg text-gray-600"><%=java.time.LocalDate.now()%></div>
+                </div>
+                <div class="date m-4 text-3xl">
+                    Welcome <b><%= ((Syndic) session.getAttribute("syndic")).getFirstName() %>
                 </div>
 
                 <div class="flex flex-wrap">

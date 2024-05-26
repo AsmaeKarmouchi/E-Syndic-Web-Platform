@@ -41,12 +41,12 @@
             <h3 class="ml-4">Property</h3>
         </a>
 
-        <a href="meeting" id="meeting" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+        <a href="meetingM" id="meetingM" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
             <i class='bx bxs-crown text-2xl'></i>
             <h3 class="ml-4">Meetings</h3>
         </a>
 
-        <a href="incident" id="incident" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+        <a href="incidentM" id="incidentM" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
             <i class='bx bxs-error-circle text-2xl'></i>
             <h3 class="ml-4">Report Incident</h3>
         </a>
