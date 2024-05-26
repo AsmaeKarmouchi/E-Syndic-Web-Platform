@@ -77,6 +77,14 @@
     <servlet-name>AddPaymentServlet</servlet-name>
     <url-pattern>/addpayment</url-pattern>
   </servlet-mapping>
+  <servlet>
+  <servlet-name>SyndicAddPaymentServlet</servlet-name>
+  <servlet-class>com.syndic.servlet.SyndicAddPaymentServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>SyndicAddPaymentServlet</servlet-name>
+<url-pattern>/Syndicaddpayment</url-pattern>
+</servlet-mapping>
 
   <servlet>
     <servlet-name>MemberProfileServlet</servlet-name>

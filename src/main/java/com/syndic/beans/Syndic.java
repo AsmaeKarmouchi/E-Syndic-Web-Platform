@@ -21,6 +21,7 @@ public class Syndic {
     private int parkingCount;
     private int elevatorsCount;
     private boolean securitySystem;
+    private double account;
 
     public Syndic() {
     }
@@ -58,7 +59,7 @@ public class Syndic {
 
     public Syndic(int id, String firstName, String lastName, String fullAddress, String codePostal, String phoneNumber, String mail, int userId,
                   String residenceName, String residenceAddress, String residenceType, int residenceSize, int apartmentCount, int villaCount,
-                  int gardenCount, int poolCount, int parkingCount, int elevatorsCount, boolean securitySystem) {
+                  int gardenCount, int poolCount, int parkingCount, int elevatorsCount, boolean securitySystem,double account) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -78,6 +79,7 @@ public class Syndic {
         this.parkingCount = parkingCount;
         this.elevatorsCount = elevatorsCount;
         this.securitySystem = securitySystem;
+        this.account = account;
     }
 
     public int getId() {
@@ -227,6 +229,14 @@ public class Syndic {
 
     public void setSecuritySystem(boolean securitySystem) {
         this.securitySystem = securitySystem;
+    }
+
+    // Getter and setter for account
+    public double getAccount() {
+        return account;
+    }
+    public void setAccount(int account) {
+        this.account = account;
     }
 }
 

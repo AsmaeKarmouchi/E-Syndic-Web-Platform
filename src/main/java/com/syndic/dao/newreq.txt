@@ -168,3 +168,10 @@ CREATE TABLE syndic_db.accounts (
     account_syndic_id INT,
     FOREIGN KEY (account_syndic_id) REFERENCES syndics(s_id)
 );
+
+ALTER TABLE syndics
+ADD COLUMN account decimal(10,2);
+
+ALTER TABLE payments
+Drop COLUMN payment_account_id ;
+ALTER TABLE payments ADD COLUMN  payment_syndic_id INT;

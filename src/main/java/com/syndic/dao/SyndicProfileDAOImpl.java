@@ -47,7 +47,7 @@ public class SyndicProfileDAOImpl implements SyndicProfileDAO {
 
         @Override
         public void updateSyndic2(Syndic syndic) throws SQLException {
-            String query = "UPDATE syndics SET s_firstname = ?, s_lastname = ?, s_codepostal = ?, s_phonenumber = ?, s_fulladdress = ?, s_mail = ?, residence_name = ?, residence_address = ?, residence_type = ?, residence_size = ?, apartment_count = ?, villa_count = ?, garden_count = ?, pool_count = ?, parking_count = ?, elevators_count = ?, security_system = ? WHERE s_iduser = ?";
+            String query = "UPDATE syndics SET s_firstname = ?, s_lastname = ?, s_codepostal = ?, s_phonenumber = ?, s_fulladdress = ?, s_mail = ?, residence_name = ?, residence_address = ?, residence_type = ?, residence_size = ?, apartment_count = ?, villa_count = ?, garden_count = ?, pool_count = ?, parking_count = ?, elevators_count = ?, security_system = ? , account = ? WHERE s_iduser = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, syndic.getFirstName());
                 preparedStatement.setString(2, syndic.getLastName());
@@ -66,9 +66,20 @@ public class SyndicProfileDAOImpl implements SyndicProfileDAO {
                 preparedStatement.setInt(15, syndic.getParkingCount());
                 preparedStatement.setInt(16, syndic.getElevatorsCount());
                 preparedStatement.setBoolean(17, syndic.isSecuritySystem());
-                preparedStatement.setInt(18, syndic.getUserId());
+              //  preparedStatement.setInt(18, syndic.getUserId());
+                preparedStatement.setDouble(18, syndic.getAccount());
                 preparedStatement.executeUpdate();
             }
+    }
+
+    @Override
+    public void updateSyndic3(Syndic syndic) throws SQLException {
+        String query = "UPDATE syndics SET   account = ? WHERE s_iduser = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setDouble(1, syndic.getAccount());
+            preparedStatement.setInt(2, syndic.getUserId());
+            preparedStatement.executeUpdate();
+        }
     }
 
     @Override
@@ -154,7 +165,7 @@ public class SyndicProfileDAOImpl implements SyndicProfileDAO {
                     syndic.setParkingCount(resultSet.getInt("parking_Count"));
                     syndic.setElevatorsCount(resultSet.getInt("elevators_Count"));
                     syndic.setSecuritySystem(resultSet.getBoolean("security_System"));
-
+                    syndic.setAccount(resultSet.getInt("account"));
                     return syndic;
                 }
             }
@@ -191,6 +202,7 @@ public class SyndicProfileDAOImpl implements SyndicProfileDAO {
                     syndic.setParkingCount(resultSet.getInt("parking_Count"));
                     syndic.setElevatorsCount(resultSet.getInt("elevators_Count"));
                     syndic.setSecuritySystem(resultSet.getBoolean("security_System"));
+                    syndic.setAccount(resultSet.getInt("account"));
 
                     syndics.add(syndic);
             }

@@ -9,6 +9,7 @@ public class Payment {
     private int account_id;
     private int member_id;
     private String status;
+    private int syndicId;
 
 
 
@@ -92,5 +93,13 @@ public class Payment {
                 ", member_id=" + member_id +
                 ", status='" + status + '\'' +
                 '}';
+    }
+
+    public void setSyndicId(int syndicId) {
+        this.syndicId=syndicId;
+    }
+
+    public int getSyndicId() {
+        return syndicId;
     }
 }

@@ -13,6 +13,7 @@ public interface SyndicProfileDAO {
     void updateSyndic(Syndic syndic) throws SQLException;
 
     void updateSyndic2(Syndic syndic) throws SQLException;
+    void updateSyndic3(Syndic syndic) throws SQLException;
 
     Syndic getSyndicByUserId(int userId) throws SQLException;
     int getSyndicIdByUserId(int userId) throws SQLException;

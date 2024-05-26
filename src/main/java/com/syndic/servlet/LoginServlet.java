@@ -117,6 +117,7 @@ public class LoginServlet extends HttpServlet {
                             syndicDAO = new SyndicProfileDAOImpl(connection);
                             Syndic syndic = syndicDAO.getSyndicByUserId(userId);
                             session.setAttribute("syndic", syndic);
+                            session.setAttribute("syndic_id", syndic.getId());
 
                             System.out.println(syndic.getId()+".. "+syndic.getResidenceName()+".. "+residence);
 
