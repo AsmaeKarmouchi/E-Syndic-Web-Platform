@@ -93,6 +93,14 @@
     <servlet-name>SyndicAddTaskServlet</servlet-name>
     <url-pattern>/Syndicaddtask</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>SyndicAddChargeServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.SyndicAddChargeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SyndicAddChargeServlet</servlet-name>
+    <url-pattern>/Syndicaddcharge</url-pattern>
+  </servlet-mapping>
 
   <servlet>
     <servlet-name>MemberProfileServlet</servlet-name>

@@ -189,3 +189,8 @@ ALTER TABLE tasks
 Drop COLUMN task_created;
 ALTER TABLE tasks
 ADD COLUMN task_amount decimal(10,2);
+
+ALTER TABLE charges ADD COLUMN  charge_s_id int ;
+ALTER TABLE charges ADD COLUMN  charge_date date;
+ALTER TABLE charges Drop COLUMN charge_code;
+ALTER TABLE charges Drop COLUMN charge_due_month;

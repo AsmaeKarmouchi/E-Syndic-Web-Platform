@@ -14,7 +14,7 @@ public interface TaskDAO {
     boolean deleteTask(int taskId);
     int getTaskCount() throws SQLException;
     float getTaskSum() throws SQLException;
-    public List<Task> getTasksBySyndic(int syndicId)throws SQLException;
+    List<Task> getTasksBySyndic(int syndicId)throws SQLException;
 
     List<Member> getMembersBySyndic(int syndicId) throws SQLException;
 }

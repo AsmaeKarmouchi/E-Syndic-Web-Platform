@@ -46,8 +46,8 @@
         </div>
       </div>
       <div class="mt-12 shadow-sm border rounded-lg overflow-x-auto">
-        <table class="w-full table-auto text-sm text-left" id="paymentTable">
-          <thead class="bg-gray-50 text-gray-600 font-medium border-b">
+        <table class="min-w-full bg-white rounded-lg shadow-md" id="paymentTable">
+          <thead class="bg-gray-800 text-white">
           <tr>
             <th class="py-3 px-6">Code</th>
             <th class="py-3 px-6">Date</th>

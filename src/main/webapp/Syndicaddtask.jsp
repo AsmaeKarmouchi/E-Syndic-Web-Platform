@@ -11,6 +11,7 @@
     <link rel="shortcut icon" href="/Assets/images/logo.png" type="image/x-icon">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="css/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -45,9 +46,11 @@
                     </button>
                 </div>
             </div>
+
+
             <div class="mt-12 shadow-sm border rounded-lg overflow-x-auto">
-                <table class="w-full table-auto text-sm text-left" id="taskTable">
-                    <thead class="bg-gray-50 text-gray-600 font-medium border-b">
+                <table class="min-w-full bg-white rounded-lg shadow-md" id="taskTable">
+                    <thead class="bg-gray-800 text-white">
                     <tr>
                         <th class="py-3 px-6">Task Name</th>
                         <th class="py-3 px-6">Task Description</th>

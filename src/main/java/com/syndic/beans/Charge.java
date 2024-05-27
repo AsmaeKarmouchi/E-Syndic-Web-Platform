@@ -3,26 +3,32 @@ package com.syndic.beans;
 public class Charge {
 
     private int chargesId;
-    private String chargeCode;
     private String chargeName;
     private String chargeDescription;
     private double chargeAmount;
     private String chargeFrequency;
     private String chargeCategory;
-    private String chargeDueMonth;
+    private int chargeSId;
+    private String chargeDate;
+
 
     // Constructors
     public Charge() {}
 
-    public Charge(int chargesId, String chargeCode, String chargeName, String chargeDescription, double chargeAmount, String chargeFrequency, String chargeCategory, String chargeDueMonth) {
+
+
+    public Charge(int chargesId, String chargeName, String chargeDescription, double chargeAmount, String chargeFrequency, String chargeCategory, int chargeSId, String chargeDate) {
         this.chargesId = chargesId;
-        this.chargeCode = chargeCode;
         this.chargeName = chargeName;
         this.chargeDescription = chargeDescription;
         this.chargeAmount = chargeAmount;
         this.chargeFrequency = chargeFrequency;
         this.chargeCategory = chargeCategory;
-        this.chargeDueMonth = chargeDueMonth;
+        this.chargeSId = chargeSId;
+        this.chargeDate = String.valueOf(chargeDate);
+    }
+
+    public Charge(int chargesId, String chargeCode, String chargeName, String chargeDescription, Double chargeAmount, String chargeFrequency, String chargeCategory, String chargeDueMonth) {
     }
 
     // Getters and Setters
@@ -32,14 +38,6 @@ public class Charge {
 
     public void setChargesId(int chargesId) {
         this.chargesId = chargesId;
-    }
-
-    public String getChargeCode() {
-        return chargeCode;
-    }
-
-    public void setChargeCode(String chargeCode) {
-        this.chargeCode = chargeCode;
     }
 
     public String getChargeName() {
@@ -82,12 +80,19 @@ public class Charge {
         this.chargeCategory = chargeCategory;
     }
 
-    public String getChargeDueMonth() {
-        return chargeDueMonth;
+    public int getChargeSId() {
+        return chargeSId;
     }
 
-    public void setChargeDueMonth(String chargeDueMonth) {
-        this.chargeDueMonth = chargeDueMonth;
+    public void setChargeSId(int chargeSId) {
+        this.chargeSId = chargeSId;
+    }
+
+    public String getChargeDate() {
+        return chargeDate;
+    }
+
+    public void setChargeDate(String chargeDate) {
+        this.chargeDate = chargeDate;
     }
 }
-
