@@ -64,6 +64,11 @@ public class MeetingServlet extends HttpServlet {
                     MeetingDAO meetingDAO = new MeetingDAOImpl(connection);
                     meetingDAO.addMeeting(newMeeting);
 
+                    List<Meeting> list_Meetings = new ArrayList<>();
+                    meetingDAO = new MeetingDAOImpl(connection);
+                    list_Meetings = meetingDAO.getMeetingBySyndicId(syndicId);
+                    session.setAttribute("list_Meetings", list_Meetings);
+
                     NotificationService notificationService = new NotificationService();
 
                     // Récupérer les e-mails des membres depuis la base de données

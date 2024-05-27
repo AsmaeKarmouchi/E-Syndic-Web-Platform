@@ -51,9 +51,12 @@ public class LoginServlet extends HttpServlet {
         // Récupérer la liste des résidences
         Connection connection = null;
         List<Syndic> List_syndics = new ArrayList<>();
+
         try {
+            Syndic_con.getConnection();
             connection = Syndic_con.getConnection();
             if (connection != null) {
+
                 syndicDAO = new SyndicProfileDAOImpl(connection);
                 List_syndics = syndicDAO.getSyndic();
                 System.out.println(List_syndics);
@@ -183,6 +186,12 @@ public class LoginServlet extends HttpServlet {
                             syndicDAO = new SyndicProfileDAOImpl(connection);
                             Syndic syndic = syndicDAO.getSyndicById(syndicId);
                             session.setAttribute("syndic", syndic);
+
+
+                            List<Member> list_members;
+                            memberDAO = new MemberProfileDAOImpl(connection);
+                            list_members = memberDAO.getMembersBySyndic(syndicId);
+                            session.setAttribute("list_members", list_members);
 
 
                             return;

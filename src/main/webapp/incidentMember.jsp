@@ -2,6 +2,7 @@
 <%@ page import="com.syndic.beans.Meeting" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.syndic.beans.Incident" %>
+<%@ page import="com.syndic.beans.Member" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +20,7 @@
 
 <body>
 <div class="container">
-    <jsp:include page="templates/syndic_sidenav.jsp" />
+    <jsp:include page="templates/member_sidenav.jsp" />
 
     <!------------MIDDLE ------------>
     <main>
@@ -60,7 +61,7 @@
         <!-- Add Incident Form -->
         <div class="flex items-center justify-center p-12">
             <div class="mx-auto w-full max-w-[550px] hidden" id="addIncidentForm">
-                <form action="incident" method="POST">
+                <form action="incidentM" method="POST">
                     <input type="hidden" name="action" value="addIncident">
                     <div class="-mx-3 flex flex-wrap">
                         <div class="w-full px-3 sm:w-1/2">
@@ -72,7 +73,7 @@
                         <div class="w-full px-3 sm:w-1/2">
                             <div class="mb-5">
                                 <label for="incident_status" class="mb-3 block text-base font-medium">Incident Status</label>
-                                <input type="text" name="incident_status" id="incident_status" placeholder="Type" class="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-600 outline-none focus:border-blue-500 focus:shadow-md"/>
+                                <input type="text" name="incident_status" id="incident_status" placeholder="Status" class="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-600 outline-none focus:border-blue-500 focus:shadow-md"/>
                             </div>
                         </div>
                     </div>
@@ -108,11 +109,11 @@
             <% for (Incident incident : listIncidents) { %>
             <div class="bg-white overflow-hidden shadow-sm rounded-lg">
                 <div class="p-6">
-                    <h2 class="flex items-center justify-between text-xl font-semibold mb-4 cursor-pointer" onclick="toggleDetails(this)">
+                    <h2 class="flex items-center justify-between text-xl font-semibold mb-4" onclick="toggleDetails(this)" >
                         <span class="text-red-500"> Incident N°<%= incident.getIncidentId() %></span>
-                        <svg class="h-6 w-6 fill-current text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path d="M10 15l-5-5h10z"/>
-                        </svg>
+                        <button class="bg-orange-500 text-white px-3 py-1 rounded" >
+                            More
+                        </button>
                     </h2>
                     <div class="hidden bg-gray-100 shadow-md rounded-lg p-4 mb-4">
                         <div class="flex flex-wrap -mx-2">
@@ -139,20 +140,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex justify-end">
-                    <button onclick="toggleEditForm(<%= incident.getIncidentSId() %>)" class="m-2 px-4 py-2 text-lg font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700">Edit</button>
-                </div>
-                <form id="editForm_<%= incident.getIncidentSId() %>" class="edit-form hidden" action="meeting" method="post">
-                    <input type="hidden" name="action" value="editIncident">
-                    <input type="hidden" name="meetingId" value="<%= incident.getIncidentSId() %>">
-                    <label for="newStatus_<%= incident.getIncidentSId() %>" class="block mb-2 text-base font-medium text-gray-700">Incident Status:</label>
-                    <div class="relative">
-                        <textarea id="newStatus_<%= incident.getIncidentSId() %>" name="newStatus" rows="4" class="w-full px-3 py-2 text-base text-gray-700 placeholder-gray-600 border rounded-md focus:outline-none focus:border-indigo-500 focus:shadow-outline-indigo resize-none"></textarea>
-                    </div>
-                    <div class="flex justify-end mt-4">
-                        <button type="submit" class="ml-auto m-2 px-4 py-2 text-lg font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700">Save</button>
-                    </div>
-                </form>
             </div>
             <% } %>
             <% } %>
@@ -179,8 +166,8 @@
             </div>
             <div class="profile">
                 <div class="info">
-                    <p>Hey, <b><%= ((Syndic) session.getAttribute("syndic")).getFirstName() %></b></p>
-                    <small class="text-muted">Syndic</small>
+                    <p>Hey, <b><%= ((Member) session.getAttribute("member")).getFirstName() %></b></p>
+                    <small class="text-muted">Member</small>
                 </div>
                 <div class="profile-photo">
                     <img src="./Assets/images/profile-1.jpg" alt="Oluwadare Taye Ayo">
@@ -254,7 +241,7 @@
 
 </div>
 <script>
-    document.getElementById("incident").classList.add("active");
+    document.getElementById("incidentM").classList.add("active");
 </script>
 <script>
     function filterIncidents() {
