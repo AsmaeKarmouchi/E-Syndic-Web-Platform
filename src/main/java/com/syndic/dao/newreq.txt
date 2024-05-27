@@ -175,3 +175,17 @@ ADD COLUMN account decimal(10,2);
 ALTER TABLE payments
 Drop COLUMN payment_account_id ;
 ALTER TABLE payments ADD COLUMN  payment_syndic_id INT;
+
+CREATE TABLE payment_flows (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    syndic_id INT NOT NULL,
+    flow_type INT  ,
+    amount DECIMAL(10, 2) NOT NULL,
+    description VARCHAR(255),
+    transaction_date DATE NOT NULL,
+    FOREIGN KEY (syndic_id) REFERENCES syndics(s_id)
+);
+ALTER TABLE tasks
+Drop COLUMN task_created;
+ALTER TABLE tasks
+ADD COLUMN task_amount decimal(10,2);

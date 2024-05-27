@@ -9,7 +9,7 @@ public class Task {
     private String taskDueDate;
     private String taskStatus;
     private int taskSId;
-    private  String taskCreated;
+    private double taskamount;
 
     // Getters and Setters
 
@@ -61,11 +61,11 @@ public class Task {
         this.taskSId = taskSId;
     }
 
-    public  String getTaskCreated() {
-        return taskCreated;
+    public  double getTaskAmount() {
+        return taskamount;
     }
 
-    public void setTaskCreated( String taskCreated) {
-        this.taskCreated = taskCreated;
+    public void setTaskAmount( double taskamount) {
+        this.taskamount = taskamount;
     }
 }

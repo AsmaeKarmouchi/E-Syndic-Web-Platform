@@ -1,5 +1,6 @@
 package com.syndic.dao;
 
+import com.syndic.beans.Member;
 import com.syndic.beans.Task;
 
 import java.sql.Connection;
@@ -13,7 +14,7 @@ public class TaskDAOImpl implements TaskDAO {
     private final Connection connection;
 
     private static final String COUNT_TASKS = "SELECT COUNT(*) FROM tasks";
-
+    private static final String SUM_TASKS_AMOUNT = "SELECT SUM(task_amount) FROM tasks";
 
     public TaskDAOImpl(Connection connection) {
         this.connection = connection;
@@ -22,7 +23,7 @@ public class TaskDAOImpl implements TaskDAO {
     @Override
     public List<Task> getAllTasks() {
         List<Task> tasks = new ArrayList<>();
-        String sql = "SELECT * FROM Tasks";
+        String sql = "SELECT * FROM tasks";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
@@ -34,7 +35,7 @@ public class TaskDAOImpl implements TaskDAO {
                 task.setTaskDueDate(rs.getString("task_due_date"));
                 task.setTaskStatus(rs.getString("task_status"));
                 task.setTaskSId(rs.getInt("task_s_id"));
-                task.setTaskCreated(rs.getString("task_created"));
+                task.setTaskAmount(rs.getDouble("task_amount"));
 
                 tasks.add(task);
             }
@@ -45,9 +46,19 @@ public class TaskDAOImpl implements TaskDAO {
         return tasks;
     }
 
+    public float getTaskSum() throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SUM_TASKS_AMOUNT);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getBigDecimal(1).floatValue();
+            }
+            return 0;
+        }
+    }
+
     @Override
     public boolean insertTask(Task task) {
-        String query = "INSERT INTO Tasks (task_name, task_description, task_due_date, task_status, task_s_id, task_created) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO tasks (task_name, task_description, task_due_date, task_status, task_s_id, task_amount) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, task.getTaskName());
@@ -55,7 +66,7 @@ public class TaskDAOImpl implements TaskDAO {
             statement.setString(3, task.getTaskDueDate());
             statement.setString(4, task.getTaskStatus());
             statement.setInt(5, task.getTaskSId());
-            statement.setString(6,task.getTaskCreated());
+            statement.setDouble(6, task.getTaskAmount());
 
             int rowsInserted = statement.executeUpdate();
             return rowsInserted > 0;
@@ -67,7 +78,7 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public boolean updateTask(Task task) {
-        String query = "UPDATE Tasks SET task_name = ?, task_description = ?, task_due_date = ?, task_status = ?, task_s_id = ?, task_created = ? WHERE task_id = ?";
+        String query = "UPDATE tasks SET task_name = ?, task_description = ?, task_due_date = ?, task_status = ?, task_s_id = ?, task_amount = ? WHERE task_id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, task.getTaskName());
@@ -75,7 +86,8 @@ public class TaskDAOImpl implements TaskDAO {
             statement.setString(3, task.getTaskDueDate());
             statement.setString(4, task.getTaskStatus());
             statement.setInt(5, task.getTaskSId());
-            statement.setString(6,task.getTaskCreated());
+            statement.setDouble(6, task.getTaskAmount());
+            statement.setInt(7, task.getTaskId());
 
             int rowsUpdated = statement.executeUpdate();
             return rowsUpdated > 0;
@@ -87,7 +99,7 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public boolean deleteTask(int task_id) {
-        String query = "DELETE FROM Tasks WHERE task_id = ?";
+        String query = "DELETE FROM tasks WHERE task_id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, task_id);
@@ -108,5 +120,53 @@ public class TaskDAOImpl implements TaskDAO {
             }
             return 0;
         }
+    }
+
+    @Override
+    public List<Task> getTasksBySyndic(int syndicId) {
+        List<Task> tasks = new ArrayList<>();
+        String query = "SELECT * FROM tasks WHERE task_s_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, syndicId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Task task = new Task();
+                    task.setTaskId(rs.getInt("task_id"));
+                    task.setTaskName(rs.getString("task_name"));
+                    task.setTaskDescription(rs.getString("task_description"));
+                    task.setTaskDueDate(rs.getString("task_due_date"));
+                    task.setTaskStatus(rs.getString("task_status"));
+                    task.setTaskSId(rs.getInt("task_s_id"));
+                    task.setTaskAmount(rs.getDouble("task_amount"));
+
+                    tasks.add(task);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tasks;
+    }
+
+    @Override
+    public List<Member> getMembersBySyndic(int syndicId) {
+        List<Member> members = new ArrayList<>();
+        String query = "SELECT * FROM members WHERE member_syndic_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, syndicId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Member member = new Member();
+                    member.setId(rs.getInt("member_id"));
+                    member.setFirstName(rs.getString("member_firstname"));
+                    member.setLastName(rs.getString("member_lastname"));
+                    // Compléter les autres champs si nécessaire
+                    members.add(member);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return members;
     }
 }

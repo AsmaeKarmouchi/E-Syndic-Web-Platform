@@ -1,5 +1,6 @@
 <%@ page import="com.syndic.beans.Member" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.syndic.beans.Syndic" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -15,6 +16,10 @@
   <!----STYLESHEET---->
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
+  <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 
 <body>
@@ -23,7 +28,14 @@
 
   <!------------MIDDLE ------------>
   <main>
+    <% Syndic syndic = (Syndic) session.getAttribute("syndic2"); %>
+    <!------------MIDDLE ------------>
     <div class="max-w-screen-xl mx-auto px-4 md:px-6">
+
+      <div class="recent-updates w-full">
+        <h1 class="text-3xl font-bold text-blue-600 mb-4">Welcome <%= syndic.getFirstName() %>!</h1>
+        <div class="form-container">
+
       <h3 class="text-light-800 text-xl font-bold sm:text-2xl m-4">Liste des résidents</h3>
 
 
@@ -98,6 +110,8 @@
           </tbody>
         </table>
       </div>
+        </div>
+      </div>
     </div>
 
 
@@ -123,8 +137,8 @@
       </div>
       <div class="profile">
         <div class="info">
-          <p>Hey, <b>Ayo</b></p>
-          <small class="text-muted">Admin</small>
+          <p>Hey, <b><%= ((Syndic) session.getAttribute("syndic")).getFirstName() %></b></p>
+          <small class="text-muted">Syndic</small>
         </div>
         <div class="profile-photo">
           <img src="./Assets/images/profile-1.jpg" alt="Oluwadare Taye Ayo">

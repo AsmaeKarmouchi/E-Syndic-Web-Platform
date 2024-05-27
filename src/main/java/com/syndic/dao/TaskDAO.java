@@ -1,5 +1,7 @@
 package com.syndic.dao;
 
+import com.syndic.beans.Member;
+import com.syndic.beans.Payment;
 import com.syndic.beans.Task;
 
 import java.sql.SQLException;
@@ -11,4 +13,8 @@ public interface TaskDAO {
     boolean updateTask(Task task);
     boolean deleteTask(int taskId);
     int getTaskCount() throws SQLException;
+    float getTaskSum() throws SQLException;
+    public List<Task> getTasksBySyndic(int syndicId)throws SQLException;
+
+    List<Member> getMembersBySyndic(int syndicId) throws SQLException;
 }

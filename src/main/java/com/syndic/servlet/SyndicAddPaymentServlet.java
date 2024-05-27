@@ -1,9 +1,11 @@
 package com.syndic.servlet;
 
 import com.syndic.beans.Payment;
+import com.syndic.beans.PaymentFlow;
 import com.syndic.beans.Syndic;
 import com.syndic.connection.Syndic_con;
 import com.syndic.dao.PaymentDAOImpl;
+import com.syndic.dao.PaymentFlowDAOImpl;
 import com.syndic.dao.SyndicProfileDAOImpl;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -141,6 +143,20 @@ public class SyndicAddPaymentServlet extends HttpServlet {
         boolean success = paymentDAO.insertPayment(payment);
 
         if (success) {
+            PaymentFlow paymentFlow = new PaymentFlow();
+            paymentFlow.setSyndicId(syndicId);
+            paymentFlow.setFlowType(0);
+            paymentFlow.setAmount(amount);
+            paymentFlow.setDescription("Payment added with code: " + code+ "type: "+type + "By Member"+ member_id);
+            paymentFlow.setTransactionDate(java.sql.Date.valueOf(date));
+            PaymentFlowDAOImpl paymentFlowDAO = new PaymentFlowDAOImpl(connection);
+            try {
+                paymentFlowDAO.addPaymentFlow(paymentFlow);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                // Gérer l'erreur de l'ajout du flux de paiement
+                return;
+            }
             session = req.getSession();
             session.setAttribute("successMessage", "Le paiement a été ajouté avec succès !");
             System.out.println("succès");

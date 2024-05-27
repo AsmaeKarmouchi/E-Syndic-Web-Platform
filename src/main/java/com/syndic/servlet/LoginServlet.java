@@ -122,8 +122,6 @@ public class LoginServlet extends HttpServlet {
                             session.setAttribute("syndic", syndic);
                             session.setAttribute("syndic_id", syndic.getId());
 
-
-
                             if (syndic.getResidenceName().equals(residence)) {
                             Syndic syndic2 = syndicDAO.getSyndicById(syndic.getId());
                             session.setAttribute("syndic2", syndic2);
