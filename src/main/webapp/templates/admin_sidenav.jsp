@@ -41,7 +41,7 @@
             <h3 class="ml-4">Add Members</h3>
         </a>
 
-        <a href="syndics.jsp" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+        <a href="syndics.jsp" id="syndics" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
             <i class='bx bx-file text-2xl'></i>
             <h3 class="ml-4">Syndic</h3>
         </a>
@@ -66,15 +66,6 @@
             <h3 class="ml-4">Payment</h3>
         </a>
 
-        <a href="addsupplier" id="addsupplier" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
-            <i class='bx bxs-group text-2xl'></i>
-            <h3 class="ml-4">Suppliers</h3>
-        </a>
-
-        <a href="addtask" id="addtask" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
-            <i class='bx bx-task text-2xl'></i>
-            <h3 class="ml-4">Tasks</h3>
-        </a>
 
         <a href="login" id="logout-link" class="flex items-center p-4 text-gray-700 hover:bg-red-600 hover:text-white transition duration-200">
             <i class='bx bx-log-out-circle text-2xl'></i>

@@ -27,6 +27,12 @@
     <main>
         <% Member member = (Member) session.getAttribute("member"); %>
 
+        <div class="flex justify-between items-center p-6 bg-green-300 shadow-md border rounded-md">
+            <h1 class="text-3xl font-bold text-gray-800"> Profile of <%= member.getFirstName() %> <%= member.getLastName() %> </h1>
+            <div class="text-lg text-gray-600"><%=java.time.LocalDate.now()%></div>
+        </div>
+        <br><br><br>
+
         <div class="main-content flex flex-col p-6">
             <div class="recent-updates w-full">
                 <h1 class="text-3xl font-bold text-blue-600 mb-4">Welcome <%= member.getFirstName() %>!</h1>

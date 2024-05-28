@@ -1,5 +1,7 @@
 <%@ page import="com.syndic.beans.Member" %>
+
 <%@ page import="java.util.List" %>
+<%@ page import="com.syndic.beans.Syndic" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -23,22 +25,27 @@
 
     <!------------MIDDLE ------------>
     <main>
-        <div class="max-w-screen-xl mx-auto px-4 md:px-6">
-            <h3 class="text-light-800 text-xl font-bold sm:text-2xl m-4">Liste des résidents</h3>
+        <div class="flex justify-between items-center p-6 bg-purple-300 shadow-md border rounded-md">
+            <h1 class="text-3xl font-bold text-gray-800">Registred Members </h1>
+            <div class="text-lg text-gray-600"><%=java.time.LocalDate.now()%></div>
+        </div>
+        <br><br><br>
 
+        <div class="max-w-screen-xl mx-auto px-4 md:px-6">
+            <h3 class="text-gray-800 text-xl font-bold sm:text-2xl my-4">Members List</h3>
 
             <div class="mt-12 shadow-sm border rounded-lg overflow-x-auto">
                 <table class="w-full table-auto text-sm text-left">
-                    <thead class="bg-gray-50 text-gray-600 font-medium border-b">
+                    <thead class="bg-gray-100 text-gray-600 font-medium border-b">
                     <tr>
                         <th class="py-3 px-6">ID</th>
                         <th class="py-3 px-6">Prénom</th>
                         <th class="py-3 px-6">Nom</th>
-                        <th class="py-3 px-6">code postal</th>
-                        <th class="py-3 px-6">Téléphone</th>
                         <th class="py-3 px-6">Adresse</th>
+                        <th class="py-3 px-6">Téléphone</th>
                         <th class="py-3 px-6">Email</th>
-                        <th class="py-3 px-6">Residence</th>
+                        <th class="py-3 px-3">Member_S_id</th>
+                        <th class="py-3 px-6"></th>
                     </tr>
                     </thead>
                     <tbody class="text-gray-600 divide-y" id="syndicsTableBody">
@@ -46,6 +53,7 @@
                         if (session.getAttribute("list_members") != null) {
                             List<Member> membersList = (List<Member>) session.getAttribute("list_members");
                             for (Member member : membersList) {
+
                     %>
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap"><%= member.getId() %></td>
@@ -54,21 +62,14 @@
                         <td class="px-6 py-4 whitespace-nowrap"><%= member.getFulladdress() %></td>
                         <td class="px-6 py-4 whitespace-nowrap"><%= member.getPhoneNumber() %></td>
                         <td class="px-6 py-4 whitespace-nowrap"><%= member.getMail() %></td>
+                        <td class="px-6 py-4 whitespace-nowrap"><%= member.getMemberSId() %></td>
                         <td class="text-right px-4 whitespace-nowrap">
-                            <button class="editSyndicBtn py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
-                                    data-id="<%= member.getId() %>"
-                                    data-firstname="<%= member.getFirstName() %>"
-                                    data-lastname="<%= member.getLastName() %>"
-                                    data-address="<%= member.getFulladdress() %>"
-                                    data-phonenumber="<%= member.getPhoneNumber() %>"
-                                    data-email="<%= member.getMail() %>">
-                            </button>
+
                             <form action="deletesyndic" method="post" class="inline">
                                 <input type="hidden" name="id" value="<%= member.getId() %>">
-                                <button type="submit" class="deleteSyndicBtn py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg">
+                                <button type="submit" class="deleteSyndicBtn py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 rounded-lg">
                                     Delete
                                 </button>
-
                             </form>
                         </td>
                     </tr>
@@ -77,7 +78,7 @@
                     } else {
                     %>
                     <tr>
-                        <td colspan="8" class="px-6 py-4">Aucun member trouvé.</td>
+                        <td colspan="8" class="px-6 py-4">Aucun membre trouvé.</td>
                     </tr>
                     <%
                         }

@@ -27,14 +27,22 @@
     </div>
     <main>
 
+        <% Member member = (Member) session.getAttribute("member"); %>
+        <div class="flex justify-between items-center p-6 bg-green-300 shadow-md border rounded-md">
+            <h1 class="text-3xl font-bold text-gray-800">Property of <%= member.getFirstName() %> <%= member.getLastName() %> </h1>
+            <div class="text-lg text-gray-600"><%=java.time.LocalDate.now()%></div>
+        </div>
+        <br><br><br>
+
+
         <div class="main-content flex flex-col p-6">
             <div class="recent-updates w-full">
-                <h1>Welcome <%= ((Member) session.getAttribute("member")).getFirstName() %>!</h1>
+
                 <% Syndic syndic = (Syndic) session.getAttribute("syndic"); %>
                 <!------------MIDDLE ------------>
                 <div class="main-content flex flex-col p-6">
                     <div class="recent-updates w-full">
-                        <h1 class="text-3xl font-bold text-blue-600 mb-4">Welcome <%= syndic.getFirstName() %>!</h1>
+                        <h1 class="text-3xl font-bold text-blue-600 mb-4">About Syndic: <%= syndic.getFirstName() %> <%= syndic.getLastName() %>  </h1>
                         <div class="form-container">
 
                                 <!-- Syndic Information -->
@@ -108,6 +116,8 @@
                                     </div>
                                 </section>
 
+
+                            <h1 class="text-3xl font-bold text-blue-600 mb-4">About Residence: <%= syndic.getResidenceName() %> </h1>
                                 <!-- Residence Information -->
                                 <section class="py-1">
                                     <div class="w-full px-4 mx-auto mt-6">

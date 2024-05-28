@@ -77,10 +77,11 @@
                 <section>
                     <div id="main" class="main-content flex-1  mt-12 md:mt-2 pb-24 md:pb-5">
 
-                        <h1 class=" m-4">Dashboard</h1>
-                        <div class="date m-4">
-                            <%=java.time.LocalDate.now()%>
+                        <div class="flex justify-between items-center p-6 bg-purple-300 shadow-md border rounded-md">
+                            <h1 class="text-3xl font-bold text-gray-800">Dashboard</h1>
+                            <div class="text-lg text-gray-600"><%=java.time.LocalDate.now()%></div>
                         </div>
+                        <br><br><br>
 
                         <div class="flex flex-wrap">
                             <div class="w-full md:w-1/2 xl:w-1/3 p-6">

@@ -116,11 +116,11 @@ public class MemberProfileDAOImpl implements MemberProfileDAO {
                 member.setId(resultSet.getInt("m_id"));
                 member.setFirstName(resultSet.getString("m_firstname"));
                 member.setLastName(resultSet.getString("m_lastname"));
-                member.setLastName(resultSet.getString("m_codepostal"));
                 member.setCodepostal(resultSet.getString("m_codepostal"));
                 member.setPhoneNumber(resultSet.getString("m_phonenumber"));
                 member.setFulladdress(resultSet.getString("m_fulladdress"));
                 member.setMail(resultSet.getString("m_mail"));
+                member.setMemberSId(resultSet.getInt("member_s_id"));
                 members.add(member);
             }
         } catch (SQLException e) {

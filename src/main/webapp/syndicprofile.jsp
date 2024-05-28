@@ -27,6 +27,12 @@
   </div>
   <main>
     <% Syndic syndic = (Syndic) session.getAttribute("syndic2"); %>
+
+    <div class="flex justify-between items-center p-6 bg-blue-300 shadow-md border rounded-md">
+      <h1 class="text-3xl font-bold text-gray-800"> Profile of <%= syndic.getFirstName() %> <%= syndic.getLastName() %> </h1>
+      <div class="text-lg text-gray-600"><%=java.time.LocalDate.now()%></div>
+    </div>
+    <br><br><br>
     <!------------MIDDLE ------------>
     <div class="main-content flex flex-col p-6">
       <div class="recent-updates w-full">

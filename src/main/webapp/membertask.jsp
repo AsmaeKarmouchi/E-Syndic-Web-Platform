@@ -20,11 +20,11 @@
 
   <main>
 
-    <div class="flex justify-between items-center p-6 bg-gray-100 shadow-md border rounded-md">
+    <div class="flex justify-between items-center p-6 bg-green-300 shadow-md border rounded-md">
       <h1 class="text-3xl font-bold text-gray-800">Residence Task</h1>
       <div class="text-lg text-gray-600"><%=java.time.LocalDate.now()%></div>
     </div>
-     <br><br><br><br><br><br>
+     <br><br><br>
       <!-- Task Form -->
       <div class="max-w-screen-xl mx-auto px-4 md:px-6 mt-12">
         <div class="grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1 mt-12">

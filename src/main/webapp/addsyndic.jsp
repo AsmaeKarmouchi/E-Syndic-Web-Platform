@@ -1,3 +1,5 @@
+<%@ page import="com.syndic.beans.Syndic" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,11 +22,11 @@
     <!------------MIDDLE ------------>
     <main>
         <!----------TOP -------->
-        <div class="flex justify-between items-center p-6 bg-gray-100 shadow-md border rounded-md">
+        <div class="flex justify-between items-center p-6 bg-purple-300 shadow-md border rounded-md">
             <h1 class="text-3xl font-bold text-gray-800">Add New Syndic</h1>
             <div class="text-lg text-gray-600"><%=java.time.LocalDate.now()%></div>
         </div>
-
+        <br><br><br>
         <div class="max-w-screen-lg mx-auto p-10 ">
             <div class="grid grid-cols-1 md:grid-cols-12 border">
                 <div class="bg-gray-900 md:col-span-4 p-10 text-white">
@@ -139,6 +141,23 @@
 
                     </div>
 
+
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                   for="type">
+                                Residence Type
+                            </label>
+                            <select
+                                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    type="text" id="type" name="type" >
+                                <option value="">select a residence</option>
+                                <option value="Small Residence">Small Residence (Moins de 20 Members)</option>
+                                <option value="Meduim Residence">Meduim Residence (Entre 20 et 40 Members )</option>
+                                <option value="Big Residence">Big Residence (Plus de 40 Members)</option>
+                            </select>
+                        </div>
+                    </div>
 
 
                     <div class="flex flex-wrap -mx-3 mb-6">

@@ -24,7 +24,7 @@
     <!------------MIDDLE ------------>
     <main>
         <!----------TOP -------->
-        <div class="flex justify-between items-center p-6 bg-gray-100 shadow-md border rounded-md">
+        <div class="flex justify-between items-center p-6 bg-green-300 shadow-md border rounded-md">
             <h1 class="text-3xl font-bold text-gray-800">Meeting</h1>
             <div class="text-lg text-gray-600"><%=java.time.LocalDate.now()%></div>
         </div>
