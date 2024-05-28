@@ -194,3 +194,18 @@ ALTER TABLE charges ADD COLUMN  charge_s_id int ;
 ALTER TABLE charges ADD COLUMN  charge_date date;
 ALTER TABLE charges Drop COLUMN charge_code;
 ALTER TABLE charges Drop COLUMN charge_due_month;
+
+
+
+CREATE TABLE Reclamations (
+    reclaim_id INT AUTO_INCREMENT PRIMARY KEY,
+    reclaim_date DATE DEFAULT CURRENT_TIMESTAMP,
+    reclaim_type VARCHAR(255),
+    reclaim_description TEXT,
+    reclaim_status VARCHAR(255),
+    reclaim_resolution_date DATE,
+    reclaim_s_id INT,
+    reclaim_m_id INT,
+    FOREIGN KEY (reclaim_s_id) REFERENCES Syndics(s_id),
+    FOREIGN KEY (reclaim_m_id) REFERENCES Members(m_id)
+);

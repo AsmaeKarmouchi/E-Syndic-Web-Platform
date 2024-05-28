@@ -128,6 +128,11 @@ public class LoginServlet extends HttpServlet {
 
                             int syndicId = syndic.getId();
 
+                            List<Payment> payments;
+                            paymentDAO = new PaymentDAOImpl(connection);
+                            payments = paymentDAO.getPaymentsBySyndic(syndicId);
+                            session.setAttribute("payments", payments);
+
                             List<Member> list_members;
                             memberDAO = new MemberProfileDAOImpl(connection);
                             list_members = memberDAO.getMembersBySyndic(syndicId);
@@ -152,7 +157,7 @@ public class LoginServlet extends HttpServlet {
 
                             List<Charge> list_Charges = new ArrayList<>();
                             chargeDAO = new ChargeDAOImpl(connection);
-                            list_Charges = chargeDAO.getCharges();
+                            list_Charges = chargeDAO.getChargesBySyndic(syndicId);
                             session.setAttribute("list_Charges", list_Charges);
 
                             response.sendRedirect("dashboardSyndic.jsp");
@@ -164,7 +169,7 @@ public class LoginServlet extends HttpServlet {
                             }
                         }  else  {
 //member
-                            response.sendRedirect("home.jsp");
+                            response.sendRedirect("memberprofile");
                             int userId = user.getIdUser();
                             memberDAO = new MemberProfileDAOImpl(connection);
                             Member member = memberDAO.getMemberByUserId(userId);
@@ -185,11 +190,25 @@ public class LoginServlet extends HttpServlet {
                             Syndic syndic = syndicDAO.getSyndicById(syndicId);
                             session.setAttribute("syndic", syndic);
 
+                            List<Payment> payments;
+                            paymentDAO = new PaymentDAOImpl(connection);
+                            payments = paymentDAO.getPaymentsBySyndic(syndicId);
+                            session.setAttribute("payments", payments);
+
 
                             List<Member> list_members;
                             memberDAO = new MemberProfileDAOImpl(connection);
                             list_members = memberDAO.getMembersBySyndic(syndicId);
                             session.setAttribute("list_members", list_members);
+
+                            List<News> list_News = new ArrayList<>();
+                            newsDAO = new NewsDAOImpl(connection);
+                            list_News = newsDAO.getNewsBySyndicId(syndicId);
+                            session.setAttribute("list_News", list_News);
+
+                            TaskDAOImpl taskDAO = new TaskDAOImpl(connection);
+                            List<Task> tasks = taskDAO.getTasksBySyndic(syndicId);
+                            session.setAttribute("tasks",tasks);
 
 
                             return;

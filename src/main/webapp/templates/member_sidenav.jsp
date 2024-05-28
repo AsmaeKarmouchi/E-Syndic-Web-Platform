@@ -26,10 +26,7 @@
 
     <!----------SIDEBAR---------->
     <div class="sidebar">
-        <a href="#" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
-            <i class='bx bxs-dashboard text-2xl'></i>
-            <h3 class="ml-4">Dashboard</h3>
-        </a>
+
 
         <a href="memberprofile" id="memberprofile" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
             <i class='bx bx-user text-2xl'></i>
@@ -46,9 +43,24 @@
             <h3 class="ml-4">Meetings</h3>
         </a>
 
+        <a href="memberpayment.jsp" id="memberpaiment" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+            <i class='bx bxs-error-circle text-2xl'></i>
+            <h3 class="ml-4">My payments</h3>
+        </a>
+
+        <a href="membernews.jsp" id="membernews" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+            <i class='bx bxs-error-circle text-2xl'></i>
+            <h3 class="ml-4">Residence News</h3>
+        </a>
+
         <a href="incidentM" id="incidentM" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
             <i class='bx bxs-error-circle text-2xl'></i>
             <h3 class="ml-4">Report Incident</h3>
+        </a>
+
+        <a href="membertask.jsp" id="membertask" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+            <i class='bx bxs-error-circle text-2xl'></i>
+            <h3 class="ml-4">Tasks</h3>
         </a>
 
         <a href="login" id="logout-link" class="flex items-center p-4 text-gray-700 hover:bg-red-600 hover:text-white transition duration-200">

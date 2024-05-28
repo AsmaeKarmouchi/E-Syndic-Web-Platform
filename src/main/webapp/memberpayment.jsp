@@ -1,6 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.syndic.beans.Payment" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="com.syndic.beans.Member" %>
+<%@ page import="java.util.ArrayList" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,12 +18,12 @@
 
 <body>
 <div class="container">
-  <jsp:include page="templates/syndic_sidenav.jsp" />
+  <jsp:include page="templates/member_sidenav.jsp" />
 
   <main>
 
     <div class="flex justify-between items-center p-6 bg-gray-100 shadow-md border rounded-md">
-      <h1 class="text-3xl font-bold text-gray-800">Add Payment</h1>
+      <h1 class="text-3xl font-bold text-gray-800">My Payment</h1>
       <div class="text-lg text-gray-600"><%=java.time.LocalDate.now()%></div>
     </div>
 
@@ -32,18 +34,7 @@
     <div class="max-w-screen-xl mx-auto px-4 md:px-6">
       <div class="items-start justify-between md:flex">
         <div class="mt-3 md:mt-0 flex gap-4">
-          <button id="addPaymentBtn"
-                  class="inline-block px-4 py-2 text-white duration-150 font-medium bg-indigo-600 rounded-lg hover:bg-indigo-500 active:bg-indigo-700 md:text-sm btn">
-            Add Payment
-          </button>
-          <input type="number" id="filterMemberId" placeholder="Filter by Member ID" class="px-4 py-2 border rounded-md">
-          <button id="filterPaymentsBtn" class="inline-block px-4 py-2 text-white duration-150 font-medium bg-blue-600 rounded-lg hover:bg-blue-500 active:bg-blue-700 md:text-sm btn">
-            Filter Payments
-          </button>
-          <button id="printInvoiceBtn" class="inline-block px-4 py-2 text-white duration-150 font-medium bg-green-600 rounded-lg hover:bg-green-500 active:bg-green-700 md:text-sm btn">
-            Print Invoice
-          </button>
-        </div>
+
       </div>
       <div class="mt-12 shadow-sm border rounded-lg overflow-x-auto">
         <table class="min-w-full bg-white rounded-lg shadow-md" id="paymentTable">
@@ -60,9 +51,20 @@
           </tr>
           </thead>
           <tbody class="text-gray-600 divide-y" id="paymentTableBody">
-          <% List<Payment> payments = (List<Payment>) request.getAttribute("payments"); %>
-          <% if (payments != null && !payments.isEmpty()) { %>
-          <% for (Payment payment : payments) { %>
+          <% List<Payment> payments = (List<Payment>) session.getAttribute("payments"); %>
+          <% Member member = (Member) session.getAttribute("member"); %>
+          <% int memberId = member.getId();%>
+          <%
+            if (payments != null && !payments.isEmpty()) {
+              List<Payment> memberpayments = new ArrayList<>();
+              for (Payment mpayment : payments) {
+                if (mpayment.getMember_id() == memberId) {
+                  memberpayments.add(mpayment);
+                }
+              }
+
+          %>
+          <% for (Payment payment : memberpayments) { %>
           <tr>
             <td class="px-6 py-4 whitespace-nowrap"><%= payment.getCode() %></td>
             <td class="px-6 py-4 whitespace-nowrap"><%= payment.getDate() %></td>
@@ -80,7 +82,7 @@
                       data-type="<%= payment.getType() %>"
                       data-member_id="<%= payment.getMember_id() %>"
                       data-status="<%= payment.getStatus() %>">
-                Edit
+                Pay
               </button>
               <form action="Syndicaddpayment" method="post" class="inline">
                 <input type="hidden" name="code" value="<%= payment.getCode() %>">
@@ -145,6 +147,7 @@
 
 
     </div>
+    </div>
   </main>
   <div class="right">
     <div class="top">
@@ -157,8 +160,8 @@
       </div>
       <div class="profile">
         <div class="info">
-          <p>Hey, <b>Ayo</b></p>
-          <small class="text-muted">Admin</small>
+          <p>Hey, <b><%= ((Member) session.getAttribute("member")).getFirstName() %></b></p>
+          <small class="text-muted"> Member</small>
         </div>
         <div class="profile-photo">
           <img src="./Assets/images/profile-1.jpg" alt="Oluwadare Taye Ayo">
@@ -287,6 +290,9 @@
   });
 
 
+</script>
+<script>
+  document.getElementById("memberpaiment").classList.add("active");
 </script>
 </body>
 </html>

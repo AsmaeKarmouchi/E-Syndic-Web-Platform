@@ -19,7 +19,7 @@
 
 <body>
 <div class="container">
-    <jsp:include page="templates/syndic_sidenav.jsp" />
+    <jsp:include page="templates/member_sidenav.jsp" />
 
     <!------------MIDDLE ------------>
     <main>
