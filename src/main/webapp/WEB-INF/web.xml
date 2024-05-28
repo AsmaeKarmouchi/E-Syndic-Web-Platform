@@ -101,6 +101,14 @@
     <servlet-name>SyndicAddChargeServlet</servlet-name>
     <url-pattern>/Syndicaddcharge</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>MemberAddReclamationServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.MemberAddReclamationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemberAddReclamationServlet</servlet-name>
+    <url-pattern>/Memberaddreclamation</url-pattern>
+  </servlet-mapping>
 
   <servlet>
     <servlet-name>MemberProfileServlet</servlet-name>
