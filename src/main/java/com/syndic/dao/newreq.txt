@@ -209,3 +209,7 @@ CREATE TABLE Reclamations (
     FOREIGN KEY (reclaim_s_id) REFERENCES Syndics(s_id),
     FOREIGN KEY (reclaim_m_id) REFERENCES Members(m_id)
 );
+ALTER TABLE tasks
+ADD COLUMN task_supplier_id INT,
+ADD CONSTRAINT fk_task_supplier
+FOREIGN KEY (task_supplier_id) REFERENCES suppliers(supplier_id);

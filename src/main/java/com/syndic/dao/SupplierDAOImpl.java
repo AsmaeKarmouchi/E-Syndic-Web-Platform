@@ -20,25 +20,25 @@ public class SupplierDAOImpl implements SupplierDAO {
     }
 
     @Override
-    public List<Supplier> getAllSuppliers() {
+    public List<Supplier> getAllSuppliers(int syndicId) {
         List<Supplier> suppliers = new ArrayList<>();
-        String sql = "SELECT * FROM Suppliers";
+        String sql = "SELECT * FROM Suppliers WHERE supplier_s_id = ? ";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                Supplier supplier = new Supplier();
+            stmt.setInt(1, syndicId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Supplier supplier = new Supplier();
 
-                supplier.setSupplier_id(rs.getInt("supplier_id"));
-                supplier.setSupplier_name(rs.getString("supplier_name"));
-                supplier.setSupplier_email(rs.getString("supplier_email"));
-                supplier.setSupplier_phone(rs.getString("supplier_phone"));
-                supplier.setSupplier_type(rs.getString("supplier_type"));
-                supplier.setSupplier_active(rs.getBoolean("supplier_active"));
-                supplier.setSupplier_rating(rs.getString("supplier_rating"));
-                supplier.setSupplier_s_id(rs.getInt("supplier_s_id"));
-
-                suppliers.add(supplier);
+                    supplier.setSupplier_id(rs.getInt("supplier_id"));
+                    supplier.setSupplier_name(rs.getString("supplier_name"));
+                    supplier.setSupplier_email(rs.getString("supplier_email"));
+                    supplier.setSupplier_phone(rs.getString("supplier_phone"));
+                    supplier.setSupplier_type(rs.getString("supplier_type"));
+                    supplier.setSupplier_active(rs.getBoolean("supplier_active"));
+                    supplier.setSupplier_rating(rs.getString("supplier_rating"));
+                    suppliers.add(supplier);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -88,7 +88,18 @@ public class SupplierDAOImpl implements SupplierDAO {
             return false;
         }
     }
-
+    public int getSupplierIdByName(String supplierName) throws SQLException {
+        String sql = "SELECT supplier_id FROM suppliers WHERE supplier_name = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, supplierName);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("supplier_id");
+            } else {
+                throw new SQLException("Supplier not found");
+            }
+        }
+    }
 
 
     @Override

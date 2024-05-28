@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface SupplierDAO {
 
-    List<Supplier> getAllSuppliers();
+    List<Supplier> getAllSuppliers(int syndicId);
 
     boolean insertSupplier(Supplier supplier);
 
@@ -15,4 +15,5 @@ public interface SupplierDAO {
 
     boolean deleteSupplier(int supplier_id);
     int getSupplierCount() throws SQLException;
+    int getSupplierIdByName(String supplierName) throws SQLException;
 }

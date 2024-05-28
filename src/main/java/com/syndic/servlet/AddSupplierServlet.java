@@ -33,10 +33,18 @@ public class AddSupplierServlet extends HttpServlet {
         if (connection == null) {
             return;
         }
+        HttpSession session = req.getSession();
+        Integer syndicId = (Integer) session.getAttribute("syndic_id");
+        System.out.println("syndicid "+syndicId);
+        if (syndicId == null) {
+            // Rediriger vers la page de connexion si le syndic_id n'est pas défini
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
 
         List<Supplier> suppliers;
         SupplierDAOImpl supplierDAO = new SupplierDAOImpl(connection);
-        suppliers = supplierDAO.getAllSuppliers();
+        suppliers = supplierDAO.getAllSuppliers(syndicId);
         req.setAttribute("suppliers", suppliers);
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("addsupplier.jsp");
@@ -84,7 +92,9 @@ public class AddSupplierServlet extends HttpServlet {
         String supplier_type = req.getParameter("supplier_type");
         boolean supplier_active = Boolean.parseBoolean(req.getParameter("supplier_active"));
         String supplier_rating = req.getParameter("supplier_rating");
-        int supplier_s_id = Integer.parseInt(req.getParameter("supplier_s_id"));
+
+        HttpSession session = req.getSession();
+        Integer supplier_s_id = (Integer) session.getAttribute("syndic_id");
 
         Supplier supplier = new Supplier();
         supplier.setSupplier_name(supplier_name);

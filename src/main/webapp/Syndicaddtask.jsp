@@ -1,6 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.syndic.beans.Task" %>
+<%@ page import="com.syndic.beans.Syndic" %>
+<%@ page import="com.syndic.beans.Supplier" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,6 +46,9 @@
                     <button id="printInvoiceBtn" class="inline-block px-4 py-2 text-white duration-150 font-medium bg-green-600 rounded-lg hover:bg-green-500 active:bg-green-700 md:text-sm btn">
                         Print Invoice
                     </button>
+                    <form action="addsupplier" method="get">
+                        <button id="addSupplierBtn" type="submit" class="inline-block px-4 py-2 text-white duration-150 font-medium bg-indigo-600 rounded-lg hover:bg-indigo-500 active:bg-indigo-700 md:text-sm btn">Add Supplier</button>
+                    </form>
                 </div>
             </div>
 
@@ -124,6 +129,23 @@
                     <div class="col-span-1">
                         <label for="taskStatus" class="block text-sm font-medium text-gray-700">Status:</label>
                         <input type="text" id="taskStatus" name="taskStatus" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="supplier" class="text-sm font-medium text-gray-600">Supplier</label>
+                        <select id="supplier" name="supplier" class="mt-1 p-2 w-full border-2 border-gray-300 rounded-md focus:outline-none focus:border-indigo-500" required>
+                            <option value="">select a Supplier</option>
+                            <%
+                                List<Supplier> suppliers = (List<Supplier>) request.getAttribute("suppliers");
+
+                                if (suppliers != null) {
+                                    for (Supplier supplier : suppliers) {
+                            %>
+                            <option value="<%= supplier.getSupplier_name() %>"><%= supplier.getSupplier_name() %></option>
+                            <%
+                                    }
+                                }
+                            %>
+                        </select>
                     </div>
                     <div class="col-span-2 flex justify-end">
                         <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

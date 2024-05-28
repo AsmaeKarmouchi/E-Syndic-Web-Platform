@@ -10,6 +10,7 @@ public class Task {
     private String taskStatus;
     private int taskSId;
     private double taskamount;
+    private int taskSupplierId;
 
     // Getters and Setters
 
@@ -67,5 +68,12 @@ public class Task {
 
     public void setTaskAmount( double taskamount) {
         this.taskamount = taskamount;
+    }
+    public int getTaskSupplierId() {
+        return taskSupplierId;
+    }
+
+    public void setTaskSupplierId(int taskSupplierId) {
+        this.taskSupplierId = taskSupplierId;
     }
 }

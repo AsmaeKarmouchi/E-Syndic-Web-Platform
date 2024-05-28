@@ -58,7 +58,7 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public boolean insertTask(Task task) {
-        String query = "INSERT INTO tasks (task_name, task_description, task_due_date, task_status, task_s_id, task_amount) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO tasks (task_name, task_description, task_due_date, task_status, task_s_id, task_amount, task_supplier_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, task.getTaskName());
@@ -67,7 +67,7 @@ public class TaskDAOImpl implements TaskDAO {
             statement.setString(4, task.getTaskStatus());
             statement.setInt(5, task.getTaskSId());
             statement.setDouble(6, task.getTaskAmount());
-
+            statement.setInt(7, task.getTaskSupplierId());
             int rowsInserted = statement.executeUpdate();
             return rowsInserted > 0;
         } catch (SQLException e) {
@@ -78,7 +78,8 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public boolean updateTask(Task task) {
-        String query = "UPDATE tasks SET task_name = ?, task_description = ?, task_due_date = ?, task_status = ?, task_s_id = ?, task_amount = ? WHERE task_id = ?";
+        String query = "UPDATE tasks SET task_name = ?, task_description = ?, task_due_date = ?, task_status = ?, task_s_id = ?, task_amount = ? , task_supplier_id = ? WHERE task_id = ?";
+
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, task.getTaskName());
@@ -88,6 +89,7 @@ public class TaskDAOImpl implements TaskDAO {
             statement.setInt(5, task.getTaskSId());
             statement.setDouble(6, task.getTaskAmount());
             statement.setInt(7, task.getTaskId());
+            statement.setInt(8,task.getTaskSupplierId());
 
             int rowsUpdated = statement.executeUpdate();
             return rowsUpdated > 0;
@@ -138,6 +140,7 @@ public class TaskDAOImpl implements TaskDAO {
                     task.setTaskStatus(rs.getString("task_status"));
                     task.setTaskSId(rs.getInt("task_s_id"));
                     task.setTaskAmount(rs.getDouble("task_amount"));
+                    task.setTaskSupplierId(rs.getInt("task_supplier_id"));
 
                     tasks.add(task);
                 }

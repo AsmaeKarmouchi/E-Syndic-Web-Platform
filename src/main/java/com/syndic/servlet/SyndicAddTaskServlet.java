@@ -1,12 +1,7 @@
 package com.syndic.servlet;
-import com.syndic.beans.Payment;
-import com.syndic.beans.PaymentFlow;
-import com.syndic.beans.Syndic;
-import com.syndic.beans.Task;
+import com.syndic.beans.*;
 import com.syndic.connection.Syndic_con;
-import com.syndic.dao.PaymentFlowDAOImpl;
-import com.syndic.dao.SyndicProfileDAOImpl;
-import com.syndic.dao.TaskDAOImpl;
+import com.syndic.dao.*;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -33,9 +28,11 @@ public class SyndicAddTaskServlet extends HttpServlet {
         if (connection == null) {
             return;
         }
+
         HttpSession session = req.getSession();
         Integer syndicId = (Integer) session.getAttribute("syndic_id");
         System.out.println("syndicid "+syndicId);
+
         if (syndicId == null) {
             // Rediriger vers la page de connexion si le syndic_id n'est pas défini
             resp.sendRedirect(req.getContextPath() + "/login");
@@ -48,6 +45,12 @@ public class SyndicAddTaskServlet extends HttpServlet {
         List<Task> tasks = taskDAO.getTasksBySyndic(syndicId);
         req.setAttribute("tasks",tasks);
         System.out.println(tasks);
+
+        List<Supplier> suppliers;
+        SupplierDAOImpl supplierDAO = new SupplierDAOImpl(connection);
+        suppliers = supplierDAO.getAllSuppliers(syndicId);
+        req.setAttribute("suppliers", suppliers);
+
         RequestDispatcher dispatcher = req.getRequestDispatcher("Syndicaddtask.jsp");
         dispatcher.forward(req, resp);
     }
@@ -79,7 +82,9 @@ public class SyndicAddTaskServlet extends HttpServlet {
         double taskAmount = Double.parseDouble(req.getParameter("taskAmount"));
         String taskDueDate = req.getParameter("taskDueDate");
         String taskStatus = req.getParameter("taskStatus");
+        String taskSupplier = req.getParameter("supplier");
         System.out.println("--"+taskName+"--"+taskAmount);
+
 
         HttpSession session = req.getSession();
         Integer syndicId = (Integer) session.getAttribute("syndic_id");
@@ -93,6 +98,17 @@ public class SyndicAddTaskServlet extends HttpServlet {
         task.setTaskStatus(taskStatus);
         task.setTaskAmount(taskAmount);
         task.setTaskSId(syndicId);
+        // Récupérer l'ID du fournisseur à partir de la base de données
+        SupplierDAOImpl supplierDAO = new SupplierDAOImpl(connection);
+        try {
+            int supplierId = supplierDAO.getSupplierIdByName(taskSupplier);
+            task.setTaskSupplierId(supplierId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            session.setAttribute("errorMessage", "Erreur lors de la récupération de l'ID du fournisseur.");
+            resp.sendRedirect(req.getContextPath() + "/Syndicaddtask");
+            return;
+        }
 //---------------------------
 
         // Récupérer le solde actuel du compte du syndic depuis la base de données

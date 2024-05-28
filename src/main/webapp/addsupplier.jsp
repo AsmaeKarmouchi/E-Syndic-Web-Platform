@@ -17,7 +17,7 @@
 
 <body>
 <div class="container">
-    <jsp:include page="templates/admin_sidenav.jsp" />
+    <jsp:include page="templates/syndic_sidenav.jsp" />
 
     <!------------MIDDLE ------------>
     <main>
@@ -52,7 +52,7 @@
                         <th class="py-3 px-6">Type</th>
                         <th class="py-3 px-6">Active</th>
                         <th class="py-3 px-6">Rating</th>
-                        <th class="py-3 px-6">Supplier_S_ID</th>
+
                         <th class="py-3 px-6">Actions</th>
                     </tr>
                     </thead>
@@ -68,11 +68,9 @@
                         <td class="px-6 py-4 whitespace-nowrap"><%= supplier.getSupplier_type() %></td>
                         <td class="px-6 py-4 whitespace-nowrap"><%= supplier.isSupplier_active() %></td>
                         <td class="px-6 py-4 whitespace-nowrap"><%= supplier.getSupplier_rating() %></td>
-                        <td class="px-6 py-4 whitespace-nowrap"><%= supplier.getSupplier_s_id() %></td>
                         <td class="text-right px-4 whitespace-nowrap">
                             <!-- Edit Supplier -->
                             <button type="button" class="editSupplierBtn py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
-                                    data-supplier_id="<%= supplier.getSupplier_s_id() %>"
                                     data-supplier_name="<%= supplier.getSupplier_name() %>"
                                     data-supplier_email="<%= supplier.getSupplier_email() %>"
                                     data-supplier_phone="<%= supplier.getSupplier_phone() %>"
@@ -140,10 +138,7 @@
                             <option value="poor">Poor</option>
                         </select>
                     </div>
-                    <div class="col-span-1">
-                        <label for="supplier_s_id" class="block text-sm font-medium text-light-700">Supplier_S ID:</label>
-                        <input type="number" id="supplier_s_id" name="supplier_s_id" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                    </div>
+
                     <div class="col-span-2 flex justify-end">
                         <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             Save
@@ -259,7 +254,6 @@
             supplierFormElement.supplier_type.value = button.dataset.supplier_type;
             supplierFormElement.supplier_active.value = button.dataset.supplier_active;
             supplierFormElement.supplier_rating.value = button.dataset.supplier_rating;
-            supplierFormElement.supplier_s_id.value = button.dataset.supplier_id;
         });
     });
 </script>

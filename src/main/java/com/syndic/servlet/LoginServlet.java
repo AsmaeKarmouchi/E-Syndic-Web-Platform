@@ -35,6 +35,7 @@ public class LoginServlet extends HttpServlet {
 
     private PaymentDAO paymentDAO;
     private AccountDAO accountsDAO;
+    private SupplierDAO supplierDAO;
 
 
     public LoginServlet() {
@@ -143,9 +144,12 @@ public class LoginServlet extends HttpServlet {
                             list_Meetings = meetingDAO.getMeetingBySyndicId(syndicId);
                             session.setAttribute("list_Meetings", list_Meetings);
 
+                            List<Supplier> suppliers  = new ArrayList<>();
+                            supplierDAO = new SupplierDAOImpl(connection);
+                            suppliers = supplierDAO.getAllSuppliers(syndicId);
+                            session.setAttribute("suppliers", suppliers);
 
-
-                            List<Incident> list_Incidents = new ArrayList<>();
+                                List<Incident> list_Incidents = new ArrayList<>();
                             incidentDAO = new IncidentDAOImpl(connection);
                             list_Incidents = incidentDAO.getIncidentBySyndicId(syndicId);
                             session.setAttribute("list_Incidents", list_Incidents);
