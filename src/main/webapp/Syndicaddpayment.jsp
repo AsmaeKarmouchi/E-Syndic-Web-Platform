@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.syndic.beans.Payment" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="com.google.gson.Gson" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +13,8 @@
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
@@ -37,6 +40,8 @@
             Add Payment
           </button>
           <input type="number" id="filterMemberId" placeholder="Filter by Member ID" class="px-4 py-2 border rounded-md">
+          <input type="date" id="filterStartDate" class="px-4 py-2 border rounded-md" placeholder="Start Date">
+          <input type="date" id="filterEndDate" class="px-4 py-2 border rounded-md" placeholder="End Date">
           <button id="filterPaymentsBtn" class="inline-block px-4 py-2 text-white duration-150 font-medium bg-blue-600 rounded-lg hover:bg-blue-500 active:bg-blue-700 md:text-sm btn">
             Filter Payments
           </button>
@@ -145,6 +150,50 @@
 
 
     </div>
+
+    <!-- Conteneurs pour les graphiques -->
+    <div class="mt-12">
+      <h2 class="text-2xl font-bold text-gray-800">Payments Charts</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+        <!-- Graphique des paiements par date -->
+        <div class="bg-white border border-gray-200 rounded-lg shadow-md">
+          <div class="p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">Payments by Date</h3>
+            <canvas id="paymentsChart" width="400" height="250"></canvas>
+          </div>
+        </div>
+
+        <!-- Graphique des paiements par membre -->
+        <div class="bg-white border border-gray-200 rounded-lg shadow-md">
+          <div class="p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">Payments by Member</h3>
+            <canvas id="paymentsByMemberChart" width="400" height="250"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+        <!-- Graphique des paiements par type -->
+        <div class="bg-white border border-gray-200 rounded-lg shadow-md">
+          <div class="p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">Payments by Type</h3>
+            <canvas id="paymentsByTypeChart" width="400" height="250"></canvas>
+          </div>
+        </div>
+
+        <!-- Graphique des paiements par méthode -->
+        <div class="bg-white border border-gray-200 rounded-lg shadow-md">
+          <div class="p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">Payments by Method</h3>
+            <canvas id="paymentsByMethodChart" width="400" height="250"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
   </main>
   <div class="right">
     <div class="top">
@@ -256,23 +305,34 @@
     });
   });
 
-  // Event listener for Filter Payments button
   document.getElementById('filterPaymentsBtn').addEventListener('click', function () {
     var memberId = document.getElementById('filterMemberId').value;
+    var startDate = document.getElementById('filterStartDate').value;
+    var endDate = document.getElementById('filterEndDate').value;
 
-    // Fetch all rows in the table
     var rows = document.querySelectorAll('#paymentTable tbody tr');
     rows.forEach(function (row) {
       var memberIdCell = row.querySelector('td:nth-child(6)').textContent;
+      var dateCell = row.querySelector('td:nth-child(2)').textContent;
 
-      // Check if the row matches the filter criteria
-      if (memberId === '' || memberIdCell === memberId) {
-        row.style.display = '';
-      } else {
-        row.style.display = 'none';
+      var showRow = true;
+
+      if (memberId && memberIdCell !== memberId) {
+        showRow = false;
       }
+
+      if (startDate && new Date(dateCell) < new Date(startDate)) {
+        showRow = false;
+      }
+
+      if (endDate && new Date(dateCell) > new Date(endDate)) {
+        showRow = false;
+      }
+
+      row.style.display = showRow ? '' : 'none';
     });
   });
+
 
   // Event listener for Print Invoice button
   document.getElementById('printInvoiceBtn').addEventListener('click', function () {
@@ -285,6 +345,200 @@
     // Ouvrir la page dans une nouvelle fenêtre
     window.open(url, '_blank');
   });
+
+  // Préparation des données pour les graphiques
+  var paymentsData = <%= new Gson().toJson(payments) %>;
+
+  // Données pour le graphique de paiements
+  // Création d'un objet pour stocker les paiements par mois
+  var monthlyPayments = {};
+
+  // Remplissage de l'objet monthlyPayments avec les montants des paiements pour chaque mois
+  paymentsData.forEach(function(payment) {
+    var date = new Date(payment.date);
+    var month = date.getMonth() + 1; // Les mois vont de 0 à 11, donc on ajoute 1 pour obtenir les mois de 1 à 12
+
+    // Vérifier si le mois existe déjà dans l'objet monthlyPayments
+    if (monthlyPayments[month]) {
+      monthlyPayments[month] += payment.amount;
+    } else {
+      monthlyPayments[month] = payment.amount;
+    }
+  });
+
+  // Création de tableaux pour les labels (mois) et les montants des paiements
+  var paymentMonths = [];
+  var paymentAmounts = [];
+
+  // Boucle pour obtenir les données des 12 derniers mois
+  var currentDate = new Date();
+  for (var i = 0; i < 12; i++) {
+    var month = currentDate.getMonth() + 1; // Les mois vont de 0 à 11, donc on ajoute 1 pour obtenir les mois de 1 à 12
+    paymentMonths.unshift(month); // Ajouter le mois au début du tableau (pour avoir les mois du plus récent au plus ancien)
+
+    // Vérifier si le mois existe dans les paiements, sinon le montant sera 0
+    if (monthlyPayments[month]) {
+      paymentAmounts.unshift(monthlyPayments[month]);
+    } else {
+      paymentAmounts.unshift(0);
+    }
+
+    // Passer au mois précédent
+    currentDate.setMonth(currentDate.getMonth() - 1);
+  }
+
+  // Création du graphique des paiements
+  var paymentsChartCtx = document.getElementById('paymentsChart').getContext('2d');
+  var paymentsChart = new Chart(paymentsChartCtx, {
+    type: 'bar',
+    data: {
+      labels: paymentMonths,
+      datasets: [{
+        label: 'Payments',
+        data: paymentAmounts,
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  // Données pour le graphique par membre
+  var paymentByMemberData = {};
+  paymentsData.forEach(function(payment) {
+    var memberId = payment.member_id;
+    if (paymentByMemberData[memberId]) {
+      paymentByMemberData[memberId] += payment.amount;
+    } else {
+      paymentByMemberData[memberId] = payment.amount;
+    }
+  });
+
+  var memberLabels = Object.keys(paymentByMemberData);
+  var memberAmounts = Object.values(paymentByMemberData);
+
+  var paymentsByMemberChartCtx = document.getElementById('paymentsByMemberChart').getContext('2d');
+  var paymentsByMemberChart = new Chart(paymentsByMemberChartCtx, {
+    type: 'bar',
+    data: {
+      labels: memberLabels,
+      datasets: [{
+        label: 'Payments by Member',
+        data: memberAmounts,
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  // Données pour le graphique par type
+  var paymentTypes = {};
+  paymentsData.forEach(function(payment) {
+    if (payment.type in paymentTypes) {
+      paymentTypes[payment.type] += payment.amount;
+    } else {
+      paymentTypes[payment.type] = payment.amount;
+    }
+  });
+
+  var paymentTypesLabels = Object.keys(paymentTypes);
+  var paymentTypesData = Object.values(paymentTypes);
+
+  var paymentsByTypeChartCtx = document.getElementById('paymentsByTypeChart').getContext('2d');
+  var paymentsByTypeChart = new Chart(paymentsByTypeChartCtx, {
+    type: 'pie',
+    data: {
+      labels: paymentTypesLabels,
+      datasets: [{
+        label: 'Payments by Type',
+        data: paymentTypesData,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true
+    }
+  });
+
+  // Données pour le graphique par méthode
+  var paymentMethods = {};
+  paymentsData.forEach(function(payment) {
+    if (payment.method in paymentMethods) {
+      paymentMethods[payment.method] += payment.amount;
+    } else {
+      paymentMethods[payment.method] = payment.amount;
+    }
+  });
+
+  var paymentMethodsLabels = Object.keys(paymentMethods);
+  var paymentMethodsData = Object.values(paymentMethods);
+
+  var paymentsByMethodChartCtx = document.getElementById('paymentsByMethodChart').getContext('2d');
+  var paymentsByMethodChart = new Chart(paymentsByMethodChartCtx, {
+    type: 'doughnut',
+    data: {
+      labels: paymentMethodsLabels,
+      datasets: [{
+        label: 'Payments by Method',
+        data: paymentMethodsData,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true
+    }
+  });
+
+
+
+
 
 
 </script>
