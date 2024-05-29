@@ -52,7 +52,7 @@
 
         <div class="mt-12 shadow-sm border rounded-lg overflow-x-auto">
           <table class="min-w-full bg-white rounded-lg shadow-md" id="reclamationTable">
-            <thead class="bg-gray-800 text-white">
+            <thead class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold">
             <tr>
               <th class="py-3 px-6">Reclamation Date</th>
               <th class="py-3 px-6">Reclamation Type</th>

@@ -40,7 +40,7 @@
                 <div class="bg-white shadow-lg rounded-lg overflow-hidden">
                     <div class="px-6 py-4">
                         <div class="flex items-center justify-between" onclick="toggleDetails(this)">
-                            <div class="font-bold text-xl mb-2" ><%= syndic.getFirstName() %> <%= syndic.getLastName() %></div>
+                            <div class="font-bold text-xl mb-2" ><%= syndic.getFirstName() %> <%= syndic.getLastName() %> / Id : <%= syndic.getId() %> </div>
                             <!-- Placer le bouton toggle hidden ici -->
                             <button class="toggleDetailsBtn text-gray-600 focus:outline-none"  >
                                 <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

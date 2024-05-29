@@ -21,47 +21,41 @@
 
     <!------------MIDDLE ------------>
     <main>
-        <div class="right">
-            <!--------TOP-->
-            <!-------END OF TOP------>
-
-            <!---------RECENT UPDATES------>
-            <div class="recent-updates"></div>
-            <!-------END OF RECENT UPDATES---->
-
+        <div class="flex justify-between items-center p-6 bg-blue-300 shadow-md border rounded-md">
+            <h1 class="text-3xl font-bold text-gray-800">Add Suppliers</h1>
+            <div class="text-lg text-gray-600"><%=java.time.LocalDate.now()%></div>
         </div>
-        <!---------END OF RIGHT------->
-        <br><br><br><br><br><br>
+
+        <br><br><br><br>
         <div class="max-w-screen-xl mx-auto px-4 md:px-6">
             <div class="items-start justify-between md:flex">
                 <div class="max-w-lg">
-                    <h3 class="text-light-800 text-xl font-bold sm:text-2xl">Suppliers</h3>
+                    <h3 class="text-light-800 text-xl font-bold sm:text-2xl">List Suppliers</h3>
                 </div>
                 <div class="mt-3 md:mt-0">
                     <button id="addSupplierBtn" class="inline-block px-4 py-2 text-white duration-150 font-medium bg-indigo-600 rounded-lg hover:bg-indigo-500 active:bg-indigo-700 md:text-sm btn">Add Supplier</button>
                 </div>
             </div>
-            <div class="mt-12 shadow-sm border rounded-lg overflow-x-auto">
+            <div class="mt-12 shadow-lg border rounded-lg overflow-x-auto">
                 <table class="w-full table-auto text-sm text-left" id="supplierTable">
                     <!-- Table headers -->
-                    <thead class="bg-gray-50 text-gray-600 font-medium border-b">
+                    <thead class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold">
                     <tr>
-                        <th class="py-3 px-6">Name</th>
-                        <th class="py-3 px-6">Email</th>
-                        <th class="py-3 px-6">Phone</th>
-                        <th class="py-3 px-6">Type</th>
-                        <th class="py-3 px-6">Active</th>
-                        <th class="py-3 px-6">Rating</th>
-
-                        <th class="py-3 px-6">Actions</th>
+                        <th class="py-3 px-6 uppercase tracking-wider">Name</th>
+                        <th class="py-3 px-6 uppercase tracking-wider">Email</th>
+                        <th class="py-3 px-6 uppercase tracking-wider">Phone</th>
+                        <th class="py-3 px-6 uppercase tracking-wider">Type</th>
+                        <th class="py-3 px-6 uppercase tracking-wider">Active</th>
+                        <th class="py-3 px-6 uppercase tracking-wider">Rating</th>
+                        <th class="py-3 px-6 uppercase tracking-wider">Actions</th>
                     </tr>
                     </thead>
                     <!-- Table body -->
-                    <tbody class="text-gray-600 divide-y">
+                    <tbody class="text-gray-800 divide-y divide-gray-200">
                     <% List<Supplier> suppliers = (List<Supplier>) request.getAttribute("suppliers"); %>
                     <% if (suppliers != null && !suppliers.isEmpty()) { %>
                     <% for (Supplier supplier : suppliers) { %>
-                    <tr>
+                    <tr class="bg-white hover:bg-gray-100 transition duration-150">
                         <td class="px-6 py-4 whitespace-nowrap"><%= supplier.getSupplier_name() %></td>
                         <td class="px-6 py-4 whitespace-nowrap"><%= supplier.getSupplier_email() %></td>
                         <td class="px-6 py-4 whitespace-nowrap"><%= supplier.getSupplier_phone() %></td>
@@ -70,7 +64,7 @@
                         <td class="px-6 py-4 whitespace-nowrap"><%= supplier.getSupplier_rating() %></td>
                         <td class="text-right px-4 whitespace-nowrap">
                             <!-- Edit Supplier -->
-                            <button type="button" class="editSupplierBtn py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
+                            <button type="button" class="editSupplierBtn py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 transition duration-150 hover:bg-gray-50 rounded-lg"
                                     data-supplier_name="<%= supplier.getSupplier_name() %>"
                                     data-supplier_email="<%= supplier.getSupplier_email() %>"
                                     data-supplier_phone="<%= supplier.getSupplier_phone() %>"
@@ -83,7 +77,7 @@
                             <form action="addsupplier" method="post" class="inline">
                                 <input type="hidden" name="supplier_s_id" value="<%= supplier.getSupplier_s_id() %>">
                                 <input type="hidden" name="action" value="delete">
-                                <button type="submit" class="deleteSupplierBtn py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg">
+                                <button type="submit" class="deleteSupplierBtn py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 transition duration-150 hover:bg-gray-50 rounded-lg">
                                     Delete
                                 </button>
                             </form>
@@ -92,29 +86,30 @@
                     <% } %>
                     <% } else { %>
                     <tr>
-                        <td colspan="8" class="px-6 py-4">No suppliers available at the moment.</td>
+                        <td colspan="7" class="px-6 py-4 text-center text-gray-500">No suppliers available at the moment.</td>
                     </tr>
                     <% } %>
                     </tbody>
                 </table>
             </div>
 
+
             <!-- Formulaire d'ajout et de modification -->
-            <div id="SupplierForm" class="form hidden mt-6">
+            <div id="SupplierForm" class="form hidden mt-6 p-6 bg-blue-200 shadow-lg rounded-lg">
                 <form id="supplierFormElement" class="grid grid-cols-2 gap-6" action="addsupplier" method="post">
                     <input type="hidden" id="action" name="action" value="add">
 
                     <div class="col-span-1">
                         <label for="supplier_name" class="block text-sm font-medium text-light-700">Name:</label>
-                        <input type="text" id="supplier_name" name="supplier_name" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        <input type="text" id="supplier_name" name="supplier_name" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div class="col-span-1">
                         <label for="supplier_email" class="block text-sm font-medium text-light-700">Email:</label>
-                        <input type="email" id="supplier_email" name="supplier_email" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        <input type="email" id="supplier_email" name="supplier_email" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div class="col-span-1">
                         <label for="supplier_phone" class="block text-sm font-medium text-light-700">Phone:</label>
-                        <input type="text" id="supplier_phone" name="supplier_phone" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        <input type="text" id="supplier_phone" name="supplier_phone" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div class="col-span-1">
                         <label for="supplier_type" class="block text-sm font-medium text-light-700">Type:</label>

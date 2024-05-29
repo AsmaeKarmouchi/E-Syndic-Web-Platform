@@ -36,74 +36,74 @@
         <div class="mt-3 md:mt-0 flex gap-4">
 
       </div>
-      <div class="mt-12 shadow-sm border rounded-lg overflow-x-auto">
-        <table class="min-w-full bg-white rounded-lg shadow-md" id="paymentTable">
-          <thead class="bg-gray-800 text-white">
-          <tr>
-            <th class="py-3 px-6">Code</th>
-            <th class="py-3 px-6">Date</th>
-            <th class="py-3 px-6">Amount</th>
-            <th class="py-3 px-6">Method</th>
-            <th class="py-3 px-6">Type</th>
-            <th class="py-3 px-6">Member ID</th>
-            <th class="py-3 px-6">Status</th>
-            <th class="py-3 px-6">Actions</th>
-          </tr>
-          </thead>
-          <tbody class="text-gray-600 divide-y" id="paymentTableBody">
-          <% List<Payment> payments = (List<Payment>) session.getAttribute("payments"); %>
-          <% Member member = (Member) session.getAttribute("member"); %>
-          <% int memberId = member.getId();%>
-          <%
-            if (payments != null && !payments.isEmpty()) {
-              List<Payment> memberpayments = new ArrayList<>();
-              for (Payment mpayment : payments) {
-                if (mpayment.getMember_id() == memberId) {
-                  memberpayments.add(mpayment);
+        <div class="mt-12 shadow-md border border-gray-200 rounded-lg overflow-x-auto">
+          <table class="min-w-full bg-white rounded-lg" id="paymentTable">
+            <thead class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold">
+            <tr>
+              <th class="py-3 px-6 text-left">Code</th>
+              <th class="py-3 px-6 text-left">Date</th>
+              <th class="py-3 px-6 text-left">Amount</th>
+              <th class="py-3 px-6 text-left">Method</th>
+              <th class="py-3 px-6 text-left">Type</th>
+              <th class="py-3 px-6 text-left">Member ID</th>
+              <th class="py-3 px-6 text-left">Status</th>
+              <th class="py-3 px-6 text-right">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="text-gray-700 divide-y divide-gray-200" id="paymentTableBody">
+            <% List<Payment> payments = (List<Payment>) session.getAttribute("payments"); %>
+            <% Member member = (Member) session.getAttribute("member"); %>
+            <% int memberId = member.getId(); %>
+            <%
+              if (payments != null && !payments.isEmpty()) {
+                List<Payment> memberpayments = new ArrayList<>();
+                for (Payment mpayment : payments) {
+                  if (mpayment.getMember_id() == memberId) {
+                    memberpayments.add(mpayment);
+                  }
                 }
-              }
-
-          %>
-          <% for (Payment payment : memberpayments) { %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap"><%= payment.getCode() %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= payment.getDate() %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= payment.getAmount() %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= payment.getMethod() %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= payment.getType() %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= payment.getMember_id() %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= payment.getStatus() %></td>
-            <td class="text-right px-4 whitespace-nowrap">
-              <button class="editPaymentBtn py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
-                      data-code="<%= payment.getCode() %>"
-                      data-date="<%= payment.getDate() %>"
-                      data-amount="<%= payment.getAmount() %>"
-                      data-method="<%= payment.getMethod() %>"
-                      data-type="<%= payment.getType() %>"
-                      data-member_id="<%= payment.getMember_id() %>"
-                      data-status="<%= payment.getStatus() %>">
-                Pay
-              </button>
-              <form action="Syndicaddpayment" method="post" class="inline">
-                <input type="hidden" name="code" value="<%= payment.getCode() %>">
-                <input type="hidden" name="action" value="delete">
-                <button type="submit" class="deletePaymentBtn py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg">
-                  Delete
+            %>
+            <% for (Payment payment : memberpayments) { %>
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap"><%= payment.getCode() %></td>
+              <td class="px-6 py-4 whitespace-nowrap"><%= payment.getDate() %></td>
+              <td class="px-6 py-4 whitespace-nowrap"><%= payment.getAmount() %></td>
+              <td class="px-6 py-4 whitespace-nowrap"><%= payment.getMethod() %></td>
+              <td class="px-6 py-4 whitespace-nowrap"><%= payment.getType() %></td>
+              <td class="px-6 py-4 whitespace-nowrap"><%= payment.getMember_id() %></td>
+              <td class="px-6 py-4 whitespace-nowrap"><%= payment.getStatus() %></td>
+              <td class="text-right px-4 whitespace-nowrap">
+                <button class="editPaymentBtn py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 transition duration-150 hover:bg-gray-50 rounded-lg"
+                        data-code="<%= payment.getCode() %>"
+                        data-date="<%= payment.getDate() %>"
+                        data-amount="<%= payment.getAmount() %>"
+                        data-method="<%= payment.getMethod() %>"
+                        data-type="<%= payment.getType() %>"
+                        data-member_id="<%= payment.getMember_id() %>"
+                        data-status="<%= payment.getStatus() %>">
+                  Pay
                 </button>
-              </form>
-            </td>
-          </tr>
-          <% } %>
-          <% } else { %>
-          <tr>
-            <td colspan="9" class="px-6 py-4">No payments available at the moment.</td>
-          </tr>
-          <% } %>
-          </tbody>
-        </table>
-      </div>
+                <form action="Syndicaddpayment" method="post" class="inline">
+                  <input type="hidden" name="code" value="<%= payment.getCode() %>">
+                  <input type="hidden" name="action" value="delete">
+                  <button type="submit" class="deletePaymentBtn py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 transition duration-150 hover:bg-gray-50 rounded-lg">
+                    Delete
+                  </button>
+                </form>
+              </td>
+            </tr>
+            <% } %>
+            <% } else { %>
+            <tr>
+              <td colspan="8" class="px-6 py-4 text-center text-gray-500">No payments available at the moment.</td>
+            </tr>
+            <% } %>
+            </tbody>
+          </table>
+        </div>
 
-      <div id="PaymentForm" class="form hidden mt-6 p-6 bg-white shadow-lg rounded-lg">
+
+        <div id="PaymentForm" class="form hidden mt-6 p-6 bg-white shadow-lg rounded-lg">
         <form id="paymentFormElement" class="grid grid-cols-1 gap-6 md:grid-cols-2" action="Syndicaddpayment" method="post">
           <input type="hidden" id="action" name="action" value="add">
           <input type="hidden" id="edit_code" name="edit_code" value="">

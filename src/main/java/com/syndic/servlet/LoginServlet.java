@@ -57,7 +57,7 @@ public class LoginServlet extends HttpServlet {
         List<Syndic> List_syndics = new ArrayList<>();
 
         try {
-            //Syndic_con.getConnection();
+            Syndic_con.getConnection();
             connection = Syndic_con.getConnection();
             if (connection != null) {
 

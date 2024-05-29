@@ -17,7 +17,7 @@
     <jsp:include page="templates/syndic_sidenav.jsp" />
         <main>
 
-            <div class="flex justify-between items-center p-6 bg-gray-100 shadow-md border rounded-md">
+            <div class="flex justify-between items-center p-6 bg-blue-300 shadow-md border rounded-md">
                 <h1 class="text-3xl font-bold text-gray-800">Add Charge</h1>
                 <div class="text-lg text-gray-600"><%=java.time.LocalDate.now()%></div>
             </div>
@@ -42,24 +42,24 @@
                     </div>
                 </div>
 
-                <div class="mt-12 shadow-sm border rounded-lg overflow-x-auto">
+                <div class="mt-12 shadow-lg border rounded-lg overflow-x-auto">
                     <table class="min-w-full bg-white rounded-lg shadow-md" id="chargeTable">
-                        <thead class="bg-gray-800 text-white">
+                        <thead class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold">
                         <tr>
-                            <th class="py-3 px-6">Charge Name</th>
-                            <th class="py-3 px-6">Charge Description</th>
-                            <th class="py-3 px-6">Charge Amount</th>
-                            <th class="py-3 px-6">Frequency</th>
-                            <th class="py-3 px-6">Category</th>
-                            <th class="py-3 px-6">Date</th>
-                            <th class="py-3 px-6">Actions</th>
+                            <th class="py-3 px-6 uppercase tracking-wider">Charge Name</th>
+                            <th class="py-3 px-6 uppercase tracking-wider">Charge Description</th>
+                            <th class="py-3 px-6 uppercase tracking-wider">Charge Amount</th>
+                            <th class="py-3 px-6 uppercase tracking-wider">Frequency</th>
+                            <th class="py-3 px-6 uppercase tracking-wider">Category</th>
+                            <th class="py-3 px-6 uppercase tracking-wider">Date</th>
+                            <th class="py-3 px-6 uppercase tracking-wider">Actions</th>
                         </tr>
                         </thead>
-                        <tbody class="text-gray-600 divide-y" id="chargeTableBody">
-                            <% List<Charge> charges = (List<Charge>) request.getAttribute("charges"); %>
-                            <% if (charges != null && !charges.isEmpty()) { %>
-                            <% for (Charge charge : charges) { %>
-                        <tr>
+                        <tbody class="text-gray-800 divide-y divide-gray-200" id="chargeTableBody">
+                        <% List<Charge> charges = (List<Charge>) request.getAttribute("charges"); %>
+                        <% if (charges != null && !charges.isEmpty()) { %>
+                        <% for (Charge charge : charges) { %>
+                        <tr class="bg-white hover:bg-gray-100 transition duration-150">
                             <td class="px-6 py-4 whitespace-nowrap"><%= charge.getChargeName() %></td>
                             <td class="px-6 py-4 whitespace-nowrap"><%= charge.getChargeDescription() %></td>
                             <td class="px-6 py-4 whitespace-nowrap"><%= charge.getChargeAmount() %></td>
@@ -67,7 +67,7 @@
                             <td class="px-6 py-4 whitespace-nowrap"><%= charge.getChargeCategory() %></td>
                             <td class="px-6 py-4 whitespace-nowrap"><%= charge.getChargeDate() %></td>
                             <td class="text-right px-4 whitespace-nowrap">
-                                <button class="editChargeBtn py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
+                                <button class="editChargeBtn py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 transition duration-150 hover:bg-gray-50 rounded-lg"
                                         data-name="<%= charge.getChargeName() %>"
                                         data-description="<%= charge.getChargeDescription() %>"
                                         data-amount="<%= charge.getChargeAmount() %>"
@@ -79,50 +79,51 @@
                                 <form action="Syndicaddcharge" method="post" class="inline">
                                     <input type="hidden" name="code" value="<%= charge.getChargeName() %>">
                                     <input type="hidden" name="action" value="delete">
-                                    <button type="submit" class="deleteChargeBtn py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg">
+                                    <button type="submit" class="deleteChargeBtn py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 transition duration-150 hover:bg-gray-50 rounded-lg">
                                         Delete
                                     </button>
                                 </form>
                             </td>
                         </tr>
-                            <% } %>
-                            <% } else { %>
-                            <tr>
-                                <td colspan="7" class="px-6 py-4">No charges available at the moment.</td>
-                            </tr>
-                            <% } %>
+                        <% } %>
+                        <% } else { %>
+                        <tr>
+                            <td colspan="7" class="px-6 py-4 text-center text-gray-500">No charges available at the moment.</td>
+                        </tr>
+                        <% } %>
                         </tbody>
                     </table>
                 </div>
 
-                <div id="ChargeForm" class="form hidden mt-6 p-6 bg-white shadow-lg rounded-lg">
+
+                <div id="ChargeForm" class="form hidden mt-6 p-6 bg-blue-200 shadow-lg rounded-lg">
                     <form id="chargeFormElement" class="grid grid-cols-1 gap-6 md:grid-cols-2" action="Syndicaddcharge" method="post">
                         <input type="hidden" id="action" name="action" value="add">
                         <input type="hidden" id="edit_charge_id" name="edit_charge_id" value="">
 
                         <div class="col-span-1">
                             <label for="chargeName" class="block text-sm font-medium text-gray-700">Charge Name:</label>
-                            <input type="text" id="chargeName" name="chargeName" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <input type="text" id="chargeName" name="chargeName" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </div>
                         <div class="col-span-1">
                             <label for="chargeDescription" class="block text-sm font-medium text-gray-700">Charge Description:</label>
-                            <input type="text" id="chargeDescription" name="chargeDescription" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <input type="text" id="chargeDescription" name="chargeDescription" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </div>
                         <div class="col-span-1">
                             <label for="chargeAmount" class="block text-sm font-medium text-gray-700">Charge Amount:</label>
-                            <input type="text" id="chargeAmount" name="chargeAmount" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <input type="text" id="chargeAmount" name="chargeAmount" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </div>
                         <div class="col-span-1">
                             <label for="chargeFrequency" class="block text-sm font-medium text-gray-700">Charge Frequency:</label>
-                            <input type="text" id="chargeFrequency" name="chargeFrequency" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <input type="text" id="chargeFrequency" name="chargeFrequency" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </div>
                         <div class="col-span-1">
                             <label for="chargeCategory" class="block text-sm font-medium text-gray-700">Charge Category:</label>
-                            <input type="text" id="chargeCategory" name="chargeCategory" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <input type="text" id="chargeCategory" name="chargeCategory" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </div>
                         <div class="col-span-1">
                             <label for="chargeDate" class="block text-sm font-medium text-gray-700">Date:</label>
-                            <input type="date" id="chargeDate" name="chargeDate" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <input type="date" id="chargeDate" name="chargeDate" class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </div>
                         <div class="col-span-2 flex justify-end">
                             <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

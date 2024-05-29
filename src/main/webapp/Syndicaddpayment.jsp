@@ -50,25 +50,25 @@
           </button>
         </div>
       </div>
-      <div class="mt-12 shadow-sm border rounded-lg overflow-x-auto">
+      <div class="mt-12 shadow-lg border rounded-lg overflow-x-auto">
         <table class="min-w-full bg-white rounded-lg shadow-md" id="paymentTable">
-          <thead class="bg-gray-800 text-white">
+          <thead class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold">
           <tr>
-            <th class="py-3 px-6">Code</th>
-            <th class="py-3 px-6">Date</th>
-            <th class="py-3 px-6">Amount</th>
-            <th class="py-3 px-6">Method</th>
-            <th class="py-3 px-6">Type</th>
-            <th class="py-3 px-6">Member ID</th>
-            <th class="py-3 px-6">Status</th>
-            <th class="py-3 px-6">Actions</th>
+            <th class="py-3 px-6 uppercase tracking-wider">Code</th>
+            <th class="py-3 px-6 uppercase tracking-wider">Date</th>
+            <th class="py-3 px-6 uppercase tracking-wider">Amount</th>
+            <th class="py-3 px-6 uppercase tracking-wider">Method</th>
+            <th class="py-3 px-6 uppercase tracking-wider">Type</th>
+            <th class="py-3 px-6 uppercase tracking-wider">Member ID</th>
+            <th class="py-3 px-6 uppercase tracking-wider">Status</th>
+            <th class="py-3 px-6 uppercase tracking-wider">Actions</th>
           </tr>
           </thead>
-          <tbody class="text-gray-600 divide-y" id="paymentTableBody">
+          <tbody class="text-gray-800 divide-y divide-gray-200" id="paymentTableBody">
           <% List<Payment> payments = (List<Payment>) request.getAttribute("payments"); %>
           <% if (payments != null && !payments.isEmpty()) { %>
           <% for (Payment payment : payments) { %>
-          <tr>
+          <tr class="bg-white hover:bg-gray-100 transition duration-150">
             <td class="px-6 py-4 whitespace-nowrap"><%= payment.getCode() %></td>
             <td class="px-6 py-4 whitespace-nowrap"><%= payment.getDate() %></td>
             <td class="px-6 py-4 whitespace-nowrap"><%= payment.getAmount() %></td>
@@ -77,7 +77,7 @@
             <td class="px-6 py-4 whitespace-nowrap"><%= payment.getMember_id() %></td>
             <td class="px-6 py-4 whitespace-nowrap"><%= payment.getStatus() %></td>
             <td class="text-right px-4 whitespace-nowrap">
-              <button class="editPaymentBtn py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
+              <button class="editPaymentBtn py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 transition duration-150 hover:bg-gray-50 rounded-lg"
                       data-code="<%= payment.getCode() %>"
                       data-date="<%= payment.getDate() %>"
                       data-amount="<%= payment.getAmount() %>"
@@ -90,7 +90,7 @@
               <form action="Syndicaddpayment" method="post" class="inline">
                 <input type="hidden" name="code" value="<%= payment.getCode() %>">
                 <input type="hidden" name="action" value="delete">
-                <button type="submit" class="deletePaymentBtn py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg">
+                <button type="submit" class="deletePaymentBtn py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 transition duration-150 hover:bg-gray-50 rounded-lg">
                   Delete
                 </button>
               </form>
@@ -99,12 +99,13 @@
           <% } %>
           <% } else { %>
           <tr>
-            <td colspan="9" class="px-6 py-4">No payments available at the moment.</td>
+            <td colspan="8" class="px-6 py-4 text-center text-gray-500">No payments available at the moment.</td>
           </tr>
           <% } %>
           </tbody>
         </table>
       </div>
+
 
       <div id="PaymentForm" class="form hidden mt-6 p-6 bg-white shadow-lg rounded-lg">
         <form id="paymentFormElement" class="grid grid-cols-1 gap-6 md:grid-cols-2" action="Syndicaddpayment" method="post">

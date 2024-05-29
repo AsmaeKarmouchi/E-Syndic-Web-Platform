@@ -41,7 +41,7 @@
                         <!-- Syndic Information -->
                         <section class="py-1">
                             <div class="w-full px-4 mx-auto mt-6">
-                                <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-100 border-0">
+                                <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-green-100 border-0">
                                     <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
                                         <div class="text-center flex justify-between">
                                             <h6 class="text-gray-700 text-xl font-bold m-4">
@@ -112,7 +112,7 @@
                         <!-- Residence Information -->
                         <section class="py-1">
                             <div class="w-full px-4 mx-auto mt-6">
-                                <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-100 border-0">
+                                <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-red-100 border-0">
                                     <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
                                         <div class="text-center flex justify-between">
                                             <h6 class="text-gray-700 text-xl font-bold m-4">

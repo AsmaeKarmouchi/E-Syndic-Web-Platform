@@ -34,28 +34,27 @@
         <div class="max-w-screen-xl mx-auto px-4 md:px-6">
             <h3 class="text-gray-800 text-xl font-bold sm:text-2xl my-4">Members List</h3>
 
-            <div class="mt-12 shadow-sm border rounded-lg overflow-x-auto">
+            <div class="mt-12 shadow-lg border rounded-lg overflow-x-auto">
                 <table class="w-full table-auto text-sm text-left">
-                    <thead class="bg-gray-100 text-gray-600 font-medium border-b">
+                    <thead class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold">
                     <tr>
-                        <th class="py-3 px-6">ID</th>
-                        <th class="py-3 px-6">Prénom</th>
-                        <th class="py-3 px-6">Nom</th>
-                        <th class="py-3 px-6">Adresse</th>
-                        <th class="py-3 px-6">Téléphone</th>
-                        <th class="py-3 px-6">Email</th>
-                        <th class="py-3 px-3">Member_S_id</th>
+                        <th class="py-3 px-6 uppercase tracking-wider">ID</th>
+                        <th class="py-3 px-6 uppercase tracking-wider">Prénom</th>
+                        <th class="py-3 px-6 uppercase tracking-wider">Nom</th>
+                        <th class="py-3 px-6 uppercase tracking-wider">Adresse</th>
+                        <th class="py-3 px-6 uppercase tracking-wider">Téléphone</th>
+                        <th class="py-3 px-6 uppercase tracking-wider">Email</th>
+                        <th class="py-3 px-6 uppercase tracking-wider">Member_S_id</th>
                         <th class="py-3 px-6"></th>
                     </tr>
                     </thead>
-                    <tbody class="text-gray-600 divide-y" id="syndicsTableBody">
+                    <tbody class="text-gray-800 divide-y divide-gray-200" id="syndicsTableBody">
                     <%
                         if (session.getAttribute("list_members") != null) {
                             List<Member> membersList = (List<Member>) session.getAttribute("list_members");
                             for (Member member : membersList) {
-
                     %>
-                    <tr>
+                    <tr class="bg-white hover:bg-gray-100 transition duration-150">
                         <td class="px-6 py-4 whitespace-nowrap"><%= member.getId() %></td>
                         <td class="px-6 py-4 whitespace-nowrap"><%= member.getFirstName() %></td>
                         <td class="px-6 py-4 whitespace-nowrap"><%= member.getLastName() %></td>
@@ -64,10 +63,9 @@
                         <td class="px-6 py-4 whitespace-nowrap"><%= member.getMail() %></td>
                         <td class="px-6 py-4 whitespace-nowrap"><%= member.getMemberSId() %></td>
                         <td class="text-right px-4 whitespace-nowrap">
-
                             <form action="deletesyndic" method="post" class="inline">
                                 <input type="hidden" name="id" value="<%= member.getId() %>">
-                                <button type="submit" class="deleteSyndicBtn py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 rounded-lg">
+                                <button type="submit" class="py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 transition duration-150 rounded-lg">
                                     Delete
                                 </button>
                             </form>
@@ -78,7 +76,7 @@
                     } else {
                     %>
                     <tr>
-                        <td colspan="8" class="px-6 py-4">Aucun membre trouvé.</td>
+                        <td colspan="8" class="px-6 py-4 text-center text-gray-500">Aucun membre trouvé.</td>
                     </tr>
                     <%
                         }
@@ -86,6 +84,7 @@
                     </tbody>
                 </table>
             </div>
+
         </div>
 
 

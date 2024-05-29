@@ -36,46 +36,46 @@
       <div class="items-start justify-between md:flex">
         <div class="mt-3 md:mt-0 flex gap-4">
           <input type="number" id="filterId" placeholder="Filter by syndic ID" class="px-4 py-2 border rounded-md">
-          <input type="number" id="filterdate" placeholder="Filter by date " class="px-4 py-2 border rounded-md">
+          <input type="date" id="filterStartDate" class="px-4 py-2 border rounded-md" placeholder="Start Date">
+          <input type="date" id="filterEndDate" class="px-4 py-2 border rounded-md" placeholder="End Date">
           <button id="filterPaymentsBtn" class="inline-block px-4 py-2 text-white duration-150 font-medium bg-blue-600 rounded-lg hover:bg-blue-500 active:bg-blue-700 md:text-sm btn">
             Filter Payments Flows
           </button>
 
         </div>
       </div>
-      <div class="mt-12 shadow-sm border rounded-lg overflow-x-auto">
+      <div class="mt-12 shadow-lg border rounded-lg overflow-x-auto">
         <table class="w-full table-auto text-sm text-left" id="paymentTable">
-          <thead class="bg-gray-50 text-gray-600 font-medium border-b">
+          <thead class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold">
           <tr>
-            <th class="py-3 px-6">Syndicid</th>
-            <th class="py-3 px-6">Flow Type</th>
-            <th class="py-3 px-6">Amount</th>
-            <th class="py-3 px-6">description</th>
-            <th class="py-3 px-6">Date Transaction</th>
+            <th class="py-3 px-6 uppercase tracking-wider">Syndicid</th>
+            <th class="py-3 px-6 uppercase tracking-wider">Flow Type</th>
+            <th class="py-3 px-6 uppercase tracking-wider">Amount</th>
+            <th class="py-3 px-6 uppercase tracking-wider">Description</th>
+            <th class="py-3 px-6 uppercase tracking-wider">Date Transaction</th>
           </tr>
           </thead>
-          <tbody class="text-gray-600 divide-y" id="paymentTableBody">
-          <!-- Boucle sur chaque syndic -->
-            <% List<PaymentFlow> paymentsflow = (List<PaymentFlow>) session.getAttribute("paymentsflow"); %>
-            <% if ( paymentsflow != null && !paymentsflow.isEmpty())  { %>
-            <% for  (PaymentFlow pf : paymentsflow) { %>
-          <tr>
+          <tbody class="text-gray-800 divide-y divide-gray-200" id="paymentTableBody">
+          <% List<PaymentFlow> paymentsflow = (List<PaymentFlow>) session.getAttribute("paymentsflow"); %>
+          <% if (paymentsflow != null && !paymentsflow.isEmpty()) { %>
+          <% for (PaymentFlow pf : paymentsflow) { %>
+          <tr class="bg-white hover:bg-gray-100 transition duration-150">
             <td class="px-6 py-4 whitespace-nowrap"><%= pf.getSyndicId() %></td>
             <td class="px-6 py-4 whitespace-nowrap"><%= pf.getFlowType() %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= pf.getAmount()%></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= pf.getDescription()%></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%=  pf.getTransactionDate()%></td>
-            </td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= pf.getAmount() %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= pf.getDescription() %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= pf.getTransactionDate() %></td>
           </tr>
-            <% } %>
-            <% } else { %>
+          <% } %>
+          <% } else { %>
           <tr>
-            <td colspan="9" class="px-6 py-4">No payments available at the moment.</td>
+            <td colspan="5" class="px-6 py-4 text-center text-gray-500">No payments available at the moment.</td>
           </tr>
           <% } %>
           </tbody>
         </table>
       </div>
+
     </div>
   </main>
   <div class="right">
@@ -162,40 +162,61 @@
 
   // Event listener for Filter Payments button
   document.getElementById('filterPaymentsBtn').addEventListener('click', function () {
-    var Id = document.getElementById('filterId').value;
-    var date = document.getElementById('filterdate').value;
+    var syndicId = document.getElementById('filterId').value;
+    var startDate = document.getElementById('filterStartDate').value;
+    var endDate = document.getElementById('filterEndDate').value;
 
-    // Fetch all rows in the table
     var rows = document.querySelectorAll('#paymentTable tbody tr');
     rows.forEach(function (row) {
-      var IdCell = row.querySelector('td:nth-child(1)').textContent;
+      var memberIdCell = row.querySelector('td:nth-child(1)').textContent;
       var dateCell = row.querySelector('td:nth-child(5)').textContent;
 
-      // Convert the dateCell and filter date to Date objects for comparison
-      var dateCellDate = new Date(dateCell);
-      var filterDate = new Date(date);
+      var showRow = true;
 
-      // Check if the row matches the filter criteria
-      if ((Id === '' || IdCell === Id) &&
-              (date === '' || dateCellDate.getTime() === filterDate.getTime())) {
-        row.style.display = '';
-      } else {
-        row.style.display = 'none';
+      if (syndicId && memberIdCell !== syndicId) {
+        showRow = false;
       }
+
+      if (startDate && new Date(dateCell) < new Date(startDate)) {
+        showRow = false;
+      }
+
+      if (endDate && new Date(dateCell) > new Date(endDate)) {
+        showRow = false;
+      }
+
+      row.style.display = showRow ? '' : 'none';
     });
   });
 
   // Event listener for Print Invoice button
   document.getElementById('printInvoiceBtn').addEventListener('click', function () {
     // Récupérer les valeurs des filtres
-    var Id = document.getElementById('filterId').value;
-    var date = document.getElementById('filterdate').value;
+    var syndicId = document.getElementById('filterId').value;
+    var startDate = document.getElementById('filterStartDate').value;
+    var endDate = document.getElementById('filterEndDate').value;
 
-    // Construire l'URL avec les paramètres de filtrage
-    var url = "paymentflowPrint.jsp?Id=" + Id + "&date=" + date;
+    var rows = document.querySelectorAll('#paymentTable tbody tr');
+    rows.forEach(function (row) {
+      var memberIdCell = row.querySelector('td:nth-child(1)').textContent;
+      var dateCell = row.querySelector('td:nth-child(5)').textContent;
 
-    // Ouvrir la page dans une nouvelle fenêtre
-    window.open(url, '_blank');
+      var showRow = true;
+
+      if (syndicId && memberIdCell !== syndicId) {
+        showRow = false;
+      }
+
+      if (startDate && new Date(dateCell) < new Date(startDate)) {
+        showRow = false;
+      }
+
+      if (endDate && new Date(dateCell) > new Date(endDate)) {
+        showRow = false;
+      }
+
+      row.style.display = showRow ? '' : 'none';
+    });
   });
 </script>
 

@@ -78,11 +78,6 @@
             <h3 class="ml-4">News-comm</h3>
         </a>
 
-        <a href="charge" id="charge" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
-            <i class='bx bx-money text-2xl'></i>
-            <h3 class="ml-4">Charges</h3>
-        </a>
-
         <a href="login" id="logout-link" class="flex items-center p-4 text-gray-700 hover:bg-red-600 hover:text-white transition duration-200">
             <i class='bx bx-log-out-circle text-2xl'></i>
             <h3 class="ml-4">Log Out</h3>

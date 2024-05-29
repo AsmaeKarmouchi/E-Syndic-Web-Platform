@@ -23,7 +23,7 @@
 
     <main>
 
-        <div class="flex justify-between items-center p-6 bg-gray-100 shadow-md border rounded-md">
+        <div class="flex justify-between items-center p-6 bg-blue-300 shadow-md border rounded-md">
             <h1 class="text-3xl font-bold text-gray-800">Add Task</h1>
             <div class="text-lg text-gray-600"><%=java.time.LocalDate.now()%></div>
         </div>
@@ -53,43 +53,41 @@
             </div>
 
 
-            <div class="mt-12 shadow-sm border rounded-lg overflow-x-auto">
+            <div class="mt-12 shadow-lg border rounded-lg overflow-x-auto">
                 <table class="min-w-full bg-white rounded-lg shadow-md" id="taskTable">
-                    <thead class="bg-gray-800 text-white">
+                    <thead class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold">
                     <tr>
-                        <th class="py-3 px-6">Task Name</th>
-                        <th class="py-3 px-6">Task Description</th>
-                        <th class="py-3 px-6">Task Amount</th>
-                        <th class="py-3 px-6">Due Date</th>
-                        <th class="py-3 px-6">Status</th>
-                        <th class="py-3 px-6">Actions</th>
-
+                        <th class="py-3 px-6 uppercase tracking-wider">Task Name</th>
+                        <th class="py-3 px-6 uppercase tracking-wider">Task Description</th>
+                        <th class="py-3 px-6 uppercase tracking-wider">Task Amount</th>
+                        <th class="py-3 px-6 uppercase tracking-wider">Due Date</th>
+                        <th class="py-3 px-6 uppercase tracking-wider">Status</th>
+                        <th class="py-3 px-6 uppercase tracking-wider">Actions</th>
                     </tr>
                     </thead>
-                    <tbody class="text-gray-600 divide-y" id="taskTableBody">
+                    <tbody class="text-gray-800 divide-y divide-gray-200" id="taskTableBody">
                     <% List<Task> tasks = (List<Task>) request.getAttribute("tasks"); %>
                     <% if (tasks != null && !tasks.isEmpty()) { %>
                     <% for (Task task : tasks) { %>
-                    <tr>
+                    <tr class="bg-white hover:bg-gray-100 transition duration-150">
                         <td class="px-6 py-4 whitespace-nowrap"><%= task.getTaskName() %></td>
                         <td class="px-6 py-4 whitespace-nowrap"><%= task.getTaskDescription() %></td>
-                        <td class="px-6 py-4 whitespace-nowrap"><%= task.getTaskAmount()%></td>
+                        <td class="px-6 py-4 whitespace-nowrap"><%= task.getTaskAmount() %></td>
                         <td class="px-6 py-4 whitespace-nowrap"><%= task.getTaskDueDate() %></td>
                         <td class="px-6 py-4 whitespace-nowrap"><%= task.getTaskStatus() %></td>
                         <td class="text-right px-4 whitespace-nowrap">
-                            <button class="editPaymentBtn py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
+                            <button class="editTaskBtn py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 transition duration-150 hover:bg-gray-50 rounded-lg"
                                     data-name="<%= task.getTaskName() %>"
                                     data-description="<%= task.getTaskDescription() %>"
                                     data-amount="<%= task.getTaskAmount() %>"
                                     data-date="<%= task.getTaskDueDate() %>"
                                     data-status="<%= task.getTaskStatus() %>">
-
                                 Edit
                             </button>
                             <form action="Syndicaddtask" method="post" class="inline">
                                 <input type="hidden" name="code" value="<%= task.getTaskName() %>">
                                 <input type="hidden" name="action" value="delete">
-                                <button type="submit" class="deletePaymentBtn py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg">
+                                <button type="submit" class="deleteTaskBtn py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 transition duration-150 hover:bg-gray-50 rounded-lg">
                                     Delete
                                 </button>
                             </form>
@@ -98,37 +96,38 @@
                     <% } %>
                     <% } else { %>
                     <tr>
-                        <td colspan="9" class="px-6 py-4">No tasks available at the moment.</td>
+                        <td colspan="6" class="px-6 py-4 text-center text-gray-500">No tasks available at the moment.</td>
                     </tr>
                     <% } %>
                     </tbody>
                 </table>
             </div>
 
-            <div id="TaskForm" class="form hidden mt-6 p-6 bg-white shadow-lg rounded-lg">
+
+            <div id="TaskForm" class="form hidden mt-6 p-6 bg-blue-200 shadow-lg rounded-lg">
                 <form id="taskFormElement" class="grid grid-cols-1 gap-6 md:grid-cols-2" action="Syndicaddtask" method="post">
                     <input type="hidden" id="action" name="action" value="add">
                     <input type="hidden" id="edit_task_id" name="edit_task_id" value="">
 
                     <div class="col-span-1">
                         <label for="taskName" class="block text-sm font-medium text-gray-700">Task Name:</label>
-                        <input type="text" id="taskName" name="taskName" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        <input type="text" id="taskName" name="taskName" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div class="col-span-1">
                         <label for="taskDescription" class="block text-sm font-medium text-gray-700">Task Description:</label>
-                        <input type="text" id="taskDescription" name="taskDescription" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        <input type="text" id="taskDescription" name="taskDescription" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div class="col-span-1">
                         <label for="taskAmount" class="block text-sm font-medium text-gray-700">Task Amount:</label>
-                        <input type="text" id="taskAmount" name="taskAmount" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        <input type="text" id="taskAmount" name="taskAmount" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div class="col-span-1">
                         <label for="taskDueDate" class="block text-sm font-medium text-gray-700">Due Date:</label>
-                        <input type="date" id="taskDueDate" name="taskDueDate" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        <input type="date" id="taskDueDate" name="taskDueDate" class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div class="col-span-1">
                         <label for="taskStatus" class="block text-sm font-medium text-gray-700">Status:</label>
-                        <input type="text" id="taskStatus" name="taskStatus" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        <input type="text" id="taskStatus" name="taskStatus" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div>
                         <label for="supplier" class="text-sm font-medium text-gray-600">Supplier</label>

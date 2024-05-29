@@ -103,8 +103,8 @@
                 <%= member.getCoOwnershipFee() %> dh
               </div>
             </div>
-
-
+          </div>
+          <div>
             <tr>
 
               <!-- Vérifiez si le paiement a été effectué pour ce mois -->
@@ -164,6 +164,8 @@
 
           </div>
         </div>
+      </div>
+
         <% } // Fin de la boucle sur les membres %>
         <%} else { %>
         <p class="text-gray-600">Aucun membre trouvé.</p>
@@ -174,7 +176,7 @@
           </div>
         </div>
 
-      </div>
+
 
 
   </main>
