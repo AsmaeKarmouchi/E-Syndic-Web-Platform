@@ -36,6 +36,7 @@ public class LoginServlet extends HttpServlet {
     private PaymentDAO paymentDAO;
     private AccountDAO accountsDAO;
     private SupplierDAO supplierDAO;
+    private ReclamationDAO reclamationDAO;
 
 
     public LoginServlet() {
@@ -180,6 +181,9 @@ public class LoginServlet extends HttpServlet {
                             session.setAttribute("member", member);
 
                             int syndicId = member.getMemberSId();
+                            session.setAttribute("syndicId", syndicId);
+                            int memberId = member.getId();
+                            session.setAttribute("memberId", memberId);
                             List<Incident> list_Incidents = new ArrayList<>();
                             incidentDAO = new IncidentDAOImpl(connection);
                             list_Incidents = incidentDAO.getIncidentBySyndicId(syndicId);
@@ -199,7 +203,6 @@ public class LoginServlet extends HttpServlet {
                             payments = paymentDAO.getPaymentsBySyndic(syndicId);
                             session.setAttribute("payments", payments);
 
-
                             List<Member> list_members;
                             memberDAO = new MemberProfileDAOImpl(connection);
                             list_members = memberDAO.getMembersBySyndic(syndicId);
@@ -209,6 +212,11 @@ public class LoginServlet extends HttpServlet {
                             newsDAO = new NewsDAOImpl(connection);
                             list_News = newsDAO.getNewsBySyndicId(syndicId);
                             session.setAttribute("list_News", list_News);
+
+                            List<Reclamation> reclamations;
+                            reclamationDAO = new ReclamationDAOImpl(connection);
+                            reclamations = reclamationDAO.getAllReclamationsByMemberId(memberId);
+                            session.setAttribute("reclamations", reclamations);
 
                             TaskDAOImpl taskDAO = new TaskDAOImpl(connection);
                             List<Task> tasks = taskDAO.getTasksBySyndic(syndicId);

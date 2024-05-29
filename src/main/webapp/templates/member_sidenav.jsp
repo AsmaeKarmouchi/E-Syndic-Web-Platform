@@ -47,6 +47,10 @@
             <i class='bx bxs-error-circle text-2xl'></i>
             <h3 class="ml-4">My payments</h3>
         </a>
+        <a href="Memberaddreclamation" id="addReclamation" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+            <i class='fas fa-money-bill-wave text-2xl'></i>
+            <h3 class="ml-4">add reclamation</h3>
+        </a>
 
         <a href="membernews.jsp" id="membernews" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
             <i class='bx bxs-error-circle text-2xl'></i>

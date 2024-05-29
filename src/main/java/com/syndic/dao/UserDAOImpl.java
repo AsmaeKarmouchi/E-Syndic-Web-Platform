@@ -14,7 +14,7 @@ public class UserDAOImpl extends AbstractDAOA implements UserDAO {
 
     private static final String SELECT_USER_BY_ID = "SELECT * FROM users WHERE id=?";
     private static final String SELECT_USER_BY_EMAIL = "SELECT * FROM users WHERE u_email=?";
-    private static final String INSERT_USER = "INSERT INTO users (u_name, u_email, u_pwd,checkadmin) VALUES (?, ?, ?,1)";
+    private static final String INSERT_USER = "INSERT INTO users (u_name, u_email, u_pwd,checkadmin) VALUES (?, ?, ?,0)";
     private static final String INSERT_SYNDIC = "INSERT INTO users (u_name, u_email, u_pwd,checkadmin) VALUES (?, ?, ?,2)";
 
     private static final String UPDATE_USER = "UPDATE users SET u_name=?, u_email=?, u_pwd=? WHERE id=?";
