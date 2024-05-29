@@ -109,7 +109,14 @@
     <servlet-name>MemberAddReclamationServlet</servlet-name>
     <url-pattern>/Memberaddreclamation</url-pattern>
   </servlet-mapping>
-
+  <servlet>
+    <servlet-name>DeleteSyndicServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.DeleteSyndicServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteSyndicServlet</servlet-name>
+    <url-pattern>/DeleteSyndicServlet</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>MemberProfileServlet</servlet-name>
     <servlet-class>com.syndic.servlet.MemberProfileServlet</servlet-class>
@@ -185,7 +192,7 @@
 
   <servlet>
     <servlet-name>AddTaskServlet</servlet-name>
-    <servlet-class>com.syndic.servlet.AddTaskServlet</servlet-class>
+    <servlet-class>com.syndic.servlet.SyndicAddTaskServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AddTaskServlet</servlet-name>

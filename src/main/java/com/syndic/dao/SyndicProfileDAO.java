@@ -1,8 +1,6 @@
 package com.syndic.dao;
 
-import com.syndic.beans.Member;
 import com.syndic.beans.Syndic;
-import com.syndic.beans.User;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -25,4 +23,5 @@ public interface SyndicProfileDAO {
     List<Syndic> getSyndic() throws SQLException;
 
     int getSyndicIdByResidence(String residence)throws SQLException ;
+     boolean deleteSyndic(int syndicId) ;
 }

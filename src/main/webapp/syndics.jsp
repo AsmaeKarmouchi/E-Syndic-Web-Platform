@@ -214,8 +214,9 @@
                                 data-email="<%= syndic.getMail() %>">
                             Edit
                         </button>
-                        <form action="deletesyndic" method="post" class="inline">
-                            <input type="hidden" name="id" value="<%= syndic.getId() %>">
+                        <form action="DeleteSyndicServlet" method="post" class="inline">
+                            <input type="hidden" name="syndicId" value="<%= syndic.getId() %>">
+                            <input type="hidden" name="action" value="delete">
                             <button type="submit" class="deleteSyndicBtn py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg">
                                 Delete
                             </button>
