@@ -191,6 +191,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>AlertServlet</servlet-name>
+    <servlet-class>com.syndic.servlet.AlertServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AlertServlet</servlet-name>
+    <url-pattern>/membersbysyndic</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>AddTaskServlet</servlet-name>
     <servlet-class>com.syndic.servlet.SyndicAddTaskServlet</servlet-class>
   </servlet>

@@ -45,7 +45,7 @@
     <%
       List<Payment> listPayments = (List<Payment>) session.getAttribute("payments");%>
 
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1" >
       <% if (session.getAttribute("list_members") != null) {
         List<Member> membersList = (List<Member>) session.getAttribute("list_members");
         for (Member member : membersList) {
@@ -61,31 +61,50 @@
           </h2>
 
           <div class="hidden bg-gray-100 shadow-md rounded-lg p-4 mb-4">
+
             <div class="flex flex-wrap -mx-2">
               <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
-                <p class="text-gray-800"><strong>Meeting ID:</strong> <%= member.getFirstName() %></p>
-                <p class="text-gray-800"><strong>Date:</strong> <%= member.getMail() %></p>
+                <p class="text-gray-800"><strong>First Name:</strong> <%= member.getFirstName() %></p>
+                <p class="text-gray-800"><strong>Last Name:</strong> <%= member.getLastName() %></p>
+                <p class="text-gray-800"><strong>Phone Number:</strong> <%= member.getPhoneNumber() %></p>
               </div>
 
               <div class="w-full md:w-1/2 px-2">
-                <p class="text-gray-800"><strong>Location:</strong> <%= member.getFirstName() %></p>
-                <p class="text-gray-800"><strong>Time:</strong> <%= member.getFirstName() %></p>
-              </div>
-
-            </div>
-            <div class="w-full px-2 mt-4">
-              <strong class="text-gray-800 block mb-2">Residence:</strong>
-              <div class="bg-white rounded-lg shadow-md p-4">
-                <%= member.getFirstName() %>
+                <p class="text-gray-800"><strong>Full Address:</strong> <%= member.getFulladdress() %></p>
+                <p class="text-gray-800"><strong>Postal Code:</strong> <%= member.getCodepostal() %></p>
+                <p class="text-gray-800"><strong>Property Code:</strong> <%= member.getPropertyCode() %></p>
               </div>
             </div>
 
             <div class="w-full px-2 mt-4">
-              <strong class="text-gray-800 block mb-2">Type:</strong>
+              <strong class="text-gray-800 block mb-2">Email:</strong>
               <div class="bg-white rounded-lg shadow-md p-4">
-                <%= member.getFirstName() %>
+                <%= member.getMail() %>
               </div>
             </div>
+
+            <div class="w-full px-2 mt-4">
+              <strong class="text-gray-800 block mb-2">Property Type:</strong>
+              <div class="bg-white rounded-lg shadow-md p-4">
+                <%= member.getPropertyType() %>
+              </div>
+            </div>
+
+            <div class="w-full px-2 mt-4">
+              <strong class="text-gray-800 block mb-2">Property Size:</strong>
+              <div class="bg-white rounded-lg shadow-md p-4">
+                <%= member.getPropertySize() %> sqm
+              </div>
+            </div>
+
+            <div class="w-full px-2 mt-4">
+              <strong class="text-gray-800 block mb-2">Co-Ownership Fee:</strong>
+              <div class="bg-white rounded-lg shadow-md p-4">
+                <%= member.getCoOwnershipFee() %> dh
+              </div>
+            </div>
+
+
             <tr>
 
               <!-- Vérifiez si le paiement a été effectué pour ce mois -->
@@ -129,6 +148,19 @@
                 </table>
               </td>
             </tr>
+
+            <!-- Add the alert button with enhanced styling and aligned to the left -->
+            <div class="w-full px-4 mt-4 button-left">
+              <form action="membersbysyndic" method="POST">
+                <input type="hidden" name="memberId" value="<%= member.getId() %>">
+                <input type="hidden" name="memberFirstName" value="<%= member.getFirstName() %>">
+                <input type="hidden" name="memberLastName" value="<%= member.getLastName() %>">
+                <input type="hidden" name="membermail" value="<%= member.getMail() %>">
+                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold px-5 py-2 rounded shadow-lg transition duration-300">
+                  Alerte <%= member.getFirstName() %> <%= member.getLastName() %>  to pay
+                </button>
+              </form>
+            </div>
 
           </div>
         </div>

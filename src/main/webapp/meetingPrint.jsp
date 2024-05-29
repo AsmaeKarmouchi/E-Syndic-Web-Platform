@@ -76,10 +76,9 @@
                     <span class="mt-1 block text-gray-500 dark:text-neutral-500">3682303</span>
 
                     <address class="mt-4 not-italic text-gray-800 dark:text-neutral-200">
-                        45 Roker Terrace<br>
-                        Latheronwheel<br>
-                        KW5 8NW, London<br>
-                        United Kingdom<br>
+                        Avenue des FAR<br>
+                        Hay Riad, Rabat<br>
+                        10000, Maroc<br>
                     </address>
                 </div>
                 <!-- Col -->
@@ -89,12 +88,12 @@
             <!-- Grid -->
             <div class=" m-4 mt-8 grid sm:grid-cols-2 gap-3">
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">Bill to:</h3>
-                    <h3 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">Sara Williams</h3>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">PV Meeting about:</h3>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-neutral-200"> <%= meeting.getMeetingTopic() %> </h3>
                     <address class="mt-2 not-italic text-gray-500 dark:text-neutral-500">
-                        280 Suzanne Throughway,<br>
-                        Breannabury, OR 45801,<br>
-                        United States<br>
+                        Avenue des FAR<br>
+                        Hay Riad, Rabat<br>
+                        10000, Maroc<br>
                     </address>
                 </div>
 
@@ -173,12 +172,11 @@
                 <h4 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">Thank you!</h4>
                 <p class="text-gray-500 dark:text-neutral-500">If you have any questions concerning this invoice, use the following contact information:</p>
                 <div class="mt-2">
-                    <p class="block text-sm font-medium text-gray-800 dark:text-neutral-200">example@site.com</p>
-                    <p class="block text-sm font-medium text-gray-800 dark:text-neutral-200">+1 (062) 109-9222</p>
+                    <p class="block text-sm font-medium text-gray-800 dark:text-neutral-200">ensiassyndic@gmail.com</p>
+                    <p class="block text-sm font-medium text-gray-800 dark:text-neutral-200">+212 (0)5 37 77 77 77</p>
                 </div>
             </div>
 
-            <p class="mt-5 text-sm text-gray-500 dark:text-neutral-500">© 2022 Preline.</p>
         </div>
         <!-- End Card -->
         </div>

@@ -245,3 +245,156 @@ kubectl get deployment
 
 
 ========================================================================================================================
+
+
+voila tout mes données et donne moi les graphes
+public List<Charge> getCharges() throws SQLException {
+        List<Charge> charges = new ArrayList<>();
+        String query = "SELECT * FROM charges ";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int chargesId = resultSet.getInt("charges_id");
+                    String chargeCode = resultSet.getString("charge_code");
+                    String chargeName = resultSet.getString("charge_name");
+                    String chargeDescription = resultSet.getString("charge_description");
+                    Double chargeAmount = resultSet.getDouble("charge_amount");
+                    String chargeFrequency = resultSet.getString("charge_frequency");
+                    String chargeCategory = resultSet.getString("charge_category");
+                    String chargeDueMonth = resultSet.getString("charge_due_month");
+
+                    Charge charge = new Charge(chargesId, chargeCode, chargeName, chargeDescription, chargeAmount, chargeFrequency, chargeCategory, chargeDueMonth);
+                    charges.add(charge);
+                }
+            }
+        }
+        return charges; // Retourner la liste de réunions
+    }
+
+public List<Incident> getIncidentBySyndicId(int syndicId) throws SQLException {
+        List<Incident> incidents = new ArrayList<>();
+        String query = "SELECT * FROM incidents WHERE incident_s_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, syndicId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+
+                    int incidentId = resultSet.getInt("incident_id");
+                    Date incidentDate = resultSet.getDate("incident_date");
+                    String incidentType = resultSet.getString("incident_type");
+                    String incidentDescription = resultSet.getString("incident_description");
+                    String incidentStatus = resultSet.getString("incident_status");
+                    Date incidentResolutionDate = resultSet.getDate("incident_resolution_date");
+
+                    Incident incident= new Incident(incidentId, incidentDate, incidentType, incidentDescription, incidentStatus, incidentResolutionDate, syndicId);
+                    incidents.add(incident); // Ajouter la réunion à la liste
+                }
+            }
+        }
+        return incidents; // Retourner la liste de réunions
+    }
+
+
+ public List<Meeting> getMeetingBySyndicId(int syndicId) throws SQLException {
+        List<Meeting> meetings = new ArrayList<>();
+        String query = "SELECT * FROM meetings WHERE meeting_s_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, syndicId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int meetingId = resultSet.getInt("meeting_id");
+                    Date meetingDate = resultSet.getDate("meeting_date");
+                    String meetingTime = resultSet.getString("meeting_time");
+                    String meetingTopic = resultSet.getString("meeting_topic");
+                    String meetingLocation = resultSet.getString("meeting_location");
+                    String meetingType = resultSet.getString("meeting_type");
+                    String meetingResidence = resultSet.getString("meeting_residence");
+                    String meetingConclusion = resultSet.getString("meeting_conclusion");
+                    Meeting meeting = new Meeting(meetingId, meetingDate, meetingTime, meetingTopic, meetingLocation,
+                            meetingType, meetingResidence, meetingConclusion, syndicId);
+                    meetings.add(meeting); // Ajouter la réunion à la liste
+                }
+            }
+        }
+        return meetings; // Retourner la liste de réunions
+    }
+
+
+    public List<Payment> getPaymentsBySyndic(int syndicId) {
+        List<Payment> payments = new ArrayList<>();
+        String query = "SELECT * FROM payments WHERE payment_syndic_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, syndicId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Payment payment = new Payment();
+                    payment.setCode(rs.getInt("payment_code"));
+                    payment.setDate(rs.getString("payment_date"));
+                    payment.setAmount(rs.getDouble("payment_amount"));
+                    payment.setMethod(rs.getString("payment_method"));
+                    payment.setType(rs.getString("payment_type"));
+                  //  payment.setAccount_id(rs.getInt("payment_account_id"));
+                    payment.setMember_id(rs.getInt("payment_member_id"));
+                    payment.setStatus(rs.getString("payment_status"));
+                    payment.setSyndicId(rs.getInt("payment_syndic_id"));
+                    payments.add(payment);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return payments;}
+
+
+
+public List<Task> getTasksBySyndic(int syndicId) {
+        List<Task> tasks = new ArrayList<>();
+        String query = "SELECT * FROM tasks WHERE task_s_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, syndicId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Task task = new Task();
+                    task.setTaskId(rs.getInt("task_id"));
+                    task.setTaskName(rs.getString("task_name"));
+                    task.setTaskDescription(rs.getString("task_description"));
+                    task.setTaskDueDate(rs.getString("task_due_date"));
+                    task.setTaskStatus(rs.getString("task_status"));
+                    task.setTaskSId(rs.getInt("task_s_id"));
+                    task.setTaskAmount(rs.getDouble("task_amount"));
+                    task.setTaskSupplierId(rs.getInt("task_supplier_id"));
+
+                    tasks.add(task);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tasks;
+
+
+ public List<Supplier> getAllSuppliers(int syndicId) {
+        List<Supplier> suppliers = new ArrayList<>();
+        String sql = "SELECT * FROM Suppliers WHERE supplier_s_id = ? ";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, syndicId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Supplier supplier = new Supplier();
+
+                    supplier.setSupplier_id(rs.getInt("supplier_id"));
+                    supplier.setSupplier_name(rs.getString("supplier_name"));
+                    supplier.setSupplier_email(rs.getString("supplier_email"));
+                    supplier.setSupplier_phone(rs.getString("supplier_phone"));
+                    supplier.setSupplier_type(rs.getString("supplier_type"));
+                    supplier.setSupplier_active(rs.getBoolean("supplier_active"));
+                    supplier.setSupplier_rating(rs.getString("supplier_rating"));
+                    suppliers.add(supplier);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return suppliers;
