@@ -19,11 +19,12 @@ public class SyndicProfileDAOImpl implements SyndicProfileDAO {
     @Override
     public void addSyndic(Syndic syndic) throws SQLException {
 
-        String query = "INSERT INTO syndics (s_fulladdress, s_iduser , residence_name) VALUES (?, ?, ?)";
+        String query = "INSERT INTO syndics (s_fulladdress, s_iduser , residence_name , residence_type) VALUES (?, ?, ? ,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, syndic.getFulladdress());
             preparedStatement.setInt(2, syndic.getUserId());
             preparedStatement.setString(3, syndic.getResidenceName());
+            preparedStatement.setString(4,syndic.getResidenceType());
             preparedStatement.executeUpdate();
         }
     }

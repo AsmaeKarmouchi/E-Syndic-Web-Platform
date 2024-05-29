@@ -5,7 +5,10 @@ import com.syndic.beans.PaymentFlow;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PaymentFlowDAOImpl implements PaymentFlowDAO {
     private Connection connection;
@@ -24,5 +27,49 @@ public class PaymentFlowDAOImpl implements PaymentFlowDAO {
             pstmt.setDate(5, new java.sql.Date(paymentFlow.getTransactionDate().getTime()));
             pstmt.executeUpdate();
         }
+    }
+
+    @Override
+    public List<PaymentFlow> getAllPaymentFlows() throws SQLException {
+        List<PaymentFlow> paymentFlows = new ArrayList<>();
+        String query = "SELECT id, syndic_id, flow_type, amount, description, transaction_date FROM payment_flows";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                PaymentFlow paymentFlow = new PaymentFlow();
+                paymentFlow.setId(rs.getInt("id"));
+                paymentFlow.setSyndicId(rs.getInt("syndic_id"));
+                paymentFlow.setFlowType(rs.getInt("flow_type"));
+                paymentFlow.setAmount(rs.getBigDecimal("amount").doubleValue());
+                paymentFlow.setDescription(rs.getString("description"));
+                paymentFlow.setTransactionDate(rs.getDate("transaction_date"));
+                paymentFlows.add(paymentFlow);
+            }
+        }
+        return paymentFlows;
+    }
+    @Override
+    public List<PaymentFlow> getPaymentFlowsBySyndicId(int syndicId) throws SQLException {
+        List<PaymentFlow> paymentFlows = new ArrayList<>();
+        String query = "SELECT id, syndic_id, flow_type, amount, description, transaction_date FROM payment_flows WHERE syndic_id = ?";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, syndicId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    PaymentFlow paymentFlow = new PaymentFlow();
+                    paymentFlow.setId(rs.getInt("id"));
+                    paymentFlow.setSyndicId(rs.getInt("syndic_id"));
+                    paymentFlow.setFlowType(rs.getInt("flow_type"));
+                    paymentFlow.setAmount(rs.getBigDecimal("amount").doubleValue());
+                    paymentFlow.setDescription(rs.getString("description"));
+                    paymentFlow.setTransactionDate(rs.getDate("transaction_date"));
+                    paymentFlows.add(paymentFlow);
+                }
+            }
+        }
+        return paymentFlows;
     }
 }

@@ -40,6 +40,7 @@ public class AddSyndicServlet extends HttpServlet {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String type = request.getParameter("type");
         Connection connection = null;
         // Crypter le mot de passe avant de l'ajouter à la base de données
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
@@ -61,6 +62,7 @@ public class AddSyndicServlet extends HttpServlet {
                     Syndic newSyndic = new Syndic();
                     newSyndic.setUserId(userId);
                     newSyndic.setResidenceName(residence);
+                    newSyndic.setResidenceType(type);
                     SyndicProfileDAO syndicDAO = new SyndicProfileDAOImpl(connection);
                     syndicDAO.addSyndic(newSyndic);
                     int syndicId = syndicDAO.getSyndicIdByUserId(userId);

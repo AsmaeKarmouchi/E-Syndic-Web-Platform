@@ -213,3 +213,6 @@ ALTER TABLE tasks
 ADD COLUMN task_supplier_id INT,
 ADD CONSTRAINT fk_task_supplier
 FOREIGN KEY (task_supplier_id) REFERENCES suppliers(supplier_id);
+
+ALTER TABLE syndics
+MODIFY COLUMN residence_type VARCHAR(250);

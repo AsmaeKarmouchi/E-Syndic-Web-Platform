@@ -38,6 +38,8 @@ public class LoginServlet extends HttpServlet {
     private SupplierDAO supplierDAO;
     private ReclamationDAO reclamationDAO;
 
+    private PaymentFlowDAO paymentflowDAO;
+
 
     public LoginServlet() {
         super();
@@ -55,7 +57,7 @@ public class LoginServlet extends HttpServlet {
         List<Syndic> List_syndics = new ArrayList<>();
 
         try {
-            Syndic_con.getConnection();
+            //Syndic_con.getConnection();
             connection = Syndic_con.getConnection();
             if (connection != null) {
 
@@ -100,6 +102,11 @@ public class LoginServlet extends HttpServlet {
                             payments = paymentDAO.getAllPayments();
                             session.setAttribute("payments", payments);
 
+                            List<PaymentFlow> paymentsflow;
+                            paymentflowDAO = new PaymentFlowDAOImpl(connection);
+                            paymentsflow = paymentflowDAO.getAllPaymentFlows();
+                            session.setAttribute("paymentsflow", paymentsflow);
+
                             List<Syndic> List_syndics;
                             syndicDAO = new SyndicProfileDAOImpl(connection);
                             List_syndics = syndicDAO.getSyndic();
@@ -134,6 +141,12 @@ public class LoginServlet extends HttpServlet {
                             paymentDAO = new PaymentDAOImpl(connection);
                             payments = paymentDAO.getPaymentsBySyndic(syndicId);
                             session.setAttribute("payments", payments);
+
+                            List<PaymentFlow> paymentsflow;
+                            paymentflowDAO = new PaymentFlowDAOImpl(connection);
+                            paymentsflow = paymentflowDAO.getPaymentFlowsBySyndicId(syndicId);
+                            System.out.println("pf  :"+paymentsflow);
+                            session.setAttribute("paymentsflow", paymentsflow);
 
                             List<Member> list_members;
                             memberDAO = new MemberProfileDAOImpl(connection);

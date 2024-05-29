@@ -21,6 +21,8 @@
     <welcome-file>addpayment.jsp</welcome-file>
     <welcome-file>addsupplier.jsp</welcome-file>
     <welcome-file>syndicprofile.jsp</welcome-file>
+    <welcome-file>paymentsflows.jsp</welcome-file>
+    <welcome-file>paymentflow.jsp</welcome-file>
   </welcome-file-list>
 
   <servlet>
