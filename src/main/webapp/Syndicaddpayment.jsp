@@ -338,9 +338,26 @@
   document.getElementById('printInvoiceBtn').addEventListener('click', function () {
     // Récupérer les valeurs des filtres
     var memberId = document.getElementById('filterMemberId').value;
+    var startDate = document.getElementById('filterStartDate').value;
+    var endDate = document.getElementById('filterEndDate').value;
 
     // Construire l'URL avec les paramètres de filtrage
-    var url = "syndicpaymentPrint.jsp?memberId=" + memberId;
+    var url = "syndicpaymentPrint.jsp?";
+    var params = [];
+
+    if (memberId) {
+      params.push("memberId=" + encodeURIComponent(memberId));
+    }
+    if (startDate) {
+      params.push("startDate=" + encodeURIComponent(startDate));
+    }
+    if (endDate) {
+      params.push("endDate=" + encodeURIComponent(endDate));
+    }
+
+    if (params.length > 0) {
+      url += params.join("&");
+    }
 
     // Ouvrir la page dans une nouvelle fenêtre
     window.open(url, '_blank');

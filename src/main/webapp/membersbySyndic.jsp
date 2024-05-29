@@ -1,6 +1,11 @@
 <%@ page import="com.syndic.beans.Member" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.syndic.beans.Syndic" %>
+<%@ page import="com.syndic.beans.Payment" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="static com.itextpdf.kernel.xmp.PdfConst.Date" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -28,92 +33,116 @@
 
   <!------------MIDDLE ------------>
   <main>
-    <% Syndic syndic = (Syndic) session.getAttribute("syndic2"); %>
-    <!------------MIDDLE ------------>
-    <div class="max-w-screen-xl mx-auto px-4 md:px-6">
+      <% Syndic syndic = (Syndic) session.getAttribute("syndic2");%>
 
-      <div class="recent-updates w-full">
-        <h1 class="text-3xl font-bold text-blue-600 mb-4">Welcome <%= syndic.getFirstName() %>!</h1>
-        <div class="form-container">
-
-      <h3 class="text-light-800 text-xl font-bold sm:text-2xl m-4">Liste des résidents</h3>
-
-
-      <div class="mt-12 shadow-sm border rounded-lg overflow-x-auto">
-        <table class="w-full table-auto text-sm text-left">
-          <thead class="bg-gray-50 text-gray-600 font-medium border-b">
-          <tr>
-            <th class="py-3 px-6">Prénom</th>
-            <th class="py-3 px-6">Nom</th>
-            <th class="py-3 px-6">Code Postal</th>
-            <th class="py-3 px-6">Téléphone</th>
-            <th class="py-3 px-6">Adresse</th>
-            <th class="py-3 px-6">Email</th>
-            <th class="py-3 px-6">Code Propriété</th>
-            <th class="py-3 px-6">Adresse Propriété</th>
-            <th class="py-3 px-6">Type de Propriété</th>
-            <th class="py-3 px-6">Taille de la Propriété</th>
-            <th class="py-3 px-6">Frais de Copropriété</th>
-          </tr>
-          </thead>
-          <tbody class="text-gray-600 divide-y" id="syndicsTableBody">
-          <%
-            if (session.getAttribute("list_members") != null) {
-              List<Member> membersList = (List<Member>) session.getAttribute("list_members");
-              for (Member member : membersList) {
-          %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap"><%= member.getFirstName() %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= member.getLastName() %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= member.getCodepostal() %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= member.getPhoneNumber() %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= member.getFulladdress() %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= member.getMail() %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= member.getPropertyCode() %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= member.getPropertyAddress() %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= member.getPropertyType() %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= member.getPropertySize() %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= member.getCoOwnershipFee() %></td>
-            <td class="text-right px-4 whitespace-nowrap">
-              <button class="editSyndicBtn py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
-                      data-firstname="<%= member.getFirstName() %>"
-                      data-lastname="<%= member.getLastName() %>"
-                      data-codepostal="<%= member.getCodepostal() %>"
-                      data-phonenumber="<%= member.getPhoneNumber() %>"
-                      data-address="<%= member.getFulladdress() %>"
-                      data-email="<%= member.getMail() %>"
-                      data-propertycode="<%= member.getPropertyCode() %>"
-                      data-propertyaddress="<%= member.getPropertyAddress() %>"
-                      data-propertytype="<%= member.getPropertyType() %>"
-                      data-propertysize="<%= member.getPropertySize() %>"
-                      data-coownershipfee="<%= member.getCoOwnershipFee() %>">
-              </button>
-              <form action="deletesyndic" method="post" class="inline">
-                <input type="hidden" name="id" value="<%= member.getId() %>">
-                <button type="submit" class="deleteSyndicBtn py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg">
-                  Delete
-                </button>
-
-              </form>
-            </td>
-          </tr>
-          <%
-            }
-          } else {
-          %>
-          <tr>
-            <td colspan="8" class="px-6 py-4">Aucun member trouvé.</td>
-          </tr>
-          <%
-            }
-          %>
-          </tbody>
-        </table>
-      </div>
-        </div>
-      </div>
+    <div class="flex justify-between items-center p-6 bg-blue-300 shadow-md border rounded-md">
+      <h1 class="text-3xl font-bold text-gray-800"> Members of <%= syndic.getResidenceName() %> Residence </h1>
+      <div class="text-lg text-gray-600"><%=java.time.LocalDate.now()%></div>
     </div>
+    <br><br><br>
 
+    <div>
+    <%
+      List<Payment> listPayments = (List<Payment>) session.getAttribute("payments");%>
+
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1">
+      <% if (session.getAttribute("list_members") != null) {
+        List<Member> membersList = (List<Member>) session.getAttribute("list_members");
+        for (Member member : membersList) {
+          int memberId = member.getId();
+      %>
+      <div class="bg-white overflow-hidden shadow-sm rounded-lg">
+        <div class="p-6">
+          <h2 class="flex items-center justify-between text-xl font-semibold mb-4" onclick="toggleDetails(this)" >
+            <span><%= member.getFirstName() %> <%= member.getLastName() %></span>
+            <button class="bg-orange-500 text-white px-3 py-1 rounded" >
+              More
+            </button>
+          </h2>
+
+          <div class="hidden bg-gray-100 shadow-md rounded-lg p-4 mb-4">
+            <div class="flex flex-wrap -mx-2">
+              <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
+                <p class="text-gray-800"><strong>Meeting ID:</strong> <%= member.getFirstName() %></p>
+                <p class="text-gray-800"><strong>Date:</strong> <%= member.getMail() %></p>
+              </div>
+
+              <div class="w-full md:w-1/2 px-2">
+                <p class="text-gray-800"><strong>Location:</strong> <%= member.getFirstName() %></p>
+                <p class="text-gray-800"><strong>Time:</strong> <%= member.getFirstName() %></p>
+              </div>
+
+            </div>
+            <div class="w-full px-2 mt-4">
+              <strong class="text-gray-800 block mb-2">Residence:</strong>
+              <div class="bg-white rounded-lg shadow-md p-4">
+                <%= member.getFirstName() %>
+              </div>
+            </div>
+
+            <div class="w-full px-2 mt-4">
+              <strong class="text-gray-800 block mb-2">Type:</strong>
+              <div class="bg-white rounded-lg shadow-md p-4">
+                <%= member.getFirstName() %>
+              </div>
+            </div>
+            <tr>
+
+              <!-- Vérifiez si le paiement a été effectué pour ce mois -->
+              <td class="px-6 py-4 whitespace-nowrap">
+                <table>
+                  <tbody>
+            <tr>
+            <!-- Remplacez 'listPayments' par votre liste de paiements filtrée pour ce membre -->
+            <%
+
+              SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+              for (int i = 1; i <= 12; i++) { // Boucle sur les 12 mois
+                boolean paymentDone = false; // Par défaut, aucun paiement n'est effectué pour ce mois
+                // Vérifiez si le paiement pour ce mois existe dans la liste de paiements filtrée
+                for (Payment payment : listPayments) {
+                  Calendar calendar = Calendar.getInstance();
+                  calendar.setTime(dateFormat.parse(payment.getDate()));
+                  int mounth = calendar.get(Calendar.MONTH) + 1;
+                  if (payment.getMember_id() == memberId && mounth == i) {
+                    paymentDone = true; // Paiement effectué
+                    break;
+                  }
+                }
+            %>
+
+
+              <!-- Vérifiez si le paiement a été effectué pour ce mois -->
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span> M-<%= i %> <br></span>
+                <div class="h-8 w-8 rounded-full flex items-center justify-center <% if (paymentDone) { %>bg-green-500<% } else { %>bg-red-500<% } %>">
+                  <i class="bx <% if (paymentDone) { %>bx-check<% } else { %>bx-x<% } %> text-white"></i>
+                </div>
+
+              </td>
+
+            <% } // Fin de la boucle sur les mois %>
+
+            </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+
+          </div>
+        </div>
+        <% } // Fin de la boucle sur les membres %>
+        <%} else { %>
+        <p class="text-gray-600">Aucun membre trouvé.</p>
+        <% } %>
+
+
+
+          </div>
+        </div>
+
+      </div>
 
 
   </main>
@@ -211,7 +240,16 @@
   <!---------END OF RIGHT------->
 
 </div>
+
+
 <script>
+
+  function toggleDetails(element) {
+    var details = element.nextElementSibling;
+    details.classList.toggle("hidden");
+  }
+
+
   function showDetails(id) {
     // Afficher les détails du syndic correspondant
     document.getElementById("details_" + id).style.display = "table-row";
