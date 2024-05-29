@@ -1,8 +1,6 @@
 package com.syndic.dao;
 
-import com.syndic.beans.Payment;
 import com.syndic.beans.Syndic;
-import com.syndic.beans.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,31 +43,31 @@ public class SyndicProfileDAOImpl implements SyndicProfileDAO {
         }
     }
 
-        @Override
-        public void updateSyndic2(Syndic syndic) throws SQLException {
-            String query = "UPDATE syndics SET s_firstname = ?, s_lastname = ?, s_codepostal = ?, s_phonenumber = ?, s_fulladdress = ?, s_mail = ?, residence_name = ?, residence_address = ?, residence_type = ?, residence_size = ?, apartment_count = ?, villa_count = ?, garden_count = ?, pool_count = ?, parking_count = ?, elevators_count = ?, security_system = ? , account = ? WHERE s_iduser = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, syndic.getFirstName());
-                preparedStatement.setString(2, syndic.getLastName());
-                preparedStatement.setString(3, syndic.getCodepostal());
-                preparedStatement.setString(4, syndic.getPhoneNumber());
-                preparedStatement.setString(5, syndic.getFulladdress());
-                preparedStatement.setString(6, syndic.getMail());
-                preparedStatement.setString(7, syndic.getResidenceName());
-                preparedStatement.setString(8, syndic.getResidenceAddress());
-                preparedStatement.setString(9, syndic.getResidenceType());
-                preparedStatement.setInt(10, syndic.getResidenceSize());
-                preparedStatement.setInt(11, syndic.getApartmentCount());
-                preparedStatement.setInt(12, syndic.getVillaCount());
-                preparedStatement.setInt(13, syndic.getGardenCount());
-                preparedStatement.setInt(14, syndic.getPoolCount());
-                preparedStatement.setInt(15, syndic.getParkingCount());
-                preparedStatement.setInt(16, syndic.getElevatorsCount());
-                preparedStatement.setBoolean(17, syndic.isSecuritySystem());
-              //  preparedStatement.setInt(18, syndic.getUserId());
-                preparedStatement.setDouble(18, syndic.getAccount());
-                preparedStatement.executeUpdate();
-            }
+    @Override
+    public void updateSyndic2(Syndic syndic) throws SQLException {
+        String query = "UPDATE syndics SET s_firstname = ?, s_lastname = ?, s_codepostal = ?, s_phonenumber = ?, s_fulladdress = ?, s_mail = ?, residence_name = ?, residence_address = ?, residence_type = ?, residence_size = ?, apartment_count = ?, villa_count = ?, garden_count = ?, pool_count = ?, parking_count = ?, elevators_count = ?, security_system = ? , account = ? WHERE s_iduser = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, syndic.getFirstName());
+            preparedStatement.setString(2, syndic.getLastName());
+            preparedStatement.setString(3, syndic.getCodepostal());
+            preparedStatement.setString(4, syndic.getPhoneNumber());
+            preparedStatement.setString(5, syndic.getFulladdress());
+            preparedStatement.setString(6, syndic.getMail());
+            preparedStatement.setString(7, syndic.getResidenceName());
+            preparedStatement.setString(8, syndic.getResidenceAddress());
+            preparedStatement.setString(9, syndic.getResidenceType());
+            preparedStatement.setInt(10, syndic.getResidenceSize());
+            preparedStatement.setInt(11, syndic.getApartmentCount());
+            preparedStatement.setInt(12, syndic.getVillaCount());
+            preparedStatement.setInt(13, syndic.getGardenCount());
+            preparedStatement.setInt(14, syndic.getPoolCount());
+            preparedStatement.setInt(15, syndic.getParkingCount());
+            preparedStatement.setInt(16, syndic.getElevatorsCount());
+            preparedStatement.setBoolean(17, syndic.isSecuritySystem());
+            //  preparedStatement.setInt(18, syndic.getUserId());
+            preparedStatement.setDouble(18, syndic.getAccount());
+            preparedStatement.executeUpdate();
+        }
     }
 
     @Override
@@ -104,6 +102,7 @@ public class SyndicProfileDAOImpl implements SyndicProfileDAO {
         }
         return null; // Retourne null si aucun synd n'est trouvé avec cet identifiant utilisateur.
     }
+
     @Override
     public int getSyndicIdByUserId(int userId) throws SQLException {
         String sql = "SELECT s_id FROM syndics WHERE s_iduser = ?";
@@ -130,7 +129,7 @@ public class SyndicProfileDAOImpl implements SyndicProfileDAO {
 
                     Syndic syndic = new Syndic();
                     syndic.setId(id);
-                    return  syndic ;
+                    return syndic;
                 }
             }
         }
@@ -182,29 +181,29 @@ public class SyndicProfileDAOImpl implements SyndicProfileDAO {
             while (resultSet.next()) {
                 Syndic syndic = new Syndic();
 
-                    syndic.setId(resultSet.getInt("s_id"));
-                    syndic.setFirstName(resultSet.getString("s_firstname"));
-                    syndic.setLastName(resultSet.getString("s_lastname"));
-                    syndic.setFulladdress(resultSet.getString("s_fulladdress"));
-                    syndic.setCodepostal(resultSet.getString("s_codepostal"));
-                    syndic.setPhoneNumber(resultSet.getString("s_phonenumber"));
-                    syndic.setMail(resultSet.getString("s_mail"));
-                    syndic.setUserId(resultSet.getInt("s_iduser"));
+                syndic.setId(resultSet.getInt("s_id"));
+                syndic.setFirstName(resultSet.getString("s_firstname"));
+                syndic.setLastName(resultSet.getString("s_lastname"));
+                syndic.setFulladdress(resultSet.getString("s_fulladdress"));
+                syndic.setCodepostal(resultSet.getString("s_codepostal"));
+                syndic.setPhoneNumber(resultSet.getString("s_phonenumber"));
+                syndic.setMail(resultSet.getString("s_mail"));
+                syndic.setUserId(resultSet.getInt("s_iduser"));
 
-                    syndic.setResidenceName(resultSet.getString("residence_Name"));
-                    syndic.setResidenceAddress(resultSet.getString("residence_Address"));
-                    syndic.setResidenceType(resultSet.getString("residence_Type"));
-                    syndic.setResidenceSize(resultSet.getInt("residence_Size"));
-                    syndic.setApartmentCount(resultSet.getInt("apartment_Count"));
-                    syndic.setVillaCount(resultSet.getInt("villa_Count"));
-                    syndic.setGardenCount(resultSet.getInt("garden_Count"));
-                    syndic.setPoolCount(resultSet.getInt("pool_Count"));
-                    syndic.setParkingCount(resultSet.getInt("parking_Count"));
-                    syndic.setElevatorsCount(resultSet.getInt("elevators_Count"));
-                    syndic.setSecuritySystem(resultSet.getBoolean("security_System"));
-                    syndic.setAccount(resultSet.getInt("account"));
+                syndic.setResidenceName(resultSet.getString("residence_Name"));
+                syndic.setResidenceAddress(resultSet.getString("residence_Address"));
+                syndic.setResidenceType(resultSet.getString("residence_Type"));
+                syndic.setResidenceSize(resultSet.getInt("residence_Size"));
+                syndic.setApartmentCount(resultSet.getInt("apartment_Count"));
+                syndic.setVillaCount(resultSet.getInt("villa_Count"));
+                syndic.setGardenCount(resultSet.getInt("garden_Count"));
+                syndic.setPoolCount(resultSet.getInt("pool_Count"));
+                syndic.setParkingCount(resultSet.getInt("parking_Count"));
+                syndic.setElevatorsCount(resultSet.getInt("elevators_Count"));
+                syndic.setSecuritySystem(resultSet.getBoolean("security_System"));
+                syndic.setAccount(resultSet.getInt("account"));
 
-                    syndics.add(syndic);
+                syndics.add(syndic);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -212,6 +211,7 @@ public class SyndicProfileDAOImpl implements SyndicProfileDAO {
 
         return syndics;
     }
+
     // Implémentation de la méthode getSyndicIdByResidence
     @Override
     public int getSyndicIdByResidence(String residence) throws SQLException {
@@ -227,6 +227,19 @@ public class SyndicProfileDAOImpl implements SyndicProfileDAO {
             }
         }
         return syndicId;
+    }
+
+    @Override
+    public boolean deleteSyndic(int syndicId) {
+        String query = "DELETE FROM syndics WHERE s_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, syndicId);
+            int rowsDeleted = preparedStatement.executeUpdate();
+            return rowsDeleted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
 

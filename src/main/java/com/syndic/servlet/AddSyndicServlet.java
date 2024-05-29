@@ -65,25 +65,25 @@ public class AddSyndicServlet extends HttpServlet {
                     syndicDAO.addSyndic(newSyndic);
                     int syndicId = syndicDAO.getSyndicIdByUserId(userId);
                     // Create two accounts for the syndic
-                    AccountDAO accountDAO = new AccountDAOImpl(connection);
+                   // AccountDAO accountDAO = new AccountDAOImpl(connection);
 
-                    int lastAccountNumber = accountDAO.getLastAccountNumber();
+                    // int lastAccountNumber = accountDAO.getLastAccountNumber();
 
-                    Account primaryAccount = new Account();
-                    primaryAccount.setAccountNumber(lastAccountNumber + 1);
-                    primaryAccount.setAccountType("Principal");
-                    primaryAccount.setAccountBalance(BigDecimal.ZERO);
-                    primaryAccount.setAccountCreatedAt(new Date());
-                    primaryAccount.setAccountSyndicId(syndicId);
-                    accountDAO.createAccount(primaryAccount);
+                    // Account primaryAccount = new Account();
+                    //  primaryAccount.setAccountNumber(lastAccountNumber + 1);
+                    //  primaryAccount.setAccountType("Principal");
+                    // primaryAccount.setAccountBalance(BigDecimal.ZERO);
+                    // primaryAccount.setAccountCreatedAt(new Date());
+                    // primaryAccount.setAccountSyndicId(syndicId);
+                    //  accountDAO.createAccount(primaryAccount);
 
-                    Account secondaryAccount = new Account();
-                    secondaryAccount.setAccountNumber(lastAccountNumber + 2);
-                    secondaryAccount.setAccountType("Secondaire");
-                    secondaryAccount.setAccountBalance(BigDecimal.ZERO);
-                    secondaryAccount.setAccountCreatedAt(new Date());
-                    secondaryAccount.setAccountSyndicId(syndicId);
-                    accountDAO.createAccount(secondaryAccount);
+                    //  Account secondaryAccount = new Account();
+                    //  secondaryAccount.setAccountNumber(lastAccountNumber + 2);
+                    //  secondaryAccount.setAccountType("Secondaire");
+                    // secondaryAccount.setAccountBalance(BigDecimal.ZERO);
+                    // secondaryAccount.setAccountCreatedAt(new Date());
+                    // secondaryAccount.setAccountSyndicId(syndicId);
+                    // accountDAO.createAccount(secondaryAccount);
 
 
                     // Définir un attribut de session pour le message

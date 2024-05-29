@@ -14,6 +14,7 @@
 <%@ page import="com.syndic.dao.MemberProfileDAO" %>
 <%@ page import="com.syndic.dao.MemberProfileDAOImpl" %>
 <%@ page import="com.syndic.beans.Syndic" %>
+<%@ page import="jakarta.servlet.http.HttpSession" %>
 <%
     int userCount = 0;
     int taskCount=0;
@@ -23,25 +24,35 @@
     int memberCount = 0;
 
     Connection connection = null;
+    Syndic syndic = (Syndic) session.getAttribute("syndic");
+    int syndicid = ((Syndic) session.getAttribute("syndic")).getId();
 
-    try {
-        connection = Syndic_con.getConnection();
-        UserDAO userDao = new UserDAOImpl(connection);
-        userCount = userDao.getUserCount();
-        TaskDAO taskDAO = new TaskDAOImpl(connection);
-        taskCount=taskDAO.getTaskCount();
-        IncidentDAO incidentDAO = new IncidentDAOImpl(connection);
-        incidentCount=incidentDAO.getIncidentCount();
-        SupplierDAO supplierDAO = new SupplierDAOImpl(connection);
-        supplierCount=supplierDAO.getSupplierCount();
-        PaymentDAO paymentDAO = new PaymentDAOImpl(connection);
-        sumpayment=paymentDAO.getPaymentSum();
-        MemberProfileDAO memberProfileDAO = new MemberProfileDAOImpl(connection);
-        memberCount=memberProfileDAO.getMemberCount();
+        try {
+            connection = Syndic_con.getConnection();
 
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
+
+            UserDAO userDao = new UserDAOImpl(connection);
+            userCount = userDao.getUserCount();
+
+            TaskDAO taskDAO = new TaskDAOImpl(connection);
+            taskCount = taskDAO.getTaskCount();
+
+            IncidentDAO incidentDAO = new IncidentDAOImpl(connection);
+            incidentCount = incidentDAO.getIncidentCount();
+
+            SupplierDAO supplierDAO = new SupplierDAOImpl(connection);
+            supplierCount = supplierDAO.getSupplierCount();
+
+            PaymentDAO paymentDAO = new PaymentDAOImpl(connection);
+            sumpayment = paymentDAO.getPaymentSum();
+
+            MemberProfileDAO memberProfileDAO = new MemberProfileDAOImpl(connection);
+            memberCount = memberProfileDAO.getMemberCount();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 %>
 
 <!DOCTYPE html>
