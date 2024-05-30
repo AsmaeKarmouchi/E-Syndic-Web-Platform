@@ -32,6 +32,7 @@ public class LoginServlet extends HttpServlet {
     private NewsDAO newsDAO;
 
     private ChargeDAO chargeDAO;
+    private TaskDAO taskDAO;
 
     private PaymentDAO paymentDAO;
     private AccountDAO accountsDAO;
@@ -177,6 +178,11 @@ public class LoginServlet extends HttpServlet {
                             chargeDAO = new ChargeDAOImpl(connection);
                             list_Charges = chargeDAO.getChargesBySyndic(syndicId);
                             session.setAttribute("list_Charges", list_Charges);
+
+                            List<Task> list_Tasks = new ArrayList<>();
+                            taskDAO = new TaskDAOImpl(connection);
+                            list_Tasks = taskDAO.getTasksBySyndic(syndicId);
+                            session.setAttribute("list_Tasks", list_Tasks);
 
                             response.sendRedirect("dashboardSyndic.jsp");
                                 return;

@@ -15,6 +15,11 @@
 <%@ page import="com.syndic.dao.MemberProfileDAOImpl" %>
 <%@ page import="com.syndic.beans.Syndic" %>
 <%@ page import="jakarta.servlet.http.HttpSession" %>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="com.syndic.beans.Payment" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.syndic.beans.Charge" %>
+<%@ page import="com.syndic.beans.Task" %>
 <%
     int userCount = 0;
     int taskCount=0;
@@ -72,6 +77,12 @@
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet"> <!--Totally optional :) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Inclure Moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+    <!-- Inclure un adaptateur de date pour Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/adapters/moment.min.js"></script>
 </head>
 
 <body >
@@ -83,7 +94,9 @@
     </div>
     <div class="w-6/7">
 <main>
-
+    <% List<Payment> payments = (List<Payment>) session.getAttribute("payments"); %>
+    <% List<Charge> charges = (List<Charge>) session.getAttribute("list_Charges"); %>
+    <% List<Task> tasks = (List<Task>) session.getAttribute("list_Tasks"); %>
     <div class="flex flex-col md:flex-row">
 
         <section>
@@ -189,6 +202,619 @@
                         <!--/Metric Card-->
                     </div>
                 </div>
+
+
+
+                <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!--Graph Card-->
+                        <div class="bg-white border-transparent rounded-lg shadow-xl">
+                            <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                                <h class="font-bold uppercase text-gray-600">Graph</h>
+                            </div>
+                            <div class="p-5">
+                                <canvas id="paymentsChart" class="chartjs" width="undefined" height="undefined"></canvas>
+                                <script>
+
+                                    var paymentsData = <%= new Gson().toJson(payments) %>;
+
+                                    // Données pour le graphique de paiements
+                                    // Création d'un objet pour stocker les paiements par mois
+                                    var monthlyPayments = {};
+
+                                    // Remplissage de l'objet monthlyPayments avec les montants des paiements pour chaque mois
+                                    paymentsData.forEach(function(payment) {
+                                        var date = new Date(payment.date);
+                                        var month = date.getMonth() + 1; // Les mois vont de 0 à 11, donc on ajoute 1 pour obtenir les mois de 1 à 12
+                                        var year = date.getFullYear(); // On obtient l'année
+
+                                        // Créer une clé de mois unique incluant l'année
+                                        var monthYear = month + '-' + year;
+
+                                        // Vérifier si le mois existe déjà dans l'objet monthlyPayments
+                                        if (monthlyPayments[monthYear]) {
+                                            monthlyPayments[monthYear] += payment.amount;
+                                        } else {
+                                            monthlyPayments[monthYear] = payment.amount;
+                                        }
+                                    });
+
+                                    // Création de tableaux pour les labels (mois) et les montants des paiements
+                                    var paymentMonths = [];
+                                    var paymentAmounts = [];
+
+                                    // Boucle pour obtenir les données des 12 derniers mois
+                                    var currentDate = new Date();
+                                    var month = 0;
+                                    for (var i = 0; i < 12; i++) {
+                                        var month = month + 1; // Les mois vont de 0 à 11, donc on ajoute 1 pour obtenir les mois de 1 à 12
+                                        var year = currentDate.getFullYear(); // On obtient l'année
+
+                                        // Créer une clé de mois unique incluant l'année
+                                        var monthYear = month + '-' + year;
+                                        paymentMonths.unshift(monthYear); // Ajouter le mois et l'année au début du tableau (pour avoir les mois du plus récent au plus ancien)
+
+                                        // Vérifier si le mois existe dans les paiements, sinon le montant sera 0
+                                        paymentAmounts.unshift(monthlyPayments[monthYear] || 0);
+
+                                        // Passer au mois précédent
+                                        currentDate.setMonth(currentDate.getMonth() - 1);
+                                    }
+
+                                    // Création du graphique des paiements
+                                    var paymentsChartCtx = document.getElementById('paymentsChart').getContext('2d');
+                                    var paymentsChart = new Chart(paymentsChartCtx, {
+                                        type: 'bar',
+                                        data: {
+                                            labels: paymentMonths,
+                                            datasets: [{
+                                                label: 'Payments',
+                                                data: paymentAmounts,
+                                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                                borderColor: 'rgba(54, 162, 235, 1)',
+                                                borderWidth: 1
+                                            }]
+                                        },
+                                        options: {
+                                            scales: {
+                                                y: {
+                                                    beginAtZero: true
+                                                }
+                                            }
+                                        }
+                                    });
+
+
+                                </script>
+                            </div>
+                        </div>
+                        <!--/Graph Card-->
+                    </div>
+
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!--Graph Card-->
+                        <div class="bg-white border-transparent rounded-lg shadow-xl">
+                            <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                                <h class="font-bold uppercase text-gray-600">Graph</h>
+                            </div>
+                            <div class="p-5">
+                                <canvas id="chargesByCategoryChart" class="chartjs" width="undefined" height="undefined"></canvas>
+                                <script>
+                                    const charges = <%= new Gson().toJson(charges) %>;
+                                    var chargesByCategory = {};
+                                    charges.forEach(function(charge) {
+                                        var category = charge.chargeCategory;
+                                        chargesByCategory[category] = (chargesByCategory[category] || 0) + charge.chargeAmount;
+                                    });
+
+                                    var categories = Object.keys(chargesByCategory);
+                                    var chargeAmountsByCategory = Object.values(chargesByCategory);
+
+                                    var barColors = [
+                                        'rgba(255, 99, 132, 0.8)',
+                                        'rgba(54, 162, 235, 0.8)',
+                                        'rgba(255, 206, 86, 0.8)',
+                                        'rgba(75, 192, 192, 0.8)',
+                                        'rgba(153, 102, 255, 0.8)'
+                                        // Ajoutez plus de couleurs si nécessaire
+                                    ];
+
+                                    var chargesByCategoryChartCtx = document.getElementById('chargesByCategoryChart').getContext('2d');
+                                    var chargesByCategoryChart = new Chart(chargesByCategoryChartCtx, {
+                                        type: 'bar',
+                                        data: {
+                                            labels: categories,
+                                            datasets: [{
+                                                label: 'Montant des Charges par Catégorie',
+                                                data: chargeAmountsByCategory,
+                                                backgroundColor: barColors,
+                                                borderColor: barColors,
+                                                borderWidth: 1
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                        }
+                                    });
+
+
+                                </script>
+                            </div>
+                        </div>
+                        <!--/Graph Card-->
+                    </div>
+
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!--Graph Card-->
+                        <div class="bg-white border-transparent rounded-lg shadow-xl">
+                            <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                                <h2 class="font-bold uppercase text-gray-600">Graph</h2>
+                            </div>
+                            <div class="p-5">
+                                <canvas id="chargesByDateChart" class="chartjs" width="undefined" height="undefined"></canvas>
+                                <script>
+                                    var chargesByDate = {};
+                                    charges.forEach(function(charge) {
+                                        var date = charge.chargeDate;
+                                        chargesByDate[date] = (chargesByDate[date] || 0) + charge.chargeAmount;
+                                    });
+
+                                    var dates = Object.keys(chargesByDate);
+                                    var chargeAmountsByDate = Object.values(chargesByDate);
+
+                                    var lineColor = 'rgba(75, 192, 192, 1)';
+
+                                    var chargesByDateChartCtx = document.getElementById('chargesByDateChart').getContext('2d');
+                                    var chargesByDateChart = new Chart(chargesByDateChartCtx, {
+                                        type: 'line',
+                                        data: {
+                                            labels: dates,
+                                            datasets: [{
+                                                label: 'Évolution des Montants des Charges dans le Temps',
+                                                data: chargeAmountsByDate,
+                                                fill: false,
+                                                borderColor: lineColor,
+                                                borderWidth: 2
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                        }
+                                    });
+
+
+
+
+                                </script>
+                            </div>
+                        </div>
+                        <!--/Graph Card-->
+                    </div>
+
+
+                    </div>
+
+
+
+
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!--Table Card-->
+                        <div class="bg-white border-transparent rounded-lg shadow-xl">
+
+                        </div>
+                        <!--/table Card-->
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!--Graph Card-->
+                        <div class="bg-white border-transparent rounded-lg shadow-xl">
+                            <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                                <h2 class="font-bold uppercase text-gray-600">Graph</h2>
+                            </div>
+                            <div class="p-5">
+                                <canvas id="paymentsByTypeChart" class="chartjs" width="undefined" height="undefined"></canvas>
+                                <script>
+
+                                    var paymentsData = <%= new Gson().toJson(payments) %>;
+
+                                    // Données pour le graphique par type
+                                    var paymentTypes = {};
+                                    paymentsData.forEach(function(payment) {
+                                        if (payment.type in paymentTypes) {
+                                            paymentTypes[payment.type] += payment.amount;
+                                        } else {
+                                            paymentTypes[payment.type] = payment.amount;
+                                        }
+                                    });
+
+                                    var paymentTypesLabels = Object.keys(paymentTypes);
+                                    var paymentTypesData = Object.values(paymentTypes);
+
+                                    var paymentsByTypeChartCtx = document.getElementById('paymentsByTypeChart').getContext('2d');
+                                    var paymentsByTypeChart = new Chart(paymentsByTypeChartCtx, {
+                                        type: 'pie',
+                                        data: {
+                                            labels: paymentTypesLabels,
+                                            datasets: [{
+                                                label: 'Payments by Type',
+                                                data: paymentTypesData,
+                                                backgroundColor: [
+                                                    'rgba(255, 99, 132, 0.4)',
+                                                    'rgba(54, 162, 235, 0.4)',
+                                                    'rgba(255, 206, 86, 0.4)',
+                                                    'rgba(75, 192, 192, 0.4)',
+                                                    'rgba(153, 102, 255, 0.4)',
+                                                    'rgba(255, 159, 64, 0.4)'
+                                                ],
+                                                borderColor: [
+                                                    'rgba(255, 99, 132, 1)',
+                                                    'rgba(54, 162, 235, 1)',
+                                                    'rgba(255, 206, 86, 1)',
+                                                    'rgba(75, 192, 192, 1)',
+                                                    'rgba(153, 102, 255, 1)',
+                                                    'rgba(255, 159, 64, 1)'
+                                                ],
+                                                borderWidth: 1
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true
+                                        }
+                                    });
+
+                                </script>
+                            </div>
+                        </div>
+                        <!--/Graph Card-->
+                    </div>
+
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!--Graph Card-->
+                        <div class="bg-white border-transparent rounded-lg shadow-xl">
+                            <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                                <h2 class="font-bold uppercase text-gray-600">Graph</h2>
+                            </div>
+                            <div class="p-5">
+                                <canvas id="paymentsByMethodChart" class="chartjs" width="undefined" height="undefined"></canvas>
+                                <script>
+
+                                    var paymentsData = <%= new Gson().toJson(payments) %>;
+                                    // Données pour le graphique par méthode
+                                    var paymentMethods = {};
+                                    paymentsData.forEach(function(payment) {
+                                        if (payment.method in paymentMethods) {
+                                            paymentMethods[payment.method] += payment.amount;
+                                        } else {
+                                            paymentMethods[payment.method] = payment.amount;
+                                        }
+                                    });
+
+                                    var paymentMethodsLabels = Object.keys(paymentMethods);
+                                    var paymentMethodsData = Object.values(paymentMethods);
+
+                                    var paymentsByMethodChartCtx = document.getElementById('paymentsByMethodChart').getContext('2d');
+                                    var paymentsByMethodChart = new Chart(paymentsByMethodChartCtx, {
+                                        type: 'doughnut',
+                                        data: {
+                                            labels: paymentMethodsLabels,
+                                            datasets: [{
+                                                label: 'Payments by Method',
+                                                data: paymentMethodsData,
+                                                backgroundColor: [
+                                                    'rgba(255, 99, 132, 0.4)',
+                                                    'rgba(54, 162, 235, 0.4)',
+                                                    'rgba(255, 206, 86, 0.4)',
+                                                    'rgba(75, 192, 192, 0.4)',
+                                                    'rgba(153, 102, 255, 0.4)',
+                                                    'rgba(255, 159, 64, 0.4)'
+                                                ],
+                                                borderColor: [
+                                                    'rgba(255, 99, 132, 1)',
+                                                    'rgba(54, 162, 235, 1)',
+                                                    'rgba(255, 206, 86, 1)',
+                                                    'rgba(75, 192, 192, 1)',
+                                                    'rgba(153, 102, 255, 1)',
+                                                    'rgba(255, 159, 64, 1)'
+                                                ],
+                                                borderWidth: 1
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true
+                                        }
+                                    });
+
+                                </script>
+                            </div>
+                        </div>
+                        <!--/Graph Card-->
+                    </div>
+
+
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!--Graph Card-->
+                        <div class="bg-white border-transparent rounded-lg shadow-xl">
+                            <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                                <h2 class="font-bold uppercase text-gray-600">Graph</h2>
+                            </div>
+                            <div class="p-5">
+                                <canvas id="chargesByFrequencyChart" class="chartjs" width="undefined" height="undefined"></canvas>
+                                <script>
+                                    var chargesByFrequency = {};
+                                    charges.forEach(function(charge) {
+                                        var frequency = charge.chargeFrequency;
+                                        chargesByFrequency[frequency] = (chargesByFrequency[frequency] || 0) + 1;
+                                    });
+
+                                    var frequencies = Object.keys(chargesByFrequency);
+                                    var chargeCountsByFrequency = Object.values(chargesByFrequency);
+
+                                    var pieColors = [
+                                        'rgba(255, 99, 132, 0.8)',
+                                        'rgba(54, 162, 235, 0.8)',
+                                        'rgba(255, 206, 86, 0.8)'
+                                        // Ajoutez plus de couleurs si nécessaire
+                                    ];
+
+                                    var chargesByFrequencyChartCtx = document.getElementById('chargesByFrequencyChart').getContext('2d');
+                                    var chargesByFrequencyChart = new Chart(chargesByFrequencyChartCtx, {
+                                        type: 'pie',
+                                        data: {
+                                            labels: frequencies,
+                                            datasets: [{
+                                                label: 'Répartition des Charges par Fréquence',
+                                                data: chargeCountsByFrequency,
+                                                backgroundColor: pieColors,
+                                                borderColor: pieColors,
+                                                borderWidth: 1
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            plugins: {
+                                                legend: {
+                                                    position: 'top',
+                                                },
+                                                title: {
+                                                    display: true,
+                                                    text: 'Charges by frequency'
+                                                }
+                                            }
+                                        }
+                                    });
+
+                                </script>
+                            </div>
+                        </div>
+                        <!--/Graph Card-->
+                    </div>
+
+
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!--Table Card-->
+                        <div class="bg-white border-transparent rounded-lg shadow-xl">
+
+                        </div>
+                        <!--/table Card-->
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!--Graph Card-->
+                        <div class="bg-white border-transparent rounded-lg shadow-xl">
+                            <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                                <h class="font-bold uppercase text-gray-600">Graph</h>
+                            </div>
+                            <div class="p-5">
+                                <canvas id="tasksByStatusChart" class="chartjs" width="undefined" height="undefined"></canvas>
+                                <script>
+                                    const tasks = <%= new Gson().toJson(tasks) %>;
+                                    // Préparer les données pour le diagramme des tâches par statut
+                                    const taskStatuses = ['Pending', 'Completed', 'Scheduled'];
+                                    const taskStatusCounts = taskStatuses.map(status =>
+                                        tasks.filter(task => task.taskStatus === status).length
+                                    );
+
+                                    // Créer le diagramme des tâches par statut
+                                    const tasksByStatusCtx = document.getElementById('tasksByStatusChart').getContext('2d');
+                                    const tasksByStatusChart = new Chart(tasksByStatusCtx, {
+                                        type: 'bar',
+                                        data: {
+                                            labels: taskStatuses,
+                                            datasets: [{
+                                                label: '# of Tasks',
+                                                data: taskStatusCounts,
+                                                backgroundColor: ['#ff6384', '#36a2eb', '#ffce56']
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true,
+
+                                        }
+                                    });
+
+
+
+                                </script>
+                            </div>
+                        </div>
+                        <!--/Graph Card-->
+                    </div>
+
+
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!--Graph Card-->
+                        <div class="bg-white border-transparent rounded-lg shadow-xl">
+                            <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                                <h2 class="font-bold uppercase text-gray-600">Graph</h2>
+                            </div>
+                            <div class="p-5">
+                                <canvas id="tasksByAmountChart" class="chartjs" width="undefined" height="undefined"></canvas>
+                                <script>
+                                    // Récupération des noms de tâches et des montants pour le diagramme par montant
+                                    var taskNamesByAmount = tasks.map(function(task) {
+                                        return task.taskName;
+                                    });
+                                    var taskAmounts = tasks.map(function(task) {
+                                        return task.taskamount;
+                                    });
+
+                                    // Création du diagramme par montant avec plusieurs couleurs
+                                    var tasksByAmountChartCtx = document.getElementById('tasksByAmountChart').getContext('2d');
+                                    var tasksByAmountChart = new Chart(tasksByAmountChartCtx, {
+                                        type: 'bar',
+                                        data: {
+                                            labels: taskNamesByAmount,
+                                            datasets: [{
+                                                label: 'Montant',
+                                                data: taskAmounts,
+                                                backgroundColor: [
+                                                    'rgba(255, 99, 132, 0.6)',
+                                                    'rgba(54, 162, 235, 0.6)',
+                                                    'rgba(255, 206, 86, 0.6)',
+                                                    'rgba(75, 192, 192, 0.6)',
+                                                    'rgba(153, 102, 255, 0.6)'
+                                                    // Ajoutez autant de couleurs que nécessaire
+                                                ],
+                                                borderColor: [
+                                                    'rgba(255, 99, 132, 1)',
+                                                    'rgba(54, 162, 235, 1)',
+                                                    'rgba(255, 206, 86, 1)',
+                                                    'rgba(75, 192, 192, 1)',
+                                                    'rgba(153, 102, 255, 1)'
+                                                    // Correspondance des couleurs de bordure si nécessaire
+                                                ],
+                                                borderWidth: 1
+                                            }]
+                                        },
+                                        options: {
+                                            scales: {
+                                                y: {
+                                                    beginAtZero: true,
+                                                    position: 'left',
+                                                    type: 'linear',
+                                                    display: true
+                                                }
+                                            }
+                                        }
+                                    });
+
+
+
+
+
+                                </script>
+                            </div>
+                        </div>
+                        <!--/Graph Card-->
+                    </div>
+
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!--Graph Card-->
+                        <div class="bg-white border-transparent rounded-lg shadow-xl">
+                            <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                                <h2 class="font-bold uppercase text-gray-600">Graph</h2>
+                            </div>
+                            <div class="p-5">
+                                <canvas id="tasksByMonthChart" class="chartjs" width="undefined" height="undefined"></canvas>
+                                <script>
+                                    // Récupération des dates de tâches pour le diagramme par mois
+                                    var taskDates = tasks.map(function(task) {
+                                        return task.taskDueDate;
+                                    });
+
+                                    // Comptage des tâches par mois
+                                    var tasksByMonth = {};
+                                    taskDates.forEach(function(date) {
+                                        var month = date.split('-')[1];
+                                        tasksByMonth[month] = (tasksByMonth[month] || 0) + 1;
+                                    });
+
+                                    // Création du tableau de données pour le diagramme
+                                    var months = Object.keys(tasksByMonth);
+                                    var taskCounts = Object.values(tasksByMonth);
+
+                                    // Définir des couleurs pour chaque barre du diagramme
+                                    var barColors = [
+                                        'rgba(255, 99, 132, 0.8)',
+                                        'rgba(54, 162, 235, 0.8)',
+                                        'rgba(255, 206, 86, 0.8)',
+                                        'rgba(75, 192, 192, 0.8)',
+                                        'rgba(153, 102, 255, 0.8)',
+                                        'rgba(255, 159, 64, 0.8)'
+                                    ];
+
+                                    // Création du tableau de datasets pour le diagramme par mois
+                                    var datasets = [{
+                                        label: 'Nombre de Tâches (Barres)',
+                                        data: taskCounts,
+                                        backgroundColor: barColors,
+                                        borderColor: barColors,
+                                        borderWidth: 1
+                                    }, {
+                                        label: 'Nombre de Tâches (Courbe)',
+                                        data: taskCounts,
+                                        fill: false,
+                                        borderColor: 'rgba(75, 192, 192, 1)',
+                                        borderWidth: 2,
+                                        type: 'line'
+                                    }];
+
+                                    // Création du diagramme par mois avec des barres et une courbe
+                                    var tasksByMonthChartCtx = document.getElementById('tasksByMonthChart').getContext('2d');
+                                    var tasksByMonthChart = new Chart(tasksByMonthChartCtx, {
+                                        type: 'bar',
+                                        data: {
+                                            labels: months,
+                                            datasets: datasets
+                                        },
+                                        options: {
+                                            scales: {
+                                                y: {
+                                                    beginAtZero: true,
+                                                    stepSize: 1
+                                                }
+                                            }
+                                        }
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                        <!--/Graph Card-->
+                    </div>
+
+
+                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                        <!--Table Card-->
+                        <div class="bg-white border-transparent rounded-lg shadow-xl">
+
+                        </div>
+                        <!--/table Card-->
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+
 
 
                 <div class="flex flex-row flex-wrap flex-grow mt-2">
@@ -318,8 +944,11 @@
                     </div>
 
                 </div>
-            </div>
+
+
+
         </section>
+
     </div>
 </main>
     </div>

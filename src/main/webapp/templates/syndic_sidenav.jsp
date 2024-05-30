@@ -41,15 +41,25 @@
             <h3 class="ml-4">Members</h3>
         </a>
         <a href="Syndicaddpayment" id="addpayment" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
-            <i class='fas fa-money-bill-wave text-2xl'></i>
+            <i class='bx bx-money text-2xl'></i>
             <h3 class="ml-4">Payment</h3>
         </a>
+
+        <a href="incident" id="incident" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+            <i class='bx bxs-crown text-2xl'></i>
+            <h3 class="ml-4">Incidents</h3>
+        </a>
+        <a href="meeting" id="meeting" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+            <i class='bx bx-calendar text-2xl'></i>
+            <h3 class="ml-4">Meetings</h3>
+        </a>
+
         <a href="Syndicaddtask" id="addtask" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
-            <i class='fas fa-money-bill-wave text-2xl'></i>
+            <i class='bx bx-task text-2xl'></i>
             <h3 class="ml-4">Task</h3>
         </a>
         <a href="Syndicaddcharge" id="addcharge" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
-            <i class='fas fa-money-bill-wave text-2xl'></i>
+            <i class='bx bx-dollar text-2xl'></i>
             <h3 class="ml-4">Charge</h3>
         </a>
         <a href="paymentflow.jsp" id="paymentflow" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
@@ -63,14 +73,6 @@
         <a href="addsupplier" id="addsupplier" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
             <i class='bx bxs-group text-2xl'></i>
             <h3 class="ml-4">Suppliers</h3>
-        </a>
-        <a href="incident" id="incident" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
-            <i class='bx bxs-crown text-2xl'></i>
-            <h3 class="ml-4">Incidents</h3>
-        </a>
-        <a href="meeting" id="meeting" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
-            <i class='bx bx-calendar text-2xl'></i>
-            <h3 class="ml-4">Meetings</h3>
         </a>
 
         <a href="news" id="news" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">

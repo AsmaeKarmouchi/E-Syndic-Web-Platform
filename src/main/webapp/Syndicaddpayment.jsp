@@ -365,6 +365,7 @@
   });
 
   // Préparation des données pour les graphiques
+  // Convertir les données de paiement en JSON
   var paymentsData = <%= new Gson().toJson(payments) %>;
 
   // Données pour le graphique de paiements
@@ -375,12 +376,16 @@
   paymentsData.forEach(function(payment) {
     var date = new Date(payment.date);
     var month = date.getMonth() + 1; // Les mois vont de 0 à 11, donc on ajoute 1 pour obtenir les mois de 1 à 12
+    var year = date.getFullYear(); // On obtient l'année
+
+    // Créer une clé de mois unique incluant l'année
+    var monthYear = month + '-' + year;
 
     // Vérifier si le mois existe déjà dans l'objet monthlyPayments
-    if (monthlyPayments[month]) {
-      monthlyPayments[month] += payment.amount;
+    if (monthlyPayments[monthYear]) {
+      monthlyPayments[monthYear] += payment.amount;
     } else {
-      monthlyPayments[month] = payment.amount;
+      monthlyPayments[monthYear] = payment.amount;
     }
   });
 
@@ -390,16 +395,17 @@
 
   // Boucle pour obtenir les données des 12 derniers mois
   var currentDate = new Date();
+  var month = 0;
   for (var i = 0; i < 12; i++) {
-    var month = currentDate.getMonth() + 1; // Les mois vont de 0 à 11, donc on ajoute 1 pour obtenir les mois de 1 à 12
-    paymentMonths.unshift(month); // Ajouter le mois au début du tableau (pour avoir les mois du plus récent au plus ancien)
+    var month = month + 1; // Les mois vont de 0 à 11, donc on ajoute 1 pour obtenir les mois de 1 à 12
+    var year = currentDate.getFullYear(); // On obtient l'année
+
+    // Créer une clé de mois unique incluant l'année
+    var monthYear = month + '-' + year;
+    paymentMonths.unshift(monthYear); // Ajouter le mois et l'année au début du tableau (pour avoir les mois du plus récent au plus ancien)
 
     // Vérifier si le mois existe dans les paiements, sinon le montant sera 0
-    if (monthlyPayments[month]) {
-      paymentAmounts.unshift(monthlyPayments[month]);
-    } else {
-      paymentAmounts.unshift(0);
-    }
+    paymentAmounts.unshift(monthlyPayments[monthYear] || 0);
 
     // Passer au mois précédent
     currentDate.setMonth(currentDate.getMonth() - 1);
@@ -427,6 +433,7 @@
       }
     }
   });
+
 
   // Données pour le graphique par membre
   var paymentByMemberData = {};

@@ -40,9 +40,9 @@
                     </button>
                 </div>
             </div>
-            <div class="mt-12 shadow-sm border rounded-lg overflow-x-auto">
+            <div class="mt-12 shadow-lg border rounded-lg overflow-x-auto">
                 <table class="w-full table-auto text-sm text-left" id="paymentTable">
-                    <thead class="bg-gray-50 text-gray-600 font-medium border-b">
+                    <thead class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold">
                     <tr>
 
                         <th class="py-3 px-6">Flow Type</th>
@@ -51,12 +51,12 @@
                         <th class="py-3 px-6">Date Transaction</th>
                     </tr>
                     </thead>
-                    <tbody class="text-gray-600 divide-y" id="paymentTableBody">
+                    <tbody class="text-gray-800 divide-y divide-gray-200" id="paymentTableBody">
                     <!-- Boucle sur chaque syndic -->
                     <% List<PaymentFlow> paymentsflow = (List<PaymentFlow>) session.getAttribute("paymentsflow"); %>
                     <% if ( paymentsflow != null && !paymentsflow.isEmpty())  { %>
                     <% for  (PaymentFlow pf : paymentsflow) { %>
-                    <tr>
+                    <tr class="bg-white hover:bg-gray-100 transition duration-150">
 
                         <td class="px-6 py-4 whitespace-nowrap"><%= pf.getFlowType() %></td>
                         <td class="px-6 py-4 whitespace-nowrap"><%= pf.getAmount()%></td>

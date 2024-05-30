@@ -51,25 +51,21 @@
             <h3 class="ml-4">Members</h3>
         </a>
 
-        <a href="displayaccounts" id="displayaccounts" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
-            <i class='bx bx-line-chart-down text-2xl'></i>
-            <h3 class="ml-4">Display Accounts</h3>
-        </a>
 
         <a href="#" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
             <i class='bx bx-paper-plane bx-tada text-2xl'></i>
             <h3 class="ml-4">Messages</h3><span class="ml-auto bg-red-500 text-white rounded-full px-2 py-1 text-xs">24</span>
         </a>
         <a href="paymentsflows.jsp" id="paymentflow" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
-            <i class='fas fa-money-bill-wave text-2xl'></i>
+            <i class='bx bx-money text-2xl'></i>
             <h3 class="ml-4">Payments flows</h3>
         </a>
-
-
-        <a href="addpayment" id="addpayment" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
-            <i class='fas fa-money-bill-wave text-2xl'></i>
-            <h3 class="ml-4">Payment</h3>
+        <a href="displayaccounts" id="displayaccounts" class="flex items-center p-4 text-gray-700 hover:bg-indigo-600 hover:text-white transition duration-200">
+            <i class='bx bx-line-chart-down text-2xl'></i>
+            <h3 class="ml-4">Display Accounts</h3>
         </a>
+
+
 
 
         <a href="login" id="logout-link" class="flex items-center p-4 text-gray-700 hover:bg-red-600 hover:text-white transition duration-200">
