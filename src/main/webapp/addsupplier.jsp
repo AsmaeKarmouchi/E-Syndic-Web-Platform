@@ -44,7 +44,6 @@
                         <th class="py-3 px-6 uppercase tracking-wider">Name</th>
                         <th class="py-3 px-6 uppercase tracking-wider">Email</th>
                         <th class="py-3 px-6 uppercase tracking-wider">Phone</th>
-                        <th class="py-3 px-6 uppercase tracking-wider">Type</th>
                         <th class="py-3 px-6 uppercase tracking-wider">Active</th>
                         <th class="py-3 px-6 uppercase tracking-wider">Rating</th>
                         <th class="py-3 px-6 uppercase tracking-wider">Actions</th>
@@ -59,7 +58,6 @@
                         <td class="px-6 py-4 whitespace-nowrap"><%= supplier.getSupplier_name() %></td>
                         <td class="px-6 py-4 whitespace-nowrap"><%= supplier.getSupplier_email() %></td>
                         <td class="px-6 py-4 whitespace-nowrap"><%= supplier.getSupplier_phone() %></td>
-                        <td class="px-6 py-4 whitespace-nowrap"><%= supplier.getSupplier_type() %></td>
                         <td class="px-6 py-4 whitespace-nowrap"><%= supplier.isSupplier_active() %></td>
                         <td class="px-6 py-4 whitespace-nowrap"><%= supplier.getSupplier_rating() %></td>
                         <td class="text-right px-4 whitespace-nowrap">
@@ -68,7 +66,6 @@
                                     data-supplier_name="<%= supplier.getSupplier_name() %>"
                                     data-supplier_email="<%= supplier.getSupplier_email() %>"
                                     data-supplier_phone="<%= supplier.getSupplier_phone() %>"
-                                    data-supplier_type="<%= supplier.getSupplier_type() %>"
                                     data-supplier_active="<%= supplier.isSupplier_active() %>"
                                     data-supplier_rating="<%= supplier.getSupplier_rating() %>">
                                 Edit
@@ -111,12 +108,7 @@
                         <label for="supplier_phone" class="block text-sm font-medium text-light-700">Phone:</label>
                         <input type="text" id="supplier_phone" name="supplier_phone" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
-                    <div class="col-span-1">
-                        <label for="supplier_type" class="block text-sm font-medium text-light-700">Type:</label>
-                        <select id="supplier_type" name="supplier_type" required class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <option value="service">Service</option>
-                        </select>
-                    </div>
+
                     <div class="col-span-1">
                         <label for="supplier_active" class="block text-sm font-medium text-light-700">Active:</label>
                         <select id="supplier_active" name="supplier_active" required class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
@@ -246,7 +238,6 @@
             supplierFormElement.supplier_name.value = button.dataset.supplier_name;
             supplierFormElement.supplier_email.value = button.dataset.supplier_email;
             supplierFormElement.supplier_phone.value = button.dataset.supplier_phone;
-            supplierFormElement.supplier_type.value = button.dataset.supplier_type;
             supplierFormElement.supplier_active.value = button.dataset.supplier_active;
             supplierFormElement.supplier_rating.value = button.dataset.supplier_rating;
         });

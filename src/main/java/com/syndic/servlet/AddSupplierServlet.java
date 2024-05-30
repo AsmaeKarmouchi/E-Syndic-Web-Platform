@@ -2,6 +2,7 @@ package com.syndic.servlet;
 
 import com.syndic.beans.Supplier;
 import com.syndic.connection.Syndic_con;
+import com.syndic.dao.SupplierDAO;
 import com.syndic.dao.SupplierDAOImpl;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public class AddSupplierServlet extends HttpServlet {
@@ -70,7 +72,11 @@ public class AddSupplierServlet extends HttpServlet {
                 session.setAttribute("message", success ? "Un fournisseur a été ajouté avec succès !" : "Une erreur s'est produite lors de l'ajout du fournisseur.");
                 break;
             case "update":
-                success = updateSupplier(req, supplierDAO);
+                try {
+                    success = updateSupplier(req, supplierDAO);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 session.setAttribute("message", success ? "Le fournisseur a été mis à jour avec succès !" : "Une erreur s'est produite lors de la mise à jour du fournisseur.");
                 break;
             case "delete":
@@ -89,7 +95,7 @@ public class AddSupplierServlet extends HttpServlet {
         String supplier_name = req.getParameter("supplier_name");
         String supplier_email = req.getParameter("supplier_email");
         String supplier_phone = req.getParameter("supplier_phone");
-        String supplier_type = req.getParameter("supplier_type");
+       // String supplier_type = req.getParameter("supplier_type");
         boolean supplier_active = Boolean.parseBoolean(req.getParameter("supplier_active"));
         String supplier_rating = req.getParameter("supplier_rating");
 
@@ -100,7 +106,7 @@ public class AddSupplierServlet extends HttpServlet {
         supplier.setSupplier_name(supplier_name);
         supplier.setSupplier_email(supplier_email);
         supplier.setSupplier_phone(supplier_phone);
-        supplier.setSupplier_type(supplier_type);
+       // supplier.setSupplier_type(supplier_type);
         supplier.setSupplier_active(supplier_active);
         supplier.setSupplier_rating(supplier_rating);
         supplier.setSupplier_s_id(supplier_s_id);
@@ -108,24 +114,28 @@ public class AddSupplierServlet extends HttpServlet {
         return supplierDAO.insertSupplier(supplier);
     }
 
-    private boolean updateSupplier(HttpServletRequest req, SupplierDAOImpl supplierDAO) {
-        int supplier_s_id = Integer.parseInt(req.getParameter("supplier_s_id"));
+    private boolean updateSupplier(HttpServletRequest req, SupplierDAOImpl supplierDAO) throws SQLException {
+       // int supplier_s_id = Integer.parseInt(req.getParameter("supplier_s_id"));
         String supplier_name = req.getParameter("supplier_name");
+
         String supplier_email = req.getParameter("supplier_email");
         String supplier_phone = req.getParameter("supplier_phone");
-        String supplier_type = req.getParameter("supplier_type");
+     //   String supplier_type = req.getParameter("supplier_type");
         boolean supplier_active = Boolean.parseBoolean(req.getParameter("supplier_active"));
         String supplier_rating = req.getParameter("supplier_rating");
 
         Supplier supplier = new Supplier();
-        supplier.setSupplier_s_id(supplier_s_id);
+        SupplierDAO s = new SupplierDAOImpl(connection);
+        int supplier_id =  s.getSupplierIdByName(supplier_name);
+       // supplier.setSupplier_s_id(supplier_s_id);
+        supplier.setSupplier_id(supplier_id);
         supplier.setSupplier_name(supplier_name);
         supplier.setSupplier_email(supplier_email);
         supplier.setSupplier_phone(supplier_phone);
-        supplier.setSupplier_type(supplier_type);
+     //   supplier.setSupplier_type(supplier_type);
         supplier.setSupplier_active(supplier_active);
         supplier.setSupplier_rating(supplier_rating);
-
+System.out.println(supplier_rating);
         return supplierDAO.updateSupplier(supplier);
     }
 
