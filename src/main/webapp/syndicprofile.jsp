@@ -145,7 +145,7 @@
                           <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="residenceType">
                             <i class="fas fa-home fa-2x mr-1"></i>Residence Type
                           </label>
-                          <input type="text" id="residenceType" name="residenceType" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getResidenceType() %>">
+                          <input type="text" id="residenceType" name="residenceType" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= syndic.getResidenceType() %>" readonly>
                         </div>
                       </div>
                       <!-- Residence Size -->

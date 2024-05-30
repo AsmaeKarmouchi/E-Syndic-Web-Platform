@@ -72,7 +72,7 @@ public class SyndicProfileServlet extends HttpServlet {
             // Mettre à jour les nouvelles informations
             syndic.setResidenceName(residenceName);
             syndic.setResidenceAddress(residenceAddress);
-            syndic.setResidenceType(residenceType);
+        //    syndic.setResidenceType(residenceType);
             syndic.setResidenceSize(residenceSize);
             syndic.setApartmentCount(apartmentCount);
             syndic.setVillaCount(villaCount);

@@ -126,7 +126,14 @@
                         </div>
                         <div class="col-span-1">
                             <label for="chargeCategory" class="block text-sm font-medium text-gray-700">Charge Category:</label>
-                            <input type="text" id="chargeCategory" name="chargeCategory" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <select id="chargeCategory" name="chargeCategory" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <option value="Utilities">Utilities</option>
+                                <option value="Maintenance and Repairs">Maintenance and Repairs</option>
+                                <option value="Security Services">Security Services</option>
+                                <option value="Special Charges">Special Charges</option>
+                                <option value="Abonnement plateforme">Abonnement plateforme</option>
+                                <option value="Other">Other</option>
+                            </select>
                         </div>
                         <div class="col-span-1">
                             <label for="chargeDate" class="block text-sm font-medium text-gray-700">Date:</label>

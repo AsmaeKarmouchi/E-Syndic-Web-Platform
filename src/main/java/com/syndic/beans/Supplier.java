@@ -5,7 +5,7 @@ public class Supplier {
     private String supplier_name;
     private String supplier_email;
     private String supplier_phone;
-    private String supplier_type;
+   // private String supplier_type;
     private boolean supplier_active;
     private String supplier_rating;
     private int supplier_s_id;
@@ -35,9 +35,9 @@ public class Supplier {
         return supplier_rating;
     }
 
-    public String getSupplier_type() {
-        return supplier_type;
-    }
+ //   public String getSupplier_type() {
+    //      return supplier_type;
+    //  }
 
     public int getSupplier_s_id() {
         return supplier_s_id;
@@ -77,9 +77,9 @@ public class Supplier {
         this.supplier_s_id = supplier_s_id;
     }
 
-    public void setSupplier_type(String supplier_type) {
-        this.supplier_type = supplier_type;
-    }
+    //   public void setSupplier_type(String supplier_type) {
+    //       this.supplier_type = supplier_type;
+    //  }
 
 
 

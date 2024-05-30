@@ -136,7 +136,12 @@
                     </div>
                     <div class="col-span-1">
                         <label for="taskStatus" class="block text-sm font-medium text-gray-700">Status:</label>
-                        <input type="text" id="taskStatus" name="taskStatus" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        <select id="taskStatus" name="taskStatus" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <option value="Not Started">Not Started</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
                     </div>
                     <div>
                         <label for="supplier" class="text-sm font-medium text-gray-600">Supplier</label>

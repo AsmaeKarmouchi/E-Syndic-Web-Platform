@@ -216,3 +216,7 @@ FOREIGN KEY (task_supplier_id) REFERENCES suppliers(supplier_id);
 
 ALTER TABLE syndics
 MODIFY COLUMN residence_type VARCHAR(250);
+
+SHOW INDEX FROM members WHERE Column_name = 'property_code' AND Non_unique = 0;
+ALTER TABLE members DROP INDEX property_code;
+SHOW INDEX FROM members WHERE Column_name = 'property_code';

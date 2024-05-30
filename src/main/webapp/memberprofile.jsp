@@ -155,7 +155,14 @@
                                                     <label class="block uppercase text-gray-600 text-xs font-bold mb-2" for="property_type">
                                                         <i class="fas fa-home fa-2x mr-1"></i>Property Type
                                                     </label>
-                                                    <input type="number" id="property_type" name="property_type" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="<%= member.getPropertyType() %>">
+                                                    <select id="property_type" name="property_type" class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                                                        <option value="" <%= member.getPropertyType() == null ? "selected" : "" %>>Sélectionner une option</option>
+                                                        <option value="Appartement" <%= "Appartement".equals(member.getPropertyType()) ? "selected" : "" %>>Appartement</option>
+                                                        <option value="Studio" <%= "Studio".equals(member.getPropertyType()) ? "selected" : "" %>>Studio</option>
+                                                        <option value="Duplex ou Triplex" <%= "Duplex ou Triplex".equals(member.getPropertyType()) ? "selected" : "" %>>Duplex ou Triplex</option>
+                                                        <option value="Locaux commerciaux" <%= "Locaux commerciaux".equals(member.getPropertyType()) ? "selected" : "" %>>Locaux commerciaux</option>
+                                                        <option value="Villa" <%= "Villa".equals(member.getPropertyType()) ? "selected" : "" %>>Villa</option>
+                                                    </select>
                                                 </div>
                                             </div>
 
