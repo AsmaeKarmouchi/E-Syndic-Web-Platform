@@ -170,20 +170,22 @@
 
             <!-- Diagrammes -->
             <div class="max-w-screen-xl mx-auto px-4 md:px-6 mt-12">
-                <div class="grid grid-cols-2 gap-6">
-                    <div class="chart-container">
+                <div class="grid grid-cols-2 gap-6 bg-white rounded-lg">
+                    <div class="chart-container ">
                         <canvas id="tasksByStatusChart"></canvas>
                     </div>
                     <div class="chart-container">
                         <canvas id="tasksByMonthChart"></canvas>
                     </div>
                 </div>
-
+                <br>
+                <div class=" bg-white rounded-lg">
                 <div class="chart-container">
                     <canvas id="tasksByAmountChart"></canvas>
                 </div>
-
-                <div class="grid grid-cols-2 gap-6">
+                </div>
+                <br>
+                <div class="grid grid-cols-2 gap-6 bg-white rounded-lg">
                     <div class="chart-container ">
                         <canvas ></canvas>
                     </div>

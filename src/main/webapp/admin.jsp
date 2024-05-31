@@ -13,6 +13,9 @@
 <%@ page import="com.syndic.dao.PaymentDAOImpl" %>
 <%@ page import="com.syndic.dao.MemberProfileDAO" %>
 <%@ page import="com.syndic.dao.MemberProfileDAOImpl" %>
+<%@ page import="com.syndic.beans.PaymentFlow" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.google.gson.Gson" %>
 <%
     int userCount = 0;
     int taskCount=0;
@@ -63,6 +66,8 @@
 </head>
 
 <body >
+
+<% List<PaymentFlow> paymentsflow = (List<PaymentFlow>) session.getAttribute("paymentsflow"); %>
 
 <div class="flex">
     <!-- Side Nav -->
@@ -181,40 +186,53 @@
 
                             <div class="w-full md:w-1/2 xl:w-1/3 p-6">
                                 <!--Graph Card-->
+                                <!--Graph Card-->
                                 <div class="bg-white border-transparent rounded-lg shadow-xl">
                                     <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                        <h class="font-bold uppercase text-gray-600">Graph</h>
+                                        <h2 class="font-bold uppercase text-gray-600">Payment Flow</h2>
                                     </div>
                                     <div class="p-5">
-                                        <canvas id="chartjs-7" class="chartjs" width="undefined" height="undefined"></canvas>
+                                        <canvas id="chartjs-bar" class="chartjs" width="undefined" height="undefined"></canvas>
                                         <script>
-                                            new Chart(document.getElementById("chartjs-7"), {
-                                                "type": "bar",
-                                                "data": {
-                                                    "labels": ["January", "February", "March", "April"],
-                                                    "datasets": [{
-                                                        "label": "Page Impressions",
-                                                        "data": [10, 20, 30, 40],
-                                                        "borderColor": "rgb(255, 99, 132)",
-                                                        "backgroundColor": "rgba(255, 99, 132, 0.2)"
-                                                    }, {
-                                                        "label": "Adsense Clicks",
-                                                        "data": [5, 15, 10, 30],
-                                                        "type": "line",
-                                                        "fill": false,
-                                                        "borderColor": "rgb(54, 162, 235)"
+                                            var paymentsData = <%= new Gson().toJson(paymentsflow) %>;
+                                            // Couleurs pour les barres
+                                            var backgroundColors = [
+                                                'rgba(255, 99, 132, 0.7)',
+                                                'rgba(54, 162, 235, 0.7)',
+                                                'rgba(255, 206, 86, 0.7)',
+                                                'rgba(75, 192, 192, 0.7)',
+                                                'rgba(153, 102, 255, 0.7)',
+                                                'rgba(255, 159, 64, 0.7)'
+                                            ];
+
+                                            // Générer un tableau de couleurs correspondant à la taille des données
+                                            var generatedColors = [];
+                                            for (var i = 0; i < paymentsData.length; i++) {
+                                                generatedColors.push(backgroundColors[i % backgroundColors.length]);
+                                            }
+
+                                            var ctxBar = document.getElementById('chartjs-bar').getContext('2d');
+                                            var myBarChart = new Chart(ctxBar, {
+                                                type: 'bar',
+                                                data: {
+                                                    labels: paymentsData.map(data => data.id),
+                                                    datasets: [{
+                                                        label: 'Montant des transactions',
+                                                        data: paymentsData.map(data => data.amount),
+                                                        backgroundColor: generatedColors,
+                                                        borderColor: 'rgba(54, 162, 235, 1)',
+                                                        borderWidth: 1
                                                     }]
                                                 },
-                                                "options": {
-                                                    "scales": {
-                                                        "yAxes": [{
-                                                            "ticks": {
-                                                                "beginAtZero": true
-                                                            }
-                                                        }]
+                                                options: {
+                                                    scales: {
+                                                        y: {
+                                                            beginAtZero: true
+                                                        }
                                                     }
                                                 }
                                             });
+
                                         </script>
                                     </div>
                                 </div>
@@ -225,7 +243,7 @@
                                 <!--Graph Card-->
                                 <div class="bg-white border-transparent rounded-lg shadow-xl">
                                     <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                        <h2 class="font-bold uppercase text-gray-600">Graph</h2>
+                                        <h2 class="font-bold uppercase text-gray-600">Charges by mounth</h2>
                                     </div>
                                     <div class="p-5">
                                         <canvas id="chartjs-0" class="chartjs" width="undefined" height="undefined"></canvas>
@@ -235,8 +253,8 @@
                                                 "data": {
                                                     "labels": ["January", "February", "March", "April", "May", "June", "July"],
                                                     "datasets": [{
-                                                        "label": "Views",
-                                                        "data": [65, 59, 80, 81, 56, 55, 40],
+                                                        "label": "Charges",
+                                                        "data": [65, 59, 80, 40, 56, 55, 62],
                                                         "fill": false,
                                                         "borderColor": "rgb(75, 192, 192)",
                                                         "lineTension": 0.1
@@ -254,36 +272,68 @@
                                 <!--Graph Card-->
                                 <div class="bg-white border-transparent rounded-lg shadow-xl">
                                     <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                        <h2 class="font-bold uppercase text-gray-600">Graph</h2>
+                                        <h2 class="font-bold uppercase text-gray-600"> Payment by Syndic</h2>
                                     </div>
                                     <div class="p-5">
-                                        <canvas id="chartjs-1" class="chartjs" width="undefined" height="undefined"></canvas>
-                                        <script>
-                                            new Chart(document.getElementById("chartjs-1"), {
-                                                "type": "bar",
-                                                "data": {
-                                                    "labels": ["January", "February", "March", "April", "May", "June", "July"],
-                                                    "datasets": [{
-                                                        "label": "Likes",
-                                                        "data": [65, 59, 80, 81, 56, 55, 40],
-                                                        "fill": false,
-                                                        "backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)", "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)", "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"],
-                                                        "borderColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)", "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"],
-                                                        "borderWidth": 1
-                                                    }]
-                                                },
-                                                "options": {
-                                                    "scales": {
-                                                        "yAxes": [{
-                                                            "ticks": {
-                                                                "beginAtZero": true
-                                                            }
-                                                        }]
-                                                    }
+                                    <canvas id="chartjs-pie" class="chartjs" width="undefined" height="undefined"></canvas>
+                                    <script>
+                                        // Fonction pour calculer la somme des paiements par syndicId
+                                        function calculatePaymentsSumBySyndicId(data) {
+                                            var sums = {};
+                                            data.forEach(function(payment) {
+                                                if (!sums.hasOwnProperty(payment.syndicId)) {
+                                                    sums[payment.syndicId] = 0;
                                                 }
+                                                sums[payment.syndicId] += payment.amount;
                                             });
-                                        </script>
-                                    </div>
+                                            return sums;
+                                        }
+
+                                        // Appel de la fonction pour calculer les sommes des paiements par syndicId
+                                        var paymentsSumBySyndicId = calculatePaymentsSumBySyndicId(paymentsData);
+
+                                        // Préparation des données pour Chart.js
+                                        var labels = Object.keys(paymentsSumBySyndicId);
+                                        var data = labels.map(function(syndicId) {
+                                            return paymentsSumBySyndicId[syndicId];
+                                        });
+
+                                        // Couleurs pour les barres
+                                        var backgroundColors = [
+                                            'rgba(255, 99, 132, 0.7)',
+                                            'rgba(54, 162, 235, 0.7)',
+                                            'rgba(255, 206, 86, 0.7)',
+                                            'rgba(75, 192, 192, 0.7)',
+                                            'rgba(153, 102, 255, 0.7)',
+                                            'rgba(255, 159, 64, 0.7)'
+                                        ];
+
+                                        // Tracer le diagramme à barres (bar chart) avec Chart.js
+                                        var ctx = document.getElementById('chartjs-pie').getContext('2d');
+                                        var myBarChart = new Chart(ctx, {
+                                            type: 'bar',
+                                            data: {
+                                                labels: labels,
+                                                datasets: [{
+                                                    label: 'payment',
+                                                    data: data,
+                                                    backgroundColor: backgroundColors,
+                                                    borderColor: 'rgba(54, 162, 235, 1)',
+                                                    borderWidth: 1
+                                                }]
+                                            },
+                                            options: {
+                                                scales: {
+                                                    yAxes: [{
+                                                        ticks: {
+                                                            beginAtZero: true
+                                                        }
+                                                    }]
+                                                }
+                                            }
+                                        });
+                                    </script>
+                                </div>
                                 </div>
                                 <!--/Graph Card-->
                             </div>
