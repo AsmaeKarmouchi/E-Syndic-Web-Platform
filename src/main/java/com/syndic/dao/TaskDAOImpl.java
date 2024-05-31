@@ -14,6 +14,7 @@ public class TaskDAOImpl implements TaskDAO {
     private final Connection connection;
 
     private static final String COUNT_TASKS = "SELECT COUNT(*) FROM tasks";
+
     private static final String SUM_TASKS_AMOUNT = "SELECT SUM(task_amount) FROM tasks";
 
     public TaskDAOImpl(Connection connection) {
@@ -123,6 +124,20 @@ public class TaskDAOImpl implements TaskDAO {
             return 0;
         }
     }
+    public int getTaskCountsyndic(int syndicid) throws SQLException {
+        String COUNT_TASKSSyndic = "SELECT COUNT(*) FROM tasks WHERE task_s_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(COUNT_TASKSSyndic)) {
+            preparedStatement.setInt(1, syndicid);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
+
+
 
     @Override
     public List<Task> getTasksBySyndic(int syndicId) {

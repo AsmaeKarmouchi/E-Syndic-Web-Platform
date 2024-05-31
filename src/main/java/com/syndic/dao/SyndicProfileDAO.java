@@ -24,4 +24,5 @@ public interface SyndicProfileDAO {
 
     int getSyndicIdByResidence(String residence)throws SQLException ;
      boolean deleteSyndic(int syndicId) ;
+
 }

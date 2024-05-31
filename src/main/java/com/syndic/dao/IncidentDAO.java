@@ -12,7 +12,7 @@ public interface IncidentDAO {
 
     List<Incident> getIncidentBySyndicId(int syndicId) throws SQLException;
 
-
+    int getIncidentCountsyndic(int syndicid) throws SQLException;
     void updateIncident(int incidentId, String incidentStatus, Date incidentResolutionDate) throws SQLException;
     int getIncidentCount() throws SQLException;
 }

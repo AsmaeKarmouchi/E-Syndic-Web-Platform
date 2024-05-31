@@ -1,18 +1,6 @@
-<%@ page import="com.syndic.dao.UserDAO" %>
-<%@ page import="com.syndic.dao.UserDAOImpl" %>
 <%@ page import="com.syndic.connection.Syndic_con" %>
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.SQLException" %>
-<%@ page import="com.syndic.dao.TaskDAO" %>
-<%@ page import="com.syndic.dao.TaskDAOImpl" %>
-<%@ page import="com.syndic.dao.IncidentDAO" %>
-<%@ page import="com.syndic.dao.IncidentDAOImpl" %>
-<%@ page import="com.syndic.dao.SupplierDAO" %>
-<%@ page import="com.syndic.dao.SupplierDAOImpl" %>
-<%@ page import="com.syndic.dao.PaymentDAO" %>
-<%@ page import="com.syndic.dao.PaymentDAOImpl" %>
-<%@ page import="com.syndic.dao.MemberProfileDAO" %>
-<%@ page import="com.syndic.dao.MemberProfileDAOImpl" %>
 <%@ page import="com.syndic.beans.Syndic" %>
 <%@ page import="jakarta.servlet.http.HttpSession" %>
 <%@ page import="com.google.gson.Gson" %>
@@ -20,6 +8,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.syndic.beans.Charge" %>
 <%@ page import="com.syndic.beans.Task" %>
+<%@ page import="com.syndic.dao.*" %>
 <%
     int userCount = 0;
     int taskCount=0;
@@ -27,10 +16,12 @@
     int supplierCount=0;
     float sumpayment=0;
     int memberCount = 0;
+    int reclamationcount = 0;
 
     Connection connection = null;
     Syndic syndic = (Syndic) session.getAttribute("syndic");
     int syndicid = ((Syndic) session.getAttribute("syndic")).getId();
+    double solde = ((Syndic) session.getAttribute("syndic2")).getAccount();
 
         try {
             connection = Syndic_con.getConnection();
@@ -40,19 +31,22 @@
             userCount = userDao.getUserCount();
 
             TaskDAO taskDAO = new TaskDAOImpl(connection);
-            taskCount = taskDAO.getTaskCount();
+            taskCount = taskDAO.getTaskCountsyndic(syndicid);
 
             IncidentDAO incidentDAO = new IncidentDAOImpl(connection);
-            incidentCount = incidentDAO.getIncidentCount();
+            incidentCount = incidentDAO.getIncidentCountsyndic(syndicid);
 
             SupplierDAO supplierDAO = new SupplierDAOImpl(connection);
-            supplierCount = supplierDAO.getSupplierCount();
+            supplierCount = supplierDAO.getSupplierCountsyndic(syndicid);
 
             PaymentDAO paymentDAO = new PaymentDAOImpl(connection);
             sumpayment = paymentDAO.getPaymentSum();
 
             MemberProfileDAO memberProfileDAO = new MemberProfileDAOImpl(connection);
-            memberCount = memberProfileDAO.getMemberCount();
+            memberCount = memberProfileDAO.getMemberCountsyndic(syndicid);
+
+            ReclamationDAO reclamationDAO = new ReclamationDAOImpl(connection);
+            reclamationcount = reclamationDAO.getReclamationCountsyndic(syndicid);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -91,6 +85,7 @@
     <!-- Side Nav -->
     <div class="w-1/7 m-4">
         <jsp:include page="templates/syndic_sidenav.jsp" />
+
     </div>
     <div class="w-6/7">
 <main>
@@ -119,8 +114,8 @@
                                     <div class="rounded-full p-5 bg-green-600"><i class="fa fa-wallet fa-2x fa-inverse"></i></div>
                                 </div>
                                 <div class="flex-1 text-right md:text-center">
-                                    <h2 class="font-bold uppercase text-gray-600">Total Revenue</h2>
-                                    <p class="font-bold text-3xl"><%=sumpayment%> <span class="text-green-500"><i class="fas fa-caret-up"></i></span></p>
+                                    <h2 class="font-bold uppercase text-gray-600">Solde compte Residence</h2>
+                                    <p class="font-bold text-3xl"><%=solde%> <span class="text-green-500"><i class="fas fa-caret-up"></i></span></p>
                                 </div>
                             </div>
                         </div>
@@ -131,11 +126,11 @@
                         <div class="bg-gradient-to-b from-pink-200 to-pink-100 border-b-4 border-pink-500 rounded-lg shadow-xl p-5">
                             <div class="flex flex-row items-center">
                                 <div class="flex-shrink pr-4">
-                                    <div class="rounded-full p-5 bg-pink-600"><i class="fas fa-users fa-2x fa-inverse"></i></div>
+                                    <div class="rounded-full p-5 bg-pink-600"><i class="fas fa-exclamation-triangle fa-2x fa-inverse"></i></div>
                                 </div>
                                 <div class="flex-1 text-right md:text-center">
-                                    <h2 class="font-bold uppercase text-gray-600">Total Users</h2>
-                                    <p class="font-bold text-3xl"><%= userCount %> <span class="text-pink-500"><i class="fas fa-exchange-alt"></i></span></p>
+                                    <h2 class="font-bold uppercase text-gray-600">Total Reclamations</h2>
+                                    <p class="font-bold text-3xl"><%= reclamationcount %> <span class="text-pink-500"><i class="fas fa-caret-up"></i></span></p>
                                 </div>
                             </div>
                         </div>

@@ -139,6 +139,18 @@ public class MemberProfileDAOImpl implements MemberProfileDAO {
             return 0;
         }
     }
+    public int getMemberCountsyndic(int syndicid) throws SQLException {
+        String COUNT_MEMBERSSyndic = "SELECT COUNT(*) FROM members WHERE member_s_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(COUNT_MEMBERSSyndic)) {
+            preparedStatement.setInt(1, syndicid);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
 
 
     @Override

@@ -77,4 +77,17 @@ public class IncidentDAOImpl implements IncidentDAO {
             return 0;
         }
     }
+
+    public int getIncidentCountsyndic(int syndicid) throws SQLException {
+        String COUNT_INCIDENTSSyndic = "SELECT COUNT(*) FROM Incidents WHERE incident_s_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(COUNT_INCIDENTSSyndic)) {
+            preparedStatement.setInt(1, syndicid);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
 }

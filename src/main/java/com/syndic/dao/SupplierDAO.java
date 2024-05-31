@@ -15,5 +15,6 @@ public interface SupplierDAO {
 
     boolean deleteSupplier(int supplier_id);
     int getSupplierCount() throws SQLException;
+    int getSupplierCountsyndic(int syndicid) throws SQLException;
     int getSupplierIdByName(String supplierName) throws SQLException;
 }

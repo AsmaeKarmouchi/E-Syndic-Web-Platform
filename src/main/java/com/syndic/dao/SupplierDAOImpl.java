@@ -126,4 +126,17 @@ public class SupplierDAOImpl implements SupplierDAO {
             return 0;
         }
     }
+
+    public int getSupplierCountsyndic(int syndicid) throws SQLException {
+        String COUNT_SUPPLIERSSyndic = "SELECT COUNT(*) FROM Suppliers WHERE supplier_s_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(COUNT_SUPPLIERSSyndic)) {
+            preparedStatement.setInt(1, syndicid);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
 }

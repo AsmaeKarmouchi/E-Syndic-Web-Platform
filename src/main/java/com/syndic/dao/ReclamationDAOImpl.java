@@ -15,6 +15,19 @@ public class ReclamationDAOImpl implements ReclamationDAO {
         this.connection = connection;
     }
 
+    public int getReclamationCountsyndic(int syndicid) throws SQLException {
+        String COUNT_ReclamationSyndic = "SELECT COUNT(*) FROM reclamations WHERE reclaim_s_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(COUNT_ReclamationSyndic)) {
+            preparedStatement.setInt(1, syndicid);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
+
     public boolean insertReclaim(Reclamation reclaim) {
         String sql = "INSERT INTO reclamations (reclaim_date , reclaim_type, reclaim_description, reclaim_status, reclaim_resolution_date, reclaim_s_id, reclaim_m_id) VALUES (?, ?, ?, ?, ?, ? , ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {

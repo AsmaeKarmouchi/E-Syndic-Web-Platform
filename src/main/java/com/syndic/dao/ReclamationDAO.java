@@ -9,4 +9,5 @@ public interface ReclamationDAO {
    boolean insertReclaim(Reclamation reclaim) throws SQLException;
 
    List<Reclamation> getAllReclamationsByMemberId(int memberId);
+   int getReclamationCountsyndic(int syndicid) throws SQLException;
 }
