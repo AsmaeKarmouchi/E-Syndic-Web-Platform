@@ -102,7 +102,7 @@
                     <div class="text-lg text-gray-600"><%=java.time.LocalDate.now()%></div>
                 </div>
                 <div class="date m-4 text-3xl">
-                    Welcome <b><%= ((Syndic) session.getAttribute("syndic")).getFirstName() %>
+                    Welcome <b><%= ((Syndic) session.getAttribute("syndic2")).getResidenceName() %>
                 </div>
 
                 <div class="flex flex-wrap">

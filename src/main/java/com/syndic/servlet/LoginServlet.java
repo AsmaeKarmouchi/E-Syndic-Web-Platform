@@ -202,6 +202,7 @@ public class LoginServlet extends HttpServlet {
                             session.setAttribute("syndicId", syndicId);
                             int memberId = member.getId();
                             session.setAttribute("memberId", memberId);
+
                             List<Incident> list_Incidents = new ArrayList<>();
                             incidentDAO = new IncidentDAOImpl(connection);
                             list_Incidents = incidentDAO.getIncidentBySyndicId(syndicId);
@@ -214,7 +215,9 @@ public class LoginServlet extends HttpServlet {
 
                             syndicDAO = new SyndicProfileDAOImpl(connection);
                             Syndic syndic = syndicDAO.getSyndicById(syndicId);
+                            String Res = syndic.getResidenceName();
                             session.setAttribute("syndic", syndic);
+                            session.setAttribute("Res", Res);
 
                             List<Payment> payments;
                             paymentDAO = new PaymentDAOImpl(connection);

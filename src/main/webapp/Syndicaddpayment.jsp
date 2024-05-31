@@ -2,7 +2,27 @@
 <%@ page import="com.syndic.beans.Payment" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.google.gson.Gson" %>
+<%@ page import="com.syndic.dao.MemberProfileDAO" %>
+<%@ page import="com.syndic.dao.MemberProfileDAOImpl" %>
+<%@ page import="com.syndic.beans.Syndic" %>
+<%@ page import="com.syndic.connection.Syndic_con" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.SQLException" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%     double solde = ((Syndic) session.getAttribute("syndic2")).getAccount();
+  String Res = ((Syndic) session.getAttribute("syndic2")).getResidenceName();
+  int syndicid = ((Syndic) session.getAttribute("syndic2")).getId();
 
+  Connection connection = null;
+  int memberCount = 0;
+  try {
+    connection = Syndic_con.getConnection();
+    MemberProfileDAO memberProfileDAO = new MemberProfileDAOImpl(connection);
+    memberCount = memberProfileDAO.getMemberCountsyndic(syndicid);
+  } catch (SQLException e) {
+    e.printStackTrace();
+  }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -207,41 +227,40 @@
       </div>
       <div class="profile">
         <div class="info">
-          <p>Hey, <b>Ayo</b></p>
+          <p>Hey, <b><%= ((Syndic) session.getAttribute("syndic")).getFirstName() %></b></p>
           <small class="text-muted">Admin</small>
         </div>
         <div class="profile-photo">
-          <img src="./Assets/images/profile-1.jpg" alt="Oluwadare Taye Ayo">
+          <img src="image/logo.jpg" alt="Oluwadare Taye Ayo">
         </div>
       </div>
     </div>
     <!---------ANALYSE DES SYNDICS --------->
     <div class="sales-analytics">
-      <h2>Analyse des Syndics</h2>
+      <h2>Syndic Analysis</h2>
 
       <!-----NOUVEAUX SYNDICS ENREGISTRÉS----->
       <div class="item online">
-        <i class='bx bx-user-plus'></i>
+        <i class='bx bx-user'></i>
         <div class="right">
           <div class="info">
-            <h3>NOUVEAUX SYNDICS ENREGISTRÉS</h3>
-            <small class="text-muted">Dernières 24 heures</small>
+            <h3>Monitor Payment Flow</h3>
+            <a href="paymentflow.jsp"><small class="text-muted">Follow-up</small></a>
           </div>
-          <h5 class="success">+38%</h5>
+          <h5 class="success">+10%</h5>
           <h3>234</h3>
         </div>
       </div>
 
       <!-----SYNDICS ACTIFS----->
       <div class="item offline">
-        <i class='bx bx-user'></i>
+        <i class='bx bx-wallet'></i>
         <div class="right">
           <div class="info">
-            <h3>SYNDICS ACTIFS</h3>
-            <small class="text-muted">Dernières 24 heures</small>
+            <h3>Residence Account Balance</h3>
+            <small class="text-muted"><%=solde%></small>
           </div>
           <h5 class="danger">-17%</h5>
-          <h3>1100</h3>
         </div>
       </div>
 
@@ -250,19 +269,18 @@
         <i class='bx bx-user-check'></i>
         <div class="right">
           <div class="info">
-            <h3>NOUVELLES DEMANDES D'ADHÉSION</h3>
-            <small class="text-muted">Dernières 24 heures</small>
+            <h3>Number of Residents in <%= Res %></h3>
+            <small class="text-muted"><%=memberCount%></small>
           </div>
-          <h5 class="success">+25%</h5>
-          <h3>32</h3>
+          <h5 class="success"></h5>
+          <h3></h3>
         </div>
       </div>
       <!----------AJOUTER UN NOUVEAU SYNDIC------->
       <div class="item add-product">
         <div>
           <i class="bx-add"></i>
-          <a href="#"><h3>Ajouter un Nouveau Syndic</h3></a>
-        </div>
+          <a href="meeting"><h3>Organize a General Assembly</h3></a>      </div>
       </div>
 
     </div>
