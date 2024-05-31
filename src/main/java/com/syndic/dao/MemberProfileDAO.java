@@ -21,5 +21,8 @@ public interface MemberProfileDAO {
     int getMemberCountsyndic(int syndicid) throws SQLException;
 
     List<Member> getMembersBySyndic(int syndicId);
+
+
+    Member getMemberById(int memberId);
 }
 

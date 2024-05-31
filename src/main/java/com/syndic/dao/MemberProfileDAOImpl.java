@@ -183,4 +183,25 @@ public class MemberProfileDAOImpl implements MemberProfileDAO {
         return members;
     }
 
+    @Override
+    public Member getMemberById(int memberId) {
+        Member member = null;
+        String query = "SELECT m_firstname, m_lastname, m_mail FROM members WHERE m_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, memberId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                member = new Member();
+                member.setFirstName(resultSet.getString("m_firstname"));
+                member.setLastName(resultSet.getString("m_lastname"));
+                member.setMail(resultSet.getString("m_mail"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return member;
+    }
+
+
+
 }

@@ -4,9 +4,11 @@ import com.syndic.beans.Payment;
 import com.syndic.beans.PaymentFlow;
 import com.syndic.beans.Syndic;
 import com.syndic.connection.Syndic_con;
+import com.syndic.dao.MemberProfileDAOImpl;
 import com.syndic.dao.PaymentDAOImpl;
 import com.syndic.dao.PaymentFlowDAOImpl;
 import com.syndic.dao.SyndicProfileDAOImpl;
+import com.syndic.mail.NotificationService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -18,6 +20,7 @@ import com.syndic.beans.Member;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SyndicAddPaymentServlet extends HttpServlet {
@@ -142,12 +145,75 @@ public class SyndicAddPaymentServlet extends HttpServlet {
         PaymentDAOImpl paymentDAO = new PaymentDAOImpl(connection);
         boolean success = paymentDAO.insertPayment(payment);
 
+        MemberProfileDAOImpl memberProfileDAO = new MemberProfileDAOImpl(connection);
+        Member member = memberProfileDAO.getMemberById(member_id);
+        NotificationService notificationService = new NotificationService();
+
+        // Liste des e-mails à notifier
+        List<String> emails = new ArrayList<>();
+        emails.add(member.getMail());
+        emails.add("kendimohammedamine@gmail.com");
+        emails.add("karmouchiasmae@gmail.com");
+        System.out.println(emails);
+
+        String subject = "Payment Confirmation";
+
+        // Corps de l'email
+        String message = "<html>"
+                + "<head>"
+                + "<style>"
+                + "body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; }"
+                + ".container { background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); max-width: 600px; margin: auto; }"
+                + ".header { text-align: center; margin-bottom: 20px; }"
+                + ".header img { width: 100px; margin-bottom: 10px; }"
+                + ".header h1 { font-size: 24px; color: #333333; margin: 0; }"
+                + "h2 { color: #333333; border-bottom: 2px solid #eeeeee; padding-bottom: 10px; }"
+                + "p { line-height: 1.6; color: #555555; }"
+                + ".label { font-weight: bold; color: #333333; }"
+                + ".intro { margin-bottom: 20px; }"
+                + ".footer { margin-top: 20px; font-size: 12px; text-align: center; color: #999999; }"
+                + "</style>"
+                + "</head>"
+                + "<body>"
+                + "<div class='container'>"
+                + "<div class='header'>"
+                + "<img src='cid:logo' alt='Logo'>"
+                + "<h1>Ensias_Syndic</h1>"
+                + "</div>"
+                + "<div class='intro'>"
+                + "<p>Dear " + member.getFirstName() + " " + member.getLastName() + ",</p>"
+                + "<p>We are pleased to confirm that your payment has been received successfully.</p>"
+                + "</div>"
+                + "<h2>Payment Details</h2>"
+                + "<p><span class='label'>Payment Code:</span> " + code + "</p>"
+                + "<p><span class='label'>Payment Date:</span> " + date + "</p>"
+                + "<p><span class='label'>Amount:</span> " + amount + "</p>"
+                + "<p><span class='label'>Payment Method:</span> " + method + "</p>"
+                + "<p><span class='label'>Payment Type:</span> " + type + "</p>"
+                + "<p><span class='label'>Payment Status:</span> " + status + "</p>"
+                + "<p>Thank you for your prompt payment.</p>"
+                + "<p>Best regards,</p>"
+                + "<p>The Syndic Team</p>"
+                + "<div class='footer'>"
+                + "<p>&copy; 2024 Ensias_Syndic. All rights reserved.</p>"
+                + "</div>"
+                + "</div>"
+                + "</body>"
+                + "</html>";
+
+        // Get the absolute path of the logo
+        String logoPath = getServletContext().getRealPath("/image/logo2.png");
+
+        // Envoyer des e-mails à tous les utilisateurs
+        notificationService.sendEmailToUsers(emails, subject, message, logoPath);
+
+
         if (success) {
             PaymentFlow paymentFlow = new PaymentFlow();
             paymentFlow.setSyndicId(syndicId);
             paymentFlow.setFlowType(0);
             paymentFlow.setAmount(amount);
-            paymentFlow.setDescription("Payment added with code: " + code+ "type: "+type + "By Member"+ member_id);
+            paymentFlow.setDescription("Payment added with code: " + code+ " type: "+type + " By Member: "+ member_id);
             paymentFlow.setTransactionDate(java.sql.Date.valueOf(date));
             PaymentFlowDAOImpl paymentFlowDAO = new PaymentFlowDAOImpl(connection);
             try {

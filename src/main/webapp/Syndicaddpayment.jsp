@@ -107,39 +107,39 @@
       </div>
 
 
-      <div id="PaymentForm" class="form hidden mt-6 p-6 bg-white shadow-lg rounded-lg">
+      <div id="PaymentForm" class="form hidden mt-6 p-6 bg-blue-200 shadow-lg rounded-lg">
         <form id="paymentFormElement" class="grid grid-cols-1 gap-6 md:grid-cols-2" action="Syndicaddpayment" method="post">
           <input type="hidden" id="action" name="action" value="add">
           <input type="hidden" id="edit_code" name="edit_code" value="">
 
           <div class="col-span-1">
             <label for="code" class="block text-sm font-medium text-gray-700">Code:</label>
-            <input type="number" id="code" name="code" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+            <input type="number" id="code" name="code" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
           </div>
           <div class="col-span-1">
             <label for="date" class="block text-sm font-medium text-gray-700">Date:</label>
-            <input type="date" id="date" name="date" value="<%=java.time.LocalDate.now()%>" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+            <input type="date" id="date" name="date" value="<%=java.time.LocalDate.now()%>" class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
           </div>
           <div class="col-span-1">
             <label for="amount" class="block text-sm font-medium text-gray-700">Amount:</label>
-            <input type="number" id="amount" name="amount" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+            <input type="number" id="amount" name="amount" class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
           </div>
           <div class="col-span-1">
             <label for="method" class="block text-sm font-medium text-gray-700">Method:</label>
-            <input type="text" id="method" name="method" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+            <input type="text" id="method" name="method" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
           </div>
           <div class="col-span-1">
             <label for="type" class="block text-sm font-medium text-gray-700">Type:</label>
-            <input type="text" id="type" name="type" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+            <input type="text" id="type" name="type" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
           </div>
 
           <div class="col-span-1">
             <label for="member_id" class="block text-sm font-medium text-gray-700">Member ID:</label>
-            <input type="number" id="member_id" name="member_id" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+            <input type="number" id="member_id" name="member_id" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
           </div>
           <div class="col-span-1">
             <label for="status" class="block text-sm font-medium text-gray-700">Status:</label>
-            <input type="text" id="status" name="status" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+            <input type="text" id="status" name="status" required class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
           </div>
           <div class="col-span-2 flex justify-end">
             <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
