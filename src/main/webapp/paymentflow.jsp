@@ -30,8 +30,9 @@
         <div class="max-w-screen-xl mx-auto px-4 md:px-6">
             <div class="items-start justify-between md:flex">
                 <div class="mt-3 md:mt-0 flex gap-4">
-                    <input type="number" id="filterId" placeholder="Filter by type de flow" class="px-4 py-2 border rounded-md">
-                    <input type="number" id="filterdate" placeholder="Filter by date " class="px-4 py-2 border rounded-md">
+                    <input type="number" id="filterId" placeholder="Filter by Flow Type" class="px-4 py-2 border rounded-md">
+                    <input type="date" id="filterStartDate" class="px-4 py-2 border rounded-md" placeholder="Start Date">
+                    <input type="date" id="filterEndDate" class="px-4 py-2 border rounded-md" placeholder="End Date">
                     <button id="filterPaymentsBtn" class="inline-block px-4 py-2 text-white duration-150 font-medium bg-blue-600 rounded-lg hover:bg-blue-500 active:bg-blue-700 md:text-sm btn">
                         Filter Payments Flows
                     </button>
@@ -159,37 +160,57 @@
 
     // Event listener for Filter Payments button
     document.getElementById('filterPaymentsBtn').addEventListener('click', function () {
-        var Id = document.getElementById('filterId').value;
-        var date = document.getElementById('filterdate').value;
+        var flowType = document.getElementById('filterId').value;
+        var startDate = document.getElementById('filterStartDate').value;
+        var endDate = document.getElementById('filterEndDate').value;
 
-        // Fetch all rows in the table
         var rows = document.querySelectorAll('#paymentTable tbody tr');
         rows.forEach(function (row) {
-            var IdCell = row.querySelector('td:nth-child(1)').textContent;
-            var dateCell = row.querySelector('td:nth-child(5)').textContent;
+            var flowtypeCell = row.querySelector('td:nth-child(1)').textContent;
+            var dateCell = row.querySelector('td:nth-child(4)').textContent;
 
-            // Convert the dateCell and filter date to Date objects for comparison
-            var dateCellDate = new Date(dateCell);
-            var filterDate = new Date(date);
+            var showRow = true;
 
-            // Check if the row matches the filter criteria
-            if ((Id === '' || IdCell === Id) &&
-                (date === '' || dateCellDate.getTime() === filterDate.getTime())) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
+            if (flowType && flowtypeCell !== flowType) {
+                showRow = false;
             }
+
+            if (startDate && new Date(dateCell) < new Date(startDate)) {
+                showRow = false;
+            }
+
+            if (endDate && new Date(dateCell) > new Date(endDate)) {
+                showRow = false;
+            }
+
+            row.style.display = showRow ? '' : 'none';
         });
     });
 
     // Event listener for Print Invoice button
     document.getElementById('printInvoiceBtn').addEventListener('click', function () {
         // Récupérer les valeurs des filtres
-        var Id = document.getElementById('filterId').value;
-        var date = document.getElementById('filterdate').value;
+        var flowType = document.getElementById('filterId').value;
+        var startDate = document.getElementById('filterStartDate').value;
+        var endDate = document.getElementById('filterEndDate').value;
 
         // Construire l'URL avec les paramètres de filtrage
-        var url = "paymentflowPrint.jsp?Id=" + Id + "&date=" + date;
+        var url = "paymentflowPrint.jsp?";
+        var params = [];
+
+        if (flowType) {
+            params.push("flowType=" + encodeURIComponent(flowType));
+        }
+        if (startDate) {
+            params.push("startDate=" + encodeURIComponent(startDate));
+        }
+        if (endDate) {
+            params.push("endDate=" + encodeURIComponent(endDate));
+        }
+
+        if (params.length > 0) {
+            url += params.join("&");
+        }
 
         // Ouvrir la page dans une nouvelle fenêtre
         window.open(url, '_blank');

@@ -146,7 +146,6 @@ public class LoginServlet extends HttpServlet {
                             List<PaymentFlow> paymentsflow;
                             paymentflowDAO = new PaymentFlowDAOImpl(connection);
                             paymentsflow = paymentflowDAO.getPaymentFlowsBySyndicId(syndicId);
-                            System.out.println("pf  :"+paymentsflow);
                             session.setAttribute("paymentsflow", paymentsflow);
 
                             List<Member> list_members;

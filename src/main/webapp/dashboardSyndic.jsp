@@ -211,7 +211,7 @@
                         <!--Graph Card-->
                         <div class="bg-white border-transparent rounded-lg shadow-xl">
                             <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                <h class="font-bold uppercase text-gray-600">Graph</h>
+                                <h2 class="font-bold uppercase text-gray-600">Payment amouny by mounth</h2>
                             </div>
                             <div class="p-5">
                                 <canvas id="paymentsChart" class="chartjs" width="undefined" height="undefined"></canvas>
@@ -296,7 +296,7 @@
                         <!--Graph Card-->
                         <div class="bg-white border-transparent rounded-lg shadow-xl">
                             <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                <h class="font-bold uppercase text-gray-600">Graph</h>
+                                <h2 class="font-bold uppercase text-gray-600">Gharges Amount By Category</h2>
                             </div>
                             <div class="p-5">
                                 <canvas id="chargesByCategoryChart" class="chartjs" width="undefined" height="undefined"></canvas>
@@ -326,7 +326,7 @@
                                         data: {
                                             labels: categories,
                                             datasets: [{
-                                                label: 'Montant des Charges par Catégorie',
+                                                label: 'Gharges Amount By Category',
                                                 data: chargeAmountsByCategory,
                                                 backgroundColor: barColors,
                                                 borderColor: barColors,
@@ -349,7 +349,7 @@
                         <!--Graph Card-->
                         <div class="bg-white border-transparent rounded-lg shadow-xl">
                             <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                <h2 class="font-bold uppercase text-gray-600">Graph</h2>
+                                <h2 class="font-bold uppercase text-gray-600">Gharges Amount Evolution </h2>
                             </div>
                             <div class="p-5">
                                 <canvas id="chargesByDateChart" class="chartjs" width="undefined" height="undefined"></canvas>
@@ -371,7 +371,7 @@
                                         data: {
                                             labels: dates,
                                             datasets: [{
-                                                label: 'Évolution des Montants des Charges dans le Temps',
+                                                label: 'Gharges Amount Evolution in time',
                                                 data: chargeAmountsByDate,
                                                 fill: false,
                                                 borderColor: lineColor,
@@ -411,13 +411,229 @@
 
 
 
+            <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+                <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                    <!--Graph Card-->
+                    <div class="bg-white border-transparent rounded-lg shadow-xl">
+                        <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                            <h2 class="font-bold uppercase text-gray-600">Tasks number by status</h2>
+                        </div>
+                        <div class="p-5">
+                            <canvas id="tasksByStatusChart" class="chartjs" width="undefined" height="undefined"></canvas>
+                            <script>
+                                const tasks = <%= new Gson().toJson(tasks) %>;
+                                // Préparer les données pour le diagramme des tâches par statut
+                                const taskStatuses = ['Pending', 'Completed', 'Scheduled'];
+                                const taskStatusCounts = taskStatuses.map(status =>
+                                    tasks.filter(task => task.taskStatus === status).length
+                                );
+
+                                // Créer le diagramme des tâches par statut
+                                const tasksByStatusCtx = document.getElementById('tasksByStatusChart').getContext('2d');
+                                const tasksByStatusChart = new Chart(tasksByStatusCtx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: taskStatuses,
+                                        datasets: [{
+                                            label: '# of Tasks',
+                                            data: taskStatusCounts,
+                                            backgroundColor: ['#ff6384', '#36a2eb', '#ffce56']
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+
+                                    }
+                                });
+
+
+
+                            </script>
+                        </div>
+                    </div>
+                    <!--/Graph Card-->
+                </div>
+
+
+                <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                    <!--Graph Card-->
+                    <div class="bg-white border-transparent rounded-lg shadow-xl">
+                        <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                            <h2 class="font-bold uppercase text-gray-600">Amounts by tasks</h2>
+                        </div>
+                        <div class="p-5">
+                            <canvas id="tasksByAmountChart" class="chartjs" width="undefined" height="undefined"></canvas>
+                            <script>
+                                // Récupération des noms de tâches et des montants pour le diagramme par montant
+                                var taskNamesByAmount = tasks.map(function(task) {
+                                    return task.taskName;
+                                });
+                                var taskAmounts = tasks.map(function(task) {
+                                    return task.taskamount;
+                                });
+                                var taskIdByAmount = tasks.map(function(task) {
+                                    return task.taskId;
+                                });
+
+                                // Création du diagramme par montant avec plusieurs couleurs
+                                var tasksByAmountChartCtx = document.getElementById('tasksByAmountChart').getContext('2d');
+                                var tasksByAmountChart = new Chart(tasksByAmountChartCtx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: taskIdByAmount,
+                                        datasets: [{
+                                            label: 'Montant',
+                                            data: taskAmounts,
+                                            backgroundColor: [
+                                                'rgba(255, 99, 132, 0.6)',
+                                                'rgba(54, 162, 235, 0.6)',
+                                                'rgba(255, 206, 86, 0.6)',
+                                                'rgba(75, 192, 192, 0.6)',
+                                                'rgba(153, 102, 255, 0.6)'
+                                                // Ajoutez autant de couleurs que nécessaire
+                                            ],
+                                            borderColor: [
+                                                'rgba(255, 99, 132, 1)',
+                                                'rgba(54, 162, 235, 1)',
+                                                'rgba(255, 206, 86, 1)',
+                                                'rgba(75, 192, 192, 1)',
+                                                'rgba(153, 102, 255, 1)'
+                                                // Correspondance des couleurs de bordure si nécessaire
+                                            ],
+                                            borderWidth: 1
+                                        }]
+                                    },
+                                    options: {
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true,
+                                                position: 'left',
+                                                type: 'linear',
+                                                display: true
+                                            }
+                                        },
+                                        plugins: {
+                                            tooltip: {
+                                                callbacks: {
+                                                    label: function(context) {
+                                                        var index = context.dataIndex;
+                                                        var taskName = taskNamesByAmount[index];
+                                                        var amount = context.raw;
+                                                        return taskName + ': ' + amount;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+
+
+
+
+
+
+                            </script>
+                        </div>
+                    </div>
+                    <!--/Graph Card-->
+                </div>
+
+                <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                    <!--Graph Card-->
+                    <div class="bg-white border-transparent rounded-lg shadow-xl">
+                        <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
+                            <h2 class="font-bold uppercase text-gray-600">Tasks number by mounth</h2>
+                        </div>
+                        <div class="p-5">
+                            <canvas id="tasksByMonthChart" class="chartjs" width="undefined" height="undefined"></canvas>
+                            <script>
+                                // Récupération des dates de tâches pour le diagramme par mois
+                                var taskDates = tasks.map(function(task) {
+                                    return task.taskDueDate;
+                                });
+
+                                // Comptage des tâches par mois
+                                var tasksByMonth = {};
+                                taskDates.forEach(function(date) {
+                                    var month = date.split('-')[1];
+                                    tasksByMonth[month] = (tasksByMonth[month] || 0) + 1;
+                                });
+
+                                // Création du tableau de données pour le diagramme
+                                var months = Object.keys(tasksByMonth);
+                                var taskCounts = Object.values(tasksByMonth);
+
+                                // Définir des couleurs pour chaque barre du diagramme
+                                var barColors = [
+                                    'rgba(255, 99, 132, 0.8)',
+                                    'rgba(54, 162, 235, 0.8)',
+                                    'rgba(255, 206, 86, 0.8)',
+                                    'rgba(75, 192, 192, 0.8)',
+                                    'rgba(153, 102, 255, 0.8)',
+                                    'rgba(255, 159, 64, 0.8)'
+                                ];
+
+                                // Création du tableau de datasets pour le diagramme par mois
+                                var datasets = [{
+                                    label: 'Tasks number (Barres)',
+                                    data: taskCounts,
+                                    backgroundColor: barColors,
+                                    borderColor: barColors,
+                                    borderWidth: 1
+                                }, {
+                                    label: 'Tasks number (Courbe)',
+                                    data: taskCounts,
+                                    fill: false,
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    borderWidth: 2,
+                                    type: 'line'
+                                }];
+
+                                // Création du diagramme par mois avec des barres et une courbe
+                                var tasksByMonthChartCtx = document.getElementById('tasksByMonthChart').getContext('2d');
+                                var tasksByMonthChart = new Chart(tasksByMonthChartCtx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: months,
+                                        datasets: datasets
+                                    },
+                                    options: {
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true,
+                                                stepSize: 1
+                                            }
+                                        }
+                                    }
+                                });
+                            </script>
+                        </div>
+                    </div>
+                    <!--/Graph Card-->
+                </div>
+
+
+                <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+                    <!--Table Card-->
+                    <div class="bg-white border-transparent rounded-lg shadow-xl">
+
+                    </div>
+                    <!--/table Card-->
+                </div>
+
+            </div>
+
+
+
+
                 <div class="flex flex-row flex-wrap flex-grow mt-2">
 
                     <div class="w-full md:w-1/2 xl:w-1/3 p-6">
                         <!--Graph Card-->
                         <div class="bg-white border-transparent rounded-lg shadow-xl">
                             <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                <h2 class="font-bold uppercase text-gray-600">Graph</h2>
+                                <h2 class="font-bold uppercase text-gray-600">Payment by type</h2>
                             </div>
                             <div class="p-5">
                                 <canvas id="paymentsByTypeChart" class="chartjs" width="undefined" height="undefined"></canvas>
@@ -480,7 +696,7 @@
                         <!--Graph Card-->
                         <div class="bg-white border-transparent rounded-lg shadow-xl">
                             <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                <h2 class="font-bold uppercase text-gray-600">Graph</h2>
+                                <h2 class="font-bold uppercase text-gray-600">Payments by Method</h2>
                             </div>
                             <div class="p-5">
                                 <canvas id="paymentsByMethodChart" class="chartjs" width="undefined" height="undefined"></canvas>
@@ -543,7 +759,7 @@
                         <!--Graph Card-->
                         <div class="bg-white border-transparent rounded-lg shadow-xl">
                             <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                <h2 class="font-bold uppercase text-gray-600">Graph</h2>
+                                <h2 class="font-bold uppercase text-gray-600">Charges by frequency</h2>
                             </div>
                             <div class="p-5">
                                 <canvas id="chargesByFrequencyChart" class="chartjs" width="undefined" height="undefined"></canvas>
@@ -570,7 +786,7 @@
                                         data: {
                                             labels: frequencies,
                                             datasets: [{
-                                                label: 'Répartition des Charges par Fréquence',
+                                                label: 'Charges by frequency',
                                                 data: chargeCountsByFrequency,
                                                 backgroundColor: pieColors,
                                                 borderColor: pieColors,
@@ -611,339 +827,6 @@
 
 
 
-                <div class="flex flex-row flex-wrap flex-grow mt-2">
-
-                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
-                        <!--Graph Card-->
-                        <div class="bg-white border-transparent rounded-lg shadow-xl">
-                            <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                <h class="font-bold uppercase text-gray-600">Graph</h>
-                            </div>
-                            <div class="p-5">
-                                <canvas id="tasksByStatusChart" class="chartjs" width="undefined" height="undefined"></canvas>
-                                <script>
-                                    const tasks = <%= new Gson().toJson(tasks) %>;
-                                    // Préparer les données pour le diagramme des tâches par statut
-                                    const taskStatuses = ['Pending', 'Completed', 'Scheduled'];
-                                    const taskStatusCounts = taskStatuses.map(status =>
-                                        tasks.filter(task => task.taskStatus === status).length
-                                    );
-
-                                    // Créer le diagramme des tâches par statut
-                                    const tasksByStatusCtx = document.getElementById('tasksByStatusChart').getContext('2d');
-                                    const tasksByStatusChart = new Chart(tasksByStatusCtx, {
-                                        type: 'bar',
-                                        data: {
-                                            labels: taskStatuses,
-                                            datasets: [{
-                                                label: '# of Tasks',
-                                                data: taskStatusCounts,
-                                                backgroundColor: ['#ff6384', '#36a2eb', '#ffce56']
-                                            }]
-                                        },
-                                        options: {
-                                            responsive: true,
-
-                                        }
-                                    });
-
-
-
-                                </script>
-                            </div>
-                        </div>
-                        <!--/Graph Card-->
-                    </div>
-
-
-                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
-                        <!--Graph Card-->
-                        <div class="bg-white border-transparent rounded-lg shadow-xl">
-                            <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                <h2 class="font-bold uppercase text-gray-600">Graph</h2>
-                            </div>
-                            <div class="p-5">
-                                <canvas id="tasksByAmountChart" class="chartjs" width="undefined" height="undefined"></canvas>
-                                <script>
-                                    // Récupération des noms de tâches et des montants pour le diagramme par montant
-                                    var taskNamesByAmount = tasks.map(function(task) {
-                                        return task.taskName;
-                                    });
-                                    var taskAmounts = tasks.map(function(task) {
-                                        return task.taskamount;
-                                    });
-
-                                    // Création du diagramme par montant avec plusieurs couleurs
-                                    var tasksByAmountChartCtx = document.getElementById('tasksByAmountChart').getContext('2d');
-                                    var tasksByAmountChart = new Chart(tasksByAmountChartCtx, {
-                                        type: 'bar',
-                                        data: {
-                                            labels: taskNamesByAmount,
-                                            datasets: [{
-                                                label: 'Montant',
-                                                data: taskAmounts,
-                                                backgroundColor: [
-                                                    'rgba(255, 99, 132, 0.6)',
-                                                    'rgba(54, 162, 235, 0.6)',
-                                                    'rgba(255, 206, 86, 0.6)',
-                                                    'rgba(75, 192, 192, 0.6)',
-                                                    'rgba(153, 102, 255, 0.6)'
-                                                    // Ajoutez autant de couleurs que nécessaire
-                                                ],
-                                                borderColor: [
-                                                    'rgba(255, 99, 132, 1)',
-                                                    'rgba(54, 162, 235, 1)',
-                                                    'rgba(255, 206, 86, 1)',
-                                                    'rgba(75, 192, 192, 1)',
-                                                    'rgba(153, 102, 255, 1)'
-                                                    // Correspondance des couleurs de bordure si nécessaire
-                                                ],
-                                                borderWidth: 1
-                                            }]
-                                        },
-                                        options: {
-                                            scales: {
-                                                y: {
-                                                    beginAtZero: true,
-                                                    position: 'left',
-                                                    type: 'linear',
-                                                    display: true
-                                                }
-                                            }
-                                        }
-                                    });
-
-
-
-
-
-                                </script>
-                            </div>
-                        </div>
-                        <!--/Graph Card-->
-                    </div>
-
-                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
-                        <!--Graph Card-->
-                        <div class="bg-white border-transparent rounded-lg shadow-xl">
-                            <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                <h2 class="font-bold uppercase text-gray-600">Graph</h2>
-                            </div>
-                            <div class="p-5">
-                                <canvas id="tasksByMonthChart" class="chartjs" width="undefined" height="undefined"></canvas>
-                                <script>
-                                    // Récupération des dates de tâches pour le diagramme par mois
-                                    var taskDates = tasks.map(function(task) {
-                                        return task.taskDueDate;
-                                    });
-
-                                    // Comptage des tâches par mois
-                                    var tasksByMonth = {};
-                                    taskDates.forEach(function(date) {
-                                        var month = date.split('-')[1];
-                                        tasksByMonth[month] = (tasksByMonth[month] || 0) + 1;
-                                    });
-
-                                    // Création du tableau de données pour le diagramme
-                                    var months = Object.keys(tasksByMonth);
-                                    var taskCounts = Object.values(tasksByMonth);
-
-                                    // Définir des couleurs pour chaque barre du diagramme
-                                    var barColors = [
-                                        'rgba(255, 99, 132, 0.8)',
-                                        'rgba(54, 162, 235, 0.8)',
-                                        'rgba(255, 206, 86, 0.8)',
-                                        'rgba(75, 192, 192, 0.8)',
-                                        'rgba(153, 102, 255, 0.8)',
-                                        'rgba(255, 159, 64, 0.8)'
-                                    ];
-
-                                    // Création du tableau de datasets pour le diagramme par mois
-                                    var datasets = [{
-                                        label: 'Nombre de Tâches (Barres)',
-                                        data: taskCounts,
-                                        backgroundColor: barColors,
-                                        borderColor: barColors,
-                                        borderWidth: 1
-                                    }, {
-                                        label: 'Nombre de Tâches (Courbe)',
-                                        data: taskCounts,
-                                        fill: false,
-                                        borderColor: 'rgba(75, 192, 192, 1)',
-                                        borderWidth: 2,
-                                        type: 'line'
-                                    }];
-
-                                    // Création du diagramme par mois avec des barres et une courbe
-                                    var tasksByMonthChartCtx = document.getElementById('tasksByMonthChart').getContext('2d');
-                                    var tasksByMonthChart = new Chart(tasksByMonthChartCtx, {
-                                        type: 'bar',
-                                        data: {
-                                            labels: months,
-                                            datasets: datasets
-                                        },
-                                        options: {
-                                            scales: {
-                                                y: {
-                                                    beginAtZero: true,
-                                                    stepSize: 1
-                                                }
-                                            }
-                                        }
-                                    });
-                                </script>
-                            </div>
-                        </div>
-                        <!--/Graph Card-->
-                    </div>
-
-
-                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
-                        <!--Table Card-->
-                        <div class="bg-white border-transparent rounded-lg shadow-xl">
-
-                        </div>
-                        <!--/table Card-->
-                    </div>
-
-                </div>
-
-
-
-
-
-
-
-
-
-
-                <div class="flex flex-row flex-wrap flex-grow mt-2">
-
-                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
-                        <!--Graph Card-->
-                        <div class="bg-white border-transparent rounded-lg shadow-xl">
-                            <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                <h class="font-bold uppercase text-gray-600">Graph</h>
-                            </div>
-                            <div class="p-5">
-                                <canvas id="chartjs-7" class="chartjs" width="undefined" height="undefined"></canvas>
-                                <script>
-                                    new Chart(document.getElementById("chartjs-7"), {
-                                        "type": "bar",
-                                        "data": {
-                                            "labels": ["January", "February", "March", "April"],
-                                            "datasets": [{
-                                                "label": "Page Impressions",
-                                                "data": [10, 20, 30, 40],
-                                                "borderColor": "rgb(255, 99, 132)",
-                                                "backgroundColor": "rgba(255, 99, 132, 0.2)"
-                                            }, {
-                                                "label": "Adsense Clicks",
-                                                "data": [5, 15, 10, 30],
-                                                "type": "line",
-                                                "fill": false,
-                                                "borderColor": "rgb(54, 162, 235)"
-                                            }]
-                                        },
-                                        "options": {
-                                            "scales": {
-                                                "yAxes": [{
-                                                    "ticks": {
-                                                        "beginAtZero": true
-                                                    }
-                                                }]
-                                            }
-                                        }
-                                    });
-                                </script>
-                            </div>
-                        </div>
-                        <!--/Graph Card-->
-                    </div>
-
-                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
-                        <!--Graph Card-->
-                        <div class="bg-white border-transparent rounded-lg shadow-xl">
-                            <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                <h2 class="font-bold uppercase text-gray-600">Graph</h2>
-                            </div>
-                            <div class="p-5">
-                                <canvas id="chartjs-0" class="chartjs" width="undefined" height="undefined"></canvas>
-                                <script>
-                                    new Chart(document.getElementById("chartjs-0"), {
-                                        "type": "line",
-                                        "data": {
-                                            "labels": ["January", "February", "March", "April", "May", "June", "July"],
-                                            "datasets": [{
-                                                "label": "Views",
-                                                "data": [65, 59, 80, 81, 56, 55, 40],
-                                                "fill": false,
-                                                "borderColor": "rgb(75, 192, 192)",
-                                                "lineTension": 0.1
-                                            }]
-                                        },
-                                        "options": {}
-                                    });
-                                </script>
-                            </div>
-                        </div>
-                        <!--/Graph Card-->
-                    </div>
-
-                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
-                        <!--Graph Card-->
-                        <div class="bg-white border-transparent rounded-lg shadow-xl">
-                            <div class="bg-gradient-to-b from-gray-300 to-gray-100 uppercase text-gray-800 border-b-2 border-gray-300 rounded-tl-lg rounded-tr-lg p-2">
-                                <h2 class="font-bold uppercase text-gray-600">Graph</h2>
-                            </div>
-                            <div class="p-5">
-                                <canvas id="chartjs-1" class="chartjs" width="undefined" height="undefined"></canvas>
-                                <script>
-                                    new Chart(document.getElementById("chartjs-1"), {
-                                        "type": "bar",
-                                        "data": {
-                                            "labels": ["January", "February", "March", "April", "May", "June", "July"],
-                                            "datasets": [{
-                                                "label": "Likes",
-                                                "data": [65, 59, 80, 81, 56, 55, 40],
-                                                "fill": false,
-                                                "backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)", "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)", "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"],
-                                                "borderColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)", "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"],
-                                                "borderWidth": 1
-                                            }]
-                                        },
-                                        "options": {
-                                            "scales": {
-                                                "yAxes": [{
-                                                    "ticks": {
-                                                        "beginAtZero": true
-                                                    }
-                                                }]
-                                            }
-                                        }
-                                    });
-                                </script>
-                            </div>
-                        </div>
-                        <!--/Graph Card-->
-                    </div>
-
-
-
-
-
-
-
-
-                    <div class="w-full md:w-1/2 xl:w-1/3 p-6">
-                        <!--Table Card-->
-                        <div class="bg-white border-transparent rounded-lg shadow-xl">
-
-                        </div>
-                        <!--/table Card-->
-                    </div>
-
-                </div>
 
 
 

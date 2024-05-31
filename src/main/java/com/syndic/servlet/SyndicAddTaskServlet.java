@@ -147,6 +147,11 @@ public class SyndicAddTaskServlet extends HttpServlet {
             PaymentFlowDAOImpl paymentFlowDAO = new PaymentFlowDAOImpl(connection);
             try {
                 paymentFlowDAO.addPaymentFlow(paymentFlow);
+
+                List<PaymentFlow> paymentsflow;
+                paymentsflow = paymentFlowDAO.getPaymentFlowsBySyndicId(syndicId);
+                session.setAttribute("paymentsflow", paymentsflow);
+
             } catch (SQLException e) {
                 e.printStackTrace();
                 session.setAttribute("errorMessage", "Erreur lors de l'ajout du flux de paiement.");
