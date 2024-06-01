@@ -7,8 +7,9 @@
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="com.syndic.dao.MemberProfileDAOImpl" %>
 <%@ page import="com.syndic.dao.MemberProfileDAO" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%     double solde = ((Syndic) session.getAttribute("syndic2")).getAccount();
+<%@ page language="java"%>
+<%
+    double solde = ((Syndic) session.getAttribute("syndic2")).getAccount();
     String Res = ((Syndic) session.getAttribute("syndic2")).getResidenceName();
     int syndicid = ((Syndic) session.getAttribute("syndic2")).getId();
 
